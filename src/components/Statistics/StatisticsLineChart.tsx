@@ -41,7 +41,7 @@ export default function StatisticsLineChart({ data, league }: Props) {
       }));
   }, [data, league]);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; payload: { season: string; avgGoals: string; avgAssists: string; teams: number } }>; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">

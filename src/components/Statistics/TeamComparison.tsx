@@ -12,17 +12,6 @@ interface Props {
   league: string;
 }
 
-interface TeamData {
-  team: string;
-  badge: string;
-  goals: number;
-  assists: number;
-  goalsPerGame: number;
-  assistsPerGame: number;
-  totalPoints: number;
-  form: string;
-}
-
 export default function TeamComparison({ data, season, league }: Props) {
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
 

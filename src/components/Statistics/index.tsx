@@ -14,7 +14,7 @@ import { useStatisticsFilter } from "@/hooks/useStatisticsFilter"
 import { statisticsData } from "@/data/statistics"
 
 export default function StatisticsIndex() {
-  const { filters, filteredStats: _filteredStats, handleFilterChange, handleReset } = useStatisticsFilter()
+  const { filters, handleFilterChange, handleReset } = useStatisticsFilter()
   const [activeTab, setActiveTab] = useState<'overview' | 'charts' | 'comparison'>('overview')
 
   const tabs = [

@@ -35,7 +35,7 @@ export default function StatisticsBarChart({ data, statType, season, league, max
       }));
   }, [data, statType, season, league, maxItems]);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { fullTeam: string; goals: number; assists: number; rank: number } }> }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">

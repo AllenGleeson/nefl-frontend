@@ -15,6 +15,11 @@ interface Props {
 type SortField = 'team' | 'goals' | 'assists' | 'goalsPerGame' | 'assistsPerGame';
 type SortDirection = 'asc' | 'desc';
 
+type ExtendedStatRow = StatRow & {
+  goalsPerGame: string;
+  assistsPerGame: string;
+};
+
 export default function EnhancedStatisticsTable({ data, statType, season, league }: Props) {
   const [sortField, setSortField] = useState<SortField>('goals');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
@@ -31,20 +36,26 @@ export default function EnhancedStatisticsTable({ data, statType, season, league
     });
 
     // Add calculated fields
-    filteredData = filteredData.map(team => ({
+    const extendedData: ExtendedStatRow[] = filteredData.map(team => ({
       ...team,
       goalsPerGame: (team.goals / 10).toFixed(1), // Assuming 10 games per season
       assistsPerGame: (team.assists / 10).toFixed(1)
     }));
 
     // Sort data
-    filteredData.sort((a, b) => {
-      let aValue: any = a[sortField];
-      let bValue: any = b[sortField];
+    extendedData.sort((a, b) => {
+      let aValue: string | number;
+      let bValue: string | number;
       
       if (sortField === 'goalsPerGame' || sortField === 'assistsPerGame') {
-        aValue = parseFloat(aValue);
-        bValue = parseFloat(bValue);
+        aValue = parseFloat(a[sortField] as string);
+        bValue = parseFloat(b[sortField] as string);
+      } else if (sortField === 'team') {
+        aValue = a.team;
+        bValue = b.team;
+      } else {
+        aValue = a[sortField] as number;
+        bValue = b[sortField] as number;
       }
       
       if (sortDirection === 'asc') {
@@ -54,7 +65,7 @@ export default function EnhancedStatisticsTable({ data, statType, season, league
       }
     });
 
-    return filteredData;
+    return extendedData;
   }, [data, season, league, searchTerm, sortField, sortDirection]);
 
   const paginatedData = useMemo(() => {

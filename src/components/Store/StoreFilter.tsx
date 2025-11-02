@@ -9,8 +9,6 @@ type Props = {
 }
 
 export default function StoreFilter({ 
-    categories: _categories, 
-    selectedCategory: _selectedCategory, 
     onCategoryChange
 }: Props) {
     const [selectedSizes, setSelectedSizes] = useState<string[]>([])
