@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { isApiError } from "@/types/ApiError";
 
 // Mock login function for demo - in production, this would call the actual API
-const loginUser = async (email: string, password: string) => {
+const loginUser = async (email: string, _password: string) => {
   // Simulate API call delay
   await new Promise(resolve => setTimeout(resolve, 500));
   
