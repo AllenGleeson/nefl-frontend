@@ -38,14 +38,24 @@ export default function EditFixtureForm({
   fixture 
 }: EditFixtureFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    homeTeam: string;
+    awayTeam: string;
+    date: string;
+    time: string;
+    venue: string;
+    league: string;
+    status: 'scheduled' | 'live' | 'completed' | 'postponed';
+    homeScore: string;
+    awayScore: string;
+  }>({
     homeTeam: '',
     awayTeam: '',
     date: '',
     time: '',
     venue: '',
     league: '',
-    status: 'scheduled' as const,
+    status: 'scheduled',
     homeScore: '',
     awayScore: ''
   });
