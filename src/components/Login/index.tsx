@@ -6,5 +6,3 @@ export { default as AuthLayout } from './AuthLayout';
 export { default as AuthGuard } from './AuthGuard';
 export { default as UserProfile } from './UserProfile';
 
-// Re-export as named export for compatibility
-export { UserProfile as UserProfileComponent } from './UserProfile';
