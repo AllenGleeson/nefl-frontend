@@ -32,7 +32,7 @@ export default function TabNavigation({
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-semibold transition-all duration-200 ${
+            className={`px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-semibold transition-all duration-200 cursor-pointer ${
               activeTab === tab.id
                 ? "bg-[var(--md-primary)] text-[var(--md-on-primary)] border-b-2 border-[var(--md-primary)]"
                 : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container)] border-b-2 border-transparent"

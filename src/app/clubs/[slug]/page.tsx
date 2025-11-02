@@ -21,7 +21,7 @@ export default async function ClubPage({ params }: ClubPageProps) {
     <div
       className="px-4 py-8 relative overflow-hidden"
       style={{
-        backgroundImage: 'url(/images/clubspage.PNG)',
+        backgroundImage: 'url(/images/clubspage.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

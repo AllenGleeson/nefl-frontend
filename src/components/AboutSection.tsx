@@ -12,7 +12,7 @@ export default function AboutUs() {
           <div className="flex border-b border-[var(--md-outline-variant)]">
             <button
               onClick={() => setActiveTab('about')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
                 activeTab === 'about'
                   ? 'text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]'
                   : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
@@ -22,7 +22,7 @@ export default function AboutUs() {
             </button>
             <button
               onClick={() => setActiveTab('league')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
                 activeTab === 'league'
                   ? 'text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]'
                   : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
@@ -32,7 +32,7 @@ export default function AboutUs() {
             </button>
             <button
               onClick={() => setActiveTab('contact')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
                 activeTab === 'contact'
                   ? 'text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]'
                   : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'

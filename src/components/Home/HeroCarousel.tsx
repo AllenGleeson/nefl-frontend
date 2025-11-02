@@ -10,7 +10,7 @@ const slides = [
     desc: "The premier football league in the North East. Follow your favorite teams, check fixtures, and stay updated with the latest results.",
     cta1: "View Fixtures",
     cta2: "Latest Results",
-    img: "/images/news/news-1.jpg",
+    img: "/images/news/news-9.webp",
   },
   {
     id: 1,
@@ -19,7 +19,7 @@ const slides = [
     desc: "Don't miss this weekend's big clash — get your tickets now and support your team!",
     cta1: "Buy Tickets",
     cta2: "Match Preview",
-    img: "/images/news/news-2.jpg",
+    img: "/images/news/news-2.webp",
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const slides = [
     desc: "Catch up with last week's goals, saves, and key moments in our highlights reel.",
     cta1: "Watch Highlights",
     cta2: "Read Report",
-    img: "/images/news/news-3.jpg",
+    img: "/images/news/news-10.webp",
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const slides = [
     desc: "Meet the young talent making waves in the league. Discover their journey from academy to first team.",
     cta1: "Read Profile",
     cta2: "View Stats",
-    img: "/images/news/news-4.jpg",
+    img: "/images/news/news-11.webp",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const slides = [
     desc: "Stay informed about all the latest transfers, signings, and contract renewals across the league.",
     cta1: "View Transfers",
     cta2: "Rumors",
-    img: "/images/news/news-5.jpg",
+    img: "/images/news/news-5.webp",
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ const slides = [
     desc: "Deep dive into the strategies, formations, and key moments that shaped this week's biggest matches.",
     cta1: "Read Analysis",
     cta2: "Watch Video",
-    img: "/images/news/news-6.jpg",
+    img: "/images/news/news-6.webp",
   },
   {
     id: 6,
@@ -64,7 +64,7 @@ const slides = [
     desc: "Celebrate the passionate fans, local heroes, and community initiatives that make our league special.",
     cta1: "Share Story",
     cta2: "Join Community",
-    img: "/images/news/news-1.jpg",
+    img: "/images/news/news-9.webp",
   },
   {
     id: 7,
@@ -73,7 +73,7 @@ const slides = [
     desc: "Discover how our youth academies are developing the next generation of football stars.",
     cta1: "Academy Info",
     cta2: "Apply Now",
-    img: "/images/news/news-2.jpg",
+    img: "/images/news/news-2.webp",
   },
   {
     id: 8,
@@ -82,7 +82,7 @@ const slides = [
     desc: "Learn about the latest rule changes, VAR updates, and how we're improving the game experience.",
     cta1: "Rule Changes",
     cta2: "Referee Training",
-    img: "/images/news/news-3.jpg",
+    img: "/images/news/news-10.webp",
   },
   {
     id: 9,
@@ -91,7 +91,7 @@ const slides = [
     desc: "Follow the thrilling title race as teams battle for glory in the most competitive season yet.",
     cta1: "League Table",
     cta2: "Fixtures",
-    img: "/images/news/news-4.jpg",
+    img: "/images/news/news-11.webp",
   },
 ];
 

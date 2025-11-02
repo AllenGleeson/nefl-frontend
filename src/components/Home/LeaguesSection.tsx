@@ -37,7 +37,7 @@ export default function LeaguesSection() {
     <div
       className="leagues-section relative py-8 sm:py-12 lg:py-16"
       style={{
-        backgroundImage: 'url(/images/img4.png)',
+        backgroundImage: 'url(/images/img4.webp)',
         backgroundPosition: 'right center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',

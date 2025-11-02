@@ -67,7 +67,7 @@ export default function NewsHeader({
                         <div className="hidden sm:flex bg-[var(--md-primary-container)] border border-[var(--md-outline-variant)] rounded-lg overflow-hidden shadow-sm">
                             <button
                                 onClick={() => handleViewModeChange('grid')}
-                                className={`px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 ${selectedViewMode === 'grid' 
+                                className={`px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${selectedViewMode === 'grid' 
                                     ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-md' 
                                     : 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] hover:bg-[var(--md-primary-container-high)]'}`}
                             >
@@ -78,7 +78,7 @@ export default function NewsHeader({
                             </button>
                             <button
                                 onClick={() => handleViewModeChange('list')}
-                                className={`px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 ${selectedViewMode === 'list' 
+                                className={`px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${selectedViewMode === 'list' 
                                     ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-md' 
                                     : 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] hover:bg-[var(--md-primary-container-high)]'}`}
                             >
@@ -94,7 +94,7 @@ export default function NewsHeader({
                             <select
                                 value={selectedSortBy}
                                 onChange={handleSortChange}
-                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200"
+                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
                             >
                                 <option value="newest" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Newest First</option>
                                 <option value="oldest" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Oldest First</option>
@@ -117,7 +117,7 @@ export default function NewsHeader({
                             <select
                                 value={selectedCategory}
                                 onChange={handleCategoryChange}
-                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200"
+                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
                             >
                                 <option value="All" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">All Categories</option>
                                 {categories.map((cat) => (
@@ -139,7 +139,7 @@ export default function NewsHeader({
                         <select
                             value={selectedDateRange}
                             onChange={handleDateRangeChange}
-                            className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200"
+                            className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
                         >
                             <option value="All" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">All Time</option>
                             <option value="7days" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Last 7 Days</option>
@@ -163,7 +163,7 @@ export default function NewsHeader({
                             setDateRange?.("All")
                             setSortBy?.("newest")
                         }}
-                        className="px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-[var(--md-on-error)] bg-[var(--md-error)] border border-[var(--md-error)] rounded-lg hover:bg-[var(--md-error-container)] hover:text-[var(--md-on-error-container)] shadow-sm transition-all duration-200 flex items-center gap-2"
+                        className="px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-[var(--md-on-error)] bg-[var(--md-error)] border border-[var(--md-error)] rounded-lg hover:bg-[var(--md-error-container)] hover:text-[var(--md-on-error-container)] shadow-sm transition-all duration-200 flex items-center gap-2 cursor-pointer"
                     >
                         <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

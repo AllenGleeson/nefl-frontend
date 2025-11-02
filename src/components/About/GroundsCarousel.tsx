@@ -5,23 +5,23 @@ import Image from "next/image"
 
 const images = [
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         title: "Dressing Room and Club House",
     },
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         title: "Pitch 1 Grass and Pitch 2 Fifa One Astro",
     },
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         title: "Small Astros 1,2,4 and 5",
     },
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         title: "Astro Pitches 2,4,3,6 and 7",
     },
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         title: "Pitches 2,3 and 4",
     },
 ]

@@ -62,7 +62,7 @@ export default function Nav() {
               <div className="flex-shrink-0">
                 <Link href="/" className="flex items-center space-x-2 text-2xl font-bold">
                   <Image 
-                    src="/images/nefl-logo.png" 
+                    src="/images/nefl-logo.webp" 
                     alt="NEFL Logo" 
                     width={100} 
                     height={100}
@@ -77,25 +77,25 @@ export default function Nav() {
                 <Link href="/about" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   About
                 </Link>
-                <Link href="/news" className="hover:bg-blue-700 px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
+                <Link href="/news" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   News
                 </Link>
-                <Link href="/leagues" className="hover:bg-blue-700 px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
+                <Link href="/leagues" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   Leagues
                 </Link>
-                {/* <Link href="/statistics" className="hover:bg-blue-700 px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
+                {/* <Link href="/statistics" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   Statistics
                 </Link> */}
-                <Link href="/fixtures" className="hover:bg-blue-700 px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
+                <Link href="/fixtures" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   Fixtures
                 </Link>
-                <Link href="/clubs" className="hover:bg-blue-700 px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
+                <Link href="/clubs" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   Clubs
                 </Link>
-                <Link href="/store" className="hover:bg-blue-700 px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
+                <Link href="/store" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   Store
                 </Link>
-                {/* <Link href="/management" className="hover:bg-blue-700 px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
+                {/* <Link href="/management" className="hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] px-3 py-2 rounded-md text-base font-medium transition-colors uppercase">
                   Management
                 </Link> */}
                 </div>

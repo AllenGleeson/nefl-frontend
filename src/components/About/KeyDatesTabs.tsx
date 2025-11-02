@@ -49,7 +49,7 @@ export default function KeyDatesTabs() {
                     <li key={tab.id}>
                         <button
                             onClick={() => setActiveTab(tab.id)}
-                            className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold transition-colors ${
+                            className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold transition-colors cursor-pointer ${
                                 activeTab === tab.id
                                     ? "border-b-2 border-[var(--md-primary)] text-[var(--md-primary)]"
                                     : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-primary)] border-b-2 border-transparent"

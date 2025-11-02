@@ -76,7 +76,7 @@ export default function Clubs() {
     <div 
       className="clubs-page relative min-h-screen bg-fixed"
       style={{
-        backgroundImage: 'url(/images/clubspage.PNG)',
+        backgroundImage: 'url(/images/clubspage.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

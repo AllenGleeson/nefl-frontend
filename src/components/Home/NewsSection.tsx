@@ -11,7 +11,7 @@ export default function NewsSection() {
       excerpt: "In a thrilling match that went down to the wire, Team A clinched the championship title with a dramatic last-minute goal that sent fans into a frenzy.",
       date: "March 10, 2024",
       category: "Match Report",
-      image: "/images/news/news-1.jpg"
+      image: "/images/news/news-1.webp"
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ export default function NewsSection() {
       excerpt: "The league announces the start of construction for a new state-of-the-art stadium that will seat 25,000 fans and feature modern amenities.",
       date: "March 8, 2024",
       category: "Announcement",
-      image: "/images/news/news-2.jpg"
+      image: "/images/news/news-2.webp"
     },
     {
       id: 3,
@@ -27,7 +27,7 @@ export default function NewsSection() {
       excerpt: "Team B's star striker John Smith has been named Player of the Month for his outstanding performances and crucial goals throughout February.",
       date: "March 5, 2024",
       category: "Awards",
-      image: "/images/news/news-3.jpg"
+      image: "/images/news/news-3.webp"
     },
     {
       id: 4,
@@ -35,7 +35,7 @@ export default function NewsSection() {
       excerpt: "The league's youth academy introduces an innovative training program focused on developing technical skills and tactical awareness for young players.",
       date: "March 3, 2024",
       category: "Development",
-      image: "/images/news/news-4.jpg"
+      image: "/images/news/news-4.webp"
     },
     {
       id: 5,
@@ -43,7 +43,7 @@ export default function NewsSection() {
       excerpt: "A comprehensive referee training workshop will be held next month to ensure consistent officiating standards across all league matches.",
       date: "March 1, 2024",
       category: "Training",
-      image: "/images/news/news-5.jpg"
+      image: "/images/news/news-5.webp"
     },
     {
       id: 6,
@@ -51,7 +51,7 @@ export default function NewsSection() {
       excerpt: "The league's community outreach program expands to include more schools and local clubs, promoting football at the grassroots level.",
       date: "February 28, 2024",
       category: "Community",
-      image: "/images/news/news-6.jpg"
+      image: "/images/news/news-6.webp"
     },
     {
       id: 7,
@@ -59,7 +59,7 @@ export default function NewsSection() {
       excerpt: "The winter transfer window closes with several key signings that are expected to strengthen teams for the second half of the season.",
       date: "February 25, 2024",
       category: "Transfers",
-      image: "/images/news/news-1.jpg"
+      image: "/images/news/news-1.webp"
     }
   ];
 

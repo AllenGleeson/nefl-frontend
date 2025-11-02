@@ -5,19 +5,19 @@ import Image from "next/image"
 
 const slides = [
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         alt: "muller on tractor",
     },
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         alt: "Fifaone day one",
     },
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         alt: "mdl FOF",
     },
     {
-        src: "/images/img4.png",
+        src: "/images/img4.webp",
         alt: "martino neil visit",
     },
 ]

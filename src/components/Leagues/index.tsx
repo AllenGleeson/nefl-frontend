@@ -37,7 +37,7 @@ export default function LeaguesIndex() {
     <div
       className="relative md:pt-6 md:pb-6"
       style={{
-        backgroundImage: 'url(/images/img4.png)',
+        backgroundImage: 'url(/images/img4.webp)',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',

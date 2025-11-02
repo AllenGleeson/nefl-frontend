@@ -5,16 +5,16 @@ import Image from "next/image"
 const timelineData = [
     {
         decade: "1980-1989",
-        leftImage: "/images/news/news-1.jpg",
-        rightImage: "/images/news/news-2.jpg",
+        leftImage: "/images/news/news-1.webp",
+        rightImage: "/images/news/news-2.webp",
         title: "The First Decade 1980 – 1990",
         text: `Some 40 years ago, the North East Football League began as the Mid-Meath League with eight teams in 1980...`,
         link: "https://nefl.ie/history-of-the-league-in-depth/",
     },
     {
         decade: "1990-1999",
-        leftImage: "/images/news/news-1.jpg",
-        rightImage: "/images/news/news-2.jpg",
+        leftImage: "/images/news/news-1.webp",
+        rightImage: "/images/news/news-2.webp",
         title: "Time of growth and a place to call home",
         text: `Thornes Lounge in Kilmessan was the venue for weekly committee meetings...`,
         link: "https://nefl.ie/history-of-the-league-in-depth/",
