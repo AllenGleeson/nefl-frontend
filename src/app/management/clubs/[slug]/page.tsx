@@ -12,7 +12,7 @@ export default function ClubManagementPage() {
   const [club, setClub] = useState<Club | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
   const [formations, setFormations] = useState<Formation[]>([]);
-  const [selectedFormation, setSelectedFormation] = useState<Formation | null>(null);
+  const [selectedFormation, setSelectedFormation] = useState<Formation | undefined>(undefined);
   const [activeTab, setActiveTab] = useState<'overview' | 'formation' | 'players' | 'stats'>('overview');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -85,7 +85,7 @@ export default function ClubManagementPage() {
         setClub(mockClub);
         setPlayers(mockPlayers);
         setFormations(mockClub.formation ? [mockClub.formation] : []);
-        setSelectedFormation(mockClub.formation || null);
+        setSelectedFormation(mockClub.formation || undefined);
       } catch (error) {
         console.error('Error fetching club data:', error);
       } finally {
