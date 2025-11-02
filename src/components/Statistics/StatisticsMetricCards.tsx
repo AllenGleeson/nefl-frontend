@@ -51,7 +51,14 @@ interface Props {
 }
 
 export default function StatisticsMetricCards({ data, statType, season, league }: Props) {
-  const metrics = useMemo(() => {
+  const metrics = useMemo<{
+    totalStats: number;
+    topPerformer: StatRow;
+    averageStats: string | number;
+    activeTeams: number;
+    changePercent: string;
+    changeType: 'positive' | 'negative' | 'neutral';
+  }>(() => {
     const filteredData = data.filter(d => {
       if (season !== 'all' && d.season !== season) return false;
       if (league !== 'all' && d.league !== league) return false;
