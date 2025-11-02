@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { Club, Player, Formation } from '@/api/ClubsService';
+import { Club, Player, Formation } from '@/types/clubManagement';
 import { FormationViewer, FormationManager } from '@/components/Management/ClubsManagement/Formation';
 
 export default function ClubManagementPage() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Player } from "@/data/club";
-import { Formation } from "@/api/ClubsService";
+import { Formation } from "@/types/clubManagement";
 import SquadFormationTabs from "./SquadFormationTabs";
 
 interface ClubSquadProps {

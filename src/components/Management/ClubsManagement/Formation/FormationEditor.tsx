@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { Formation, Player } from '@/api/ClubsService';
+import { Formation, Player } from '@/types/clubManagement';
 
 interface FormationEditorProps {
   formation: Formation;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Player } from "@/data/club";
-import { Formation } from "@/api/ClubsService";
+import { Formation } from "@/types/clubManagement";
 import { FormationViewer } from "@/components/Management/ClubsManagement/Formation";
 
 interface SquadFormationTabsProps {
