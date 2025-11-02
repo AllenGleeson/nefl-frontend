@@ -1,0 +1,564 @@
+[
+  {
+    "id": 1,
+    "title": "Matchweek 1",
+    "range": "Fri 15 Aug - Mon 18 Aug",
+    "days": [
+      {
+        "date": "2025-08-15",
+        "dayLabel": "Fri 15 Aug",
+        "matches": [
+          {
+            "id": 1,
+            "home_team": "Drogheda Town FC",
+            "away_team": "Navan Town FC",
+            "home_score": 2,
+            "away_score": 1,
+            "date": "2025-08-15",
+            "time": "19:30",
+            "status": "FT",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "United Park",
+            "referee": "John Murphy"
+          },
+          {
+            "id": 2,
+            "home_team": "Kentstown Rovers",
+            "away_team": "Duleek FC",
+            "home_score": 0,
+            "away_score": 3,
+            "date": "2025-08-15",
+            "time": "19:30",
+            "status": "FT",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Kentstown Park",
+            "referee": "Sarah O'Brien"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-16",
+        "dayLabel": "Sat 16 Aug",
+        "matches": [
+          {
+            "id": 3,
+            "home_team": "Walshestown FC",
+            "away_team": "Athboy Celtic",
+            "home_score": 4,
+            "away_score": 2,
+            "date": "2025-08-16",
+            "time": "15:00",
+            "status": "FT",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Walshestown Ground",
+            "referee": "Mike Walsh"
+          },
+          {
+            "id": 4,
+            "home_team": "Trim Celtic",
+            "away_team": "Slane Wanderers",
+            "home_score": 1,
+            "away_score": 1,
+            "date": "2025-08-16",
+            "time": "15:00",
+            "status": "FT",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Trim Sports Centre",
+            "referee": "Lisa Kelly"
+          },
+          {
+            "id": 5,
+            "home_team": "Parkvilla FC",
+            "away_team": "Torro United",
+            "home_score": 2,
+            "away_score": 0,
+            "date": "2025-08-16",
+            "time": "17:00",
+            "status": "FT",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Parkvilla Stadium",
+            "referee": "Tom O'Connor"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-17",
+        "dayLabel": "Sun 17 Aug",
+        "matches": [
+          {
+            "id": 6,
+            "home_team": "Bellurgan United",
+            "away_team": "Carrick Rovers",
+            "home_score": 3,
+            "away_score": 1,
+            "date": "2025-08-17",
+            "time": "11:00",
+            "status": "FT",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Bellurgan Park",
+            "referee": "David Murphy"
+          },
+          {
+            "id": 7,
+            "home_team": "Dromin United",
+            "away_team": "Ardee Celtic",
+            "home_score": 0,
+            "away_score": 2,
+            "date": "2025-08-17",
+            "time": "14:00",
+            "status": "FT",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Dromin Sports Ground",
+            "referee": "Emma Walsh"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Matchweek 2",
+    "range": "Fri 22 Aug - Mon 25 Aug",
+    "days": [
+      {
+        "date": "2025-08-22",
+        "dayLabel": "Fri 22 Aug",
+        "matches": [
+          {
+            "id": 8,
+            "home_team": "Navan Town FC",
+            "away_team": "Kentstown Rovers",
+            "date": "2025-08-22",
+            "time": "19:30",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Navan Sports Centre",
+            "referee": "John Murphy"
+          },
+          {
+            "id": 9,
+            "home_team": "Duleek FC",
+            "away_team": "Walshestown FC",
+            "date": "2025-08-22",
+            "time": "19:30",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Duleek Sports Ground",
+            "referee": "Sarah O'Brien"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-23",
+        "dayLabel": "Sat 23 Aug",
+        "matches": [
+          {
+            "id": 10,
+            "home_team": "Athboy Celtic",
+            "away_team": "Drogheda Town FC",
+            "date": "2025-08-23",
+            "time": "15:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Athboy Sports Centre",
+            "referee": "Mike Walsh"
+          },
+          {
+            "id": 11,
+            "home_team": "Slane Wanderers",
+            "away_team": "Parkvilla FC",
+            "date": "2025-08-23",
+            "time": "15:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Slane Sports Ground",
+            "referee": "Lisa Kelly"
+          },
+          {
+            "id": 12,
+            "home_team": "Torro United",
+            "away_team": "Bellurgan United",
+            "date": "2025-08-23",
+            "time": "17:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Torro Sports Centre",
+            "referee": "Tom O'Connor"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-24",
+        "dayLabel": "Sun 24 Aug",
+        "matches": [
+          {
+            "id": 13,
+            "home_team": "Carrick Rovers",
+            "away_team": "Trim Celtic",
+            "date": "2025-08-24",
+            "time": "11:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Carrick Sports Ground",
+            "referee": "David Murphy"
+          },
+          {
+            "id": 14,
+            "home_team": "Ardee Celtic",
+            "away_team": "Dromin United",
+            "date": "2025-08-24",
+            "time": "14:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Ardee Sports Centre",
+            "referee": "Emma Walsh"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Matchweek 3",
+    "range": "Fri 29 Aug - Mon 1 Sep",
+    "days": [
+      {
+        "date": "2025-08-29",
+        "dayLabel": "Fri 29 Aug",
+        "matches": [
+          {
+            "id": 15,
+            "home_team": "Walshestown FC",
+            "away_team": "Navan Town FC",
+            "date": "2025-08-29",
+            "time": "19:30",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Walshestown Ground",
+            "referee": "John Murphy"
+          },
+          {
+            "id": 16,
+            "home_team": "Kentstown Rovers",
+            "away_team": "Athboy Celtic",
+            "date": "2025-08-29",
+            "time": "19:30",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Kentstown Park",
+            "referee": "Sarah O'Brien"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-30",
+        "dayLabel": "Sat 30 Aug",
+        "matches": [
+          {
+            "id": 17,
+            "home_team": "Drogheda Town FC",
+            "away_team": "Duleek FC",
+            "date": "2025-08-30",
+            "time": "15:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "United Park",
+            "referee": "Mike Walsh"
+          },
+          {
+            "id": 18,
+            "home_team": "Parkvilla FC",
+            "away_team": "Slane Wanderers",
+            "date": "2025-08-30",
+            "time": "15:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Parkvilla Stadium",
+            "referee": "Lisa Kelly"
+          },
+          {
+            "id": 19,
+            "home_team": "Bellurgan United",
+            "away_team": "Torro United",
+            "date": "2025-08-30",
+            "time": "17:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Premier",
+            "season": "2025-26",
+            "competition": "NEFL Premier League",
+            "venue": "Bellurgan Park",
+            "referee": "Tom O'Connor"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-31",
+        "dayLabel": "Sun 31 Aug",
+        "matches": [
+          {
+            "id": 20,
+            "home_team": "Trim Celtic",
+            "away_team": "Carrick Rovers",
+            "date": "2025-08-31",
+            "time": "11:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Trim Sports Centre",
+            "referee": "David Murphy"
+          },
+          {
+            "id": 21,
+            "home_team": "Dromin United",
+            "away_team": "Ardee Celtic",
+            "date": "2025-08-31",
+            "time": "14:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Division1",
+            "season": "2025-26",
+            "competition": "NEFL Division 1",
+            "venue": "Dromin Sports Ground",
+            "referee": "Emma Walsh"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Cup Round 1",
+    "range": "Sat 6 Sep - Sun 7 Sep",
+    "days": [
+      {
+        "date": "2025-09-06",
+        "dayLabel": "Sat 6 Sep",
+        "matches": [
+          {
+            "id": 22,
+            "home_team": "Drogheda Town FC",
+            "away_team": "Trim Celtic",
+            "date": "2025-09-06",
+            "time": "15:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Cup",
+            "season": "2025-26",
+            "competition": "NEFL Cup",
+            "venue": "United Park",
+            "referee": "John Murphy"
+          },
+          {
+            "id": 23,
+            "home_team": "Navan Town FC",
+            "away_team": "Bellurgan United",
+            "date": "2025-09-06",
+            "time": "15:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Cup",
+            "season": "2025-26",
+            "competition": "NEFL Cup",
+            "venue": "Navan Sports Centre",
+            "referee": "Sarah O'Brien"
+          },
+          {
+            "id": 24,
+            "home_team": "Walshestown FC",
+            "away_team": "Carrick Rovers",
+            "date": "2025-09-06",
+            "time": "17:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Cup",
+            "season": "2025-26",
+            "competition": "NEFL Cup",
+            "venue": "Walshestown Ground",
+            "referee": "Mike Walsh"
+          }
+        ]
+      },
+      {
+        "date": "2025-09-07",
+        "dayLabel": "Sun 7 Sep",
+        "matches": [
+          {
+            "id": 25,
+            "home_team": "Kentstown Rovers",
+            "away_team": "Slane Wanderers",
+            "date": "2025-09-07",
+            "time": "11:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Cup",
+            "season": "2025-26",
+            "competition": "NEFL Cup",
+            "venue": "Kentstown Park",
+            "referee": "Lisa Kelly"
+          },
+          {
+            "id": 26,
+            "home_team": "Duleek FC",
+            "away_team": "Parkvilla FC",
+            "date": "2025-09-07",
+            "time": "14:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Cup",
+            "season": "2025-26",
+            "competition": "NEFL Cup",
+            "venue": "Duleek Sports Ground",
+            "referee": "Tom O'Connor"
+          },
+          {
+            "id": 27,
+            "home_team": "Athboy Celtic",
+            "away_team": "Torro United",
+            "date": "2025-09-07",
+            "time": "16:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Cup",
+            "season": "2025-26",
+            "competition": "NEFL Cup",
+            "venue": "Athboy Sports Centre",
+            "referee": "David Murphy"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Shield Round 1",
+    "range": "Sat 13 Sep - Sun 14 Sep",
+    "days": [
+      {
+        "date": "2025-09-13",
+        "dayLabel": "Sat 13 Sep",
+        "matches": [
+          {
+            "id": 28,
+            "home_team": "Ardee Celtic",
+            "away_team": "Dromin United",
+            "date": "2025-09-13",
+            "time": "15:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Shield",
+            "season": "2025-26",
+            "competition": "Fiachra O'Neill Shield",
+            "venue": "Ardee Sports Centre",
+            "referee": "Emma Walsh"
+          }
+        ]
+      },
+      {
+        "date": "2025-09-14",
+        "dayLabel": "Sun 14 Sep",
+        "matches": [
+          {
+            "id": 29,
+            "home_team": "Bellurgan United",
+            "away_team": "Carrick Rovers",
+            "date": "2025-09-14",
+            "time": "14:00",
+            "status": "Scheduled",
+            "home_badge": "/images/Ardee-Celtic.webp",
+            "away_badge": "/images/Ardee-Celtic.webp",
+            "league": "Shield",
+            "season": "2025-26",
+            "competition": "Fiachra O'Neill Shield",
+            "venue": "Bellurgan Park",
+            "referee": "John Murphy"
+          }
+        ]
+      }
+    ]
+  }
+]

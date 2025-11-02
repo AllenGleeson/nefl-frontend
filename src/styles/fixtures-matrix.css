@@ -1,0 +1,71 @@
+/* src/styles/fixtures-matrix.css */
+
+.fixtures-matrix-container {
+  @apply w-full;
+}
+
+.sp-table-wrapper {
+  @apply overflow-hidden rounded-lg;
+}
+
+.sp-scrollable-table-wrapper {
+  @apply overflow-x-auto;
+}
+
+.sp-event-matrix {
+  @apply min-w-full border-collapse;
+}
+
+.sp-event-matrix th,
+.sp-event-matrix td {
+  @apply border-gray-200;
+}
+
+.sp-event-matrix-home-label {
+  @apply sticky left-0 z-10 bg-gray-50;
+}
+
+.sp-event-matrix-label {
+  @apply min-w-24;
+}
+
+.sp-event-matrix-cell {
+  @apply min-w-16;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sp-event-matrix-label {
+    @apply min-w-20;
+  }
+  
+  .sp-event-matrix-cell {
+    @apply min-w-12;
+  }
+  
+  .sp-event-matrix-home-label {
+    @apply min-w-32;
+  }
+}
+
+/* Hover effects for better UX */
+.sp-event-matrix tbody tr:hover {
+  @apply bg-blue-50;
+}
+
+.sp-event-matrix-cell:hover {
+  @apply bg-blue-100;
+}
+
+/* Custom scrollbar for better appearance */
+.sp-scrollable-table-wrapper::-webkit-scrollbar {
+  @apply h-2;
+}
+
+.sp-scrollable-table-wrapper::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded;
+}
+
+.sp-scrollable-table-wrapper::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded hover:bg-gray-400;
+}

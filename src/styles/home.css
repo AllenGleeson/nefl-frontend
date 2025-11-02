@@ -1,0 +1,7 @@
+.home-page .hero-section,
+.home-page .league-table,
+.home-page .news-section,
+.home-page .sponsers,
+.home-page .latest-results {
+  margin: 0;
+}

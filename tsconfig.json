@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true, // Allow JavaScript files alongside TS
+    "skipLibCheck": true, // Skip type checking of declaration files to speed up build
+    "strict": true, // Enable all strict type-checking options
+    "noEmit": true, // Don’t emit compiled files (Next.js handles this)
+    "esModuleInterop": true, // Allow default imports from commonjs modules
+    "module": "esnext", // Use ESNext module system
+    "moduleResolution": "bundler", // Use bundler module resolution
+    "resolveJsonModule": true, // Allow importing JSON files
+    "isolatedModules": true, // Needed for Next.js to compile each file separately
+    "jsx": "preserve", // Keep JSX as-is, Next.js will handle it
+    "incremental": true, // Enable incremental builds for faster recompiles
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Clubs/ClubDetails"],
+  "exclude": ["node_modules"]
+}
