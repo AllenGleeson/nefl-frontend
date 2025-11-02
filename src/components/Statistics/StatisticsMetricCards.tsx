@@ -72,16 +72,17 @@ export default function StatisticsMetricCards({ data, statType, season, league }
       return false;
     });
     const previousTotal = previousPeriodData.reduce((sum, team) => sum + team[statType], 0);
-    const changePercent = previousTotal > 0 ? 
-      (((totalStats - previousTotal) / previousTotal) * 100).toFixed(1) : 0;
-    const changeType = changePercent > 0 ? 'positive' : changePercent < 0 ? 'negative' : 'neutral';
+    const changePercentNum = previousTotal > 0 ? 
+      (((totalStats - previousTotal) / previousTotal) * 100) : 0;
+    const changePercent = typeof changePercentNum === 'number' ? changePercentNum.toFixed(1) : '0.0';
+    const changeType = changePercentNum > 0 ? 'positive' : changePercentNum < 0 ? 'negative' : 'neutral';
 
     return {
       totalStats,
       topPerformer,
       averageStats,
       activeTeams,
-      changePercent: changePercent !== '0.0' ? `${changePercent > 0 ? '+' : ''}${changePercent}%` : 'No change',
+      changePercent: changePercent !== '0.0' ? `${changePercentNum > 0 ? '+' : ''}${changePercent}%` : 'No change',
       changeType
     };
   }, [data, statType, season, league]);
