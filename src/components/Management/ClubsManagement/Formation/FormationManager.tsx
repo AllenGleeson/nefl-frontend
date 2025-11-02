@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Formation, FormationPosition, Player, CreateFormationRequest } from '@/api/ClubsService';
+import React, { useState } from 'react';
+import { Formation, Player, CreateFormationRequest } from '@/api/ClubsService';
 import { FORMATION_TEMPLATES, FormationTemplate, getFormationsByCategory } from '@/data/formations';
 
 interface FormationManagerProps {
@@ -16,9 +16,7 @@ interface FormationManagerProps {
 }
 
 export default function FormationManager({
-  clubId,
   formations,
-  players,
   onFormationCreate,
   onFormationUpdate,
   onFormationDelete,
@@ -26,7 +24,6 @@ export default function FormationManager({
   selectedFormation
 }: FormationManagerProps) {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'defensive' | 'balanced' | 'attacking' | 'unconventional'>('all');
-  const [editingFormation, setEditingFormation] = useState<Formation | null>(null);
 
   const handleUseTemplate = (template: FormationTemplate) => {
     // Check if we already have 3 favourite formations
@@ -38,7 +35,7 @@ export default function FormationManager({
     const newFormation: CreateFormationRequest = {
       name: template.name,
       description: template.description,
-      positions: template.positions.map((pos, index) => ({
+      positions: template.positions.map((pos) => ({
         position: pos.position,
         x: pos.x,
         y: pos.y,
@@ -184,7 +181,7 @@ export default function FormationManager({
           <div className="flex space-x-2">
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value as any)}
+              onChange={(e) => setSelectedCategory(e.target.value as 'all' | 'defensive' | 'balanced' | 'attacking' | 'unconventional')}
               className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">All Categories</option>

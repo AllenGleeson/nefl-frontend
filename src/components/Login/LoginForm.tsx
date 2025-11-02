@@ -51,7 +51,7 @@ export default function LoginForm() {
       } else {
         setError('Invalid email or password');
       }
-    } catch (_err) {
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);

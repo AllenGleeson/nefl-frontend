@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { getRelatedNewsPosts } from '@/utils/news'
-import { NewsPost } from '@/data/newsPosts'
 
 type Props = {
   currentPostId: number

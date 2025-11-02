@@ -7,7 +7,7 @@ interface StoreManagementNavProps {
   currentPage: string;
 }
 
-export default function StoreManagementNav({ currentPage }: StoreManagementNavProps) {
+export default function StoreManagementNav(_props: StoreManagementNavProps) {
   const pathname = usePathname();
   
   const navItems = [

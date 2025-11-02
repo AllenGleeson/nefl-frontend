@@ -7,7 +7,7 @@ import { OrdersList, OrderDetails, OrderFilters } from "@/components/Management/
 
 export default function OrdersManagementPage() {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
-  const [_filters, setFilters] = useState({
+  const [, setFilters] = useState({
     status: '',
     paymentStatus: '',
     dateRange: '',

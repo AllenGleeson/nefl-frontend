@@ -22,7 +22,7 @@ export default function ForgotPasswordForm() {
       // Mock password reset logic
       console.log('Sending password reset to:', email);
       setIsSubmitted(true);
-    } catch (_err) {
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);

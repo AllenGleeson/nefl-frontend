@@ -3,15 +3,6 @@
 // src/components/Management/StoreManagement/Orders/OrderDetails.tsx
 import { useState } from 'react';
 
-interface OrderItem {
-  id: string;
-  productName: string;
-  quantity: number;
-  price: number;
-  total: number;
-  image: string;
-}
-
 interface OrderDetailsProps {
   orderId: string;
   onClose: () => void;

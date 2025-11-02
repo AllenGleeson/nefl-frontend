@@ -180,7 +180,7 @@ function CollapsibleDay({ day }: CollapsibleDayProps) {
   )
 }
 
-export default function FixturesList({ matchweeks, showLeague: _showLeague = false }: Props) {
+export default function FixturesList({ matchweeks }: Props) {
   if (matchweeks.length === 0) {
     return (
       <div className="text-center py-8 sm:py-16 px-4">

@@ -16,9 +16,6 @@ export default function StoreHighlights() {
   const totalSlides = Math.ceil(highlights.length / productsPerSlide);
 
   // Manual navigation only - no auto-advance
-  const _goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);

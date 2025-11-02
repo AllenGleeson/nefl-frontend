@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { Formation, FormationPosition, Player } from '@/api/ClubsService';
+import { Formation, Player } from '@/api/ClubsService';
 
 interface FormationEditorProps {
   formation: Formation;
@@ -24,7 +24,6 @@ export default function FormationEditor({
 }: FormationEditorProps) {
   const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const pitchRef = useRef<HTMLDivElement>(null);
 
   const getPositionColor = (position: string) => {
@@ -52,7 +51,6 @@ export default function FormationEditor({
     e.preventDefault();
     setIsDragging(true);
     setSelectedPosition(positionId);
-    setDragStart({ x: e.clientX, y: e.clientY });
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -74,14 +72,9 @@ export default function FormationEditor({
     setSelectedPosition(null);
   };
 
-  const handlePitchClick = (e: React.MouseEvent) => {
+  const handlePitchClick = () => {
     // Disabled for predefined formations - positions cannot be added/removed
     return;
-  };
-
-  const handlePositionTypeChange = (positionId: string, newType: string) => {
-    // Disabled for predefined formations - position types cannot be changed
-    console.log('Position type changes disabled for predefined formations');
   };
 
   const handlePlayerSelect = (playerId: string) => {

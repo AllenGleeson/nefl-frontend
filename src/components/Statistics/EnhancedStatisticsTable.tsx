@@ -28,7 +28,7 @@ export default function EnhancedStatisticsTable({ data, statType, season, league
   const itemsPerPage = 10;
 
   const processedData = useMemo(() => {
-    let filteredData = data.filter(d => {
+    const filteredData = data.filter(d => {
       if (season !== 'all' && d.season !== season) return false;
       if (league !== 'all' && d.league !== league) return false;
       if (searchTerm && !d.team.toLowerCase().includes(searchTerm.toLowerCase())) return false;

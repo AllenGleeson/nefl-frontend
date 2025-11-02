@@ -64,7 +64,7 @@ interface CategoryProps {
   showRunnerUp?: boolean;
 }
 
-function Category({ title: _title, data, showRunnerUp = false }: CategoryProps) {
+function Category({ data, showRunnerUp = false }: CategoryProps) {
   return (
     <div className="mb-6 sm:mb-8">
       <div className="max-w-6xl bg-[var(--md-surface-container-lowest)] overflow-hidden">

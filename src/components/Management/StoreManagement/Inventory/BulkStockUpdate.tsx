@@ -94,7 +94,7 @@ export default function BulkStockUpdate() {
 
         <div className="mb-4 p-4 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800">
-            <strong>Instructions:</strong> Update the stock quantities below and click "Update All" to apply changes to all products.
+            <strong>Instructions:</strong> Update the stock quantities below and click &quot;Update All&quot; to apply changes to all products.
           </p>
         </div>
         
@@ -144,7 +144,7 @@ export default function BulkStockUpdate() {
         {hasChanges && (
           <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
             <p className="text-sm text-yellow-800">
-              <strong>Note:</strong> You have unsaved changes. Click "Update All" to save your changes.
+              <strong>Note:</strong> You have unsaved changes. Click &quot;Update All&quot; to save your changes.
             </p>
           </div>
         )}

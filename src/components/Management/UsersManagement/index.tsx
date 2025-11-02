@@ -14,18 +14,18 @@ export default function UsersManagement() {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
   const [isViewUserModalOpen, setIsViewUserModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [selectedUser, setSelectedUser] = useState<Record<string, unknown> | null>(null);
 
   const handleAddUser = () => {
     setIsAddUserModalOpen(true);
   };
 
-  const handleEditUser = (user: any) => {
+  const handleEditUser = (user: Record<string, unknown>) => {
     setSelectedUser(user);
     setIsEditUserModalOpen(true);
   };
 
-  const handleViewUser = (user: any) => {
+  const handleViewUser = (user: Record<string, unknown>) => {
     setSelectedUser(user);
     setIsViewUserModalOpen(true);
   };
@@ -42,10 +42,6 @@ export default function UsersManagement() {
     console.log('User added successfully!');
   };
 
-  const handleUserUpdated = () => {
-    // Here you could refresh the users list or show a success message
-    console.log('User updated successfully!');
-  };
   return (
     <div className="users-management">
       <UsersManagementHeader />

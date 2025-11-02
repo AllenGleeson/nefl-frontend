@@ -22,7 +22,6 @@ export default function SalesChart() {
   ]);
 
   const maxRevenue = Math.max(...salesData.map(d => d.revenue));
-  const maxOrders = Math.max(...salesData.map(d => d.orders));
 
   return (
     <div className="bg-white rounded-lg shadow-md">

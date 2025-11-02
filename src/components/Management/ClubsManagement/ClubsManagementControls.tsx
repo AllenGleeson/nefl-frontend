@@ -1,7 +1,6 @@
 "use client";
 
 // src/components/Management/ClubsManagement/ClubsManagementControls.tsx
-import { useState } from 'react';
 
 interface Props {
   searchQuery: string;

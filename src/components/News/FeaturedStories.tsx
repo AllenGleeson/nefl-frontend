@@ -1,5 +1,4 @@
 import { newsPosts } from "@/data/newsPosts"
-import NewsCard from "./NewsCard"
 import Link from "next/link"
 
 export default function FeaturedStories() {
