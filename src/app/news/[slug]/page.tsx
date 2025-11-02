@@ -6,9 +6,9 @@ import { ArrowLeft, Calendar, Tag } from 'lucide-react'
 import RelatedArticles from '@/components/News/NewsPost/RelatedArticles'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 // Generate static params for all news slugs
@@ -19,8 +19,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function NewsArticlePage({ params }: PageProps) {
-  const newsPost = getNewsBySlug(params.slug)
+export default async function NewsArticlePage({ params }: PageProps) {
+  const { slug } = await params;
+  const newsPost = getNewsBySlug(slug)
 
   if (!newsPost) {
     notFound()
@@ -133,7 +134,8 @@ export default function NewsArticlePage({ params }: PageProps) {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: PageProps) {
-  const newsPost = getNewsBySlug(params.slug)
+  const { slug } = await params;
+  const newsPost = getNewsBySlug(slug)
 
   if (!newsPost) {
     return {

@@ -4,13 +4,14 @@ import { clubs } from "@/data/club"; // fixed typo: was club
 import ClubDetails from "@/components/Clubs/ClubDetails";
 
 interface ClubPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function ClubPage({ params }: ClubPageProps) {
-  const club = clubs.find((club) => club.slug === params.slug);
+export default async function ClubPage({ params }: ClubPageProps) {
+  const { slug } = await params;
+  const club = clubs.find((club) => club.slug === slug);
 
   if (!club) {
     notFound();
