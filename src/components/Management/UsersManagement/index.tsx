@@ -10,22 +10,36 @@ import UserRoles from './UserRoles';
 import UserActivityLog from './UserActivityLog';
 import PermissionMatrix from './PermissionMatrix';
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'manager' | 'editor';
+  status: 'active' | 'inactive' | 'pending';
+  lastLogin: string;
+  createdAt: string;
+  avatar?: string;
+  phone?: string;
+  department?: string;
+  manager?: string;
+}
+
 export default function UsersManagement() {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
   const [isViewUserModalOpen, setIsViewUserModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<Record<string, unknown> | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const handleAddUser = () => {
     setIsAddUserModalOpen(true);
   };
 
-  const handleEditUser = (user: Record<string, unknown>) => {
+  const handleEditUser = (user: User) => {
     setSelectedUser(user);
     setIsEditUserModalOpen(true);
   };
 
-  const handleViewUser = (user: Record<string, unknown>) => {
+  const handleViewUser = (user: User) => {
     setSelectedUser(user);
     setIsViewUserModalOpen(true);
   };
