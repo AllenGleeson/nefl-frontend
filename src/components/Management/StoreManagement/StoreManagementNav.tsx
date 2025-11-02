@@ -3,11 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-interface StoreManagementNavProps {
-  currentPage: string;
-}
-
-export default function StoreManagementNav(_props: StoreManagementNavProps) {
+export default function StoreManagementNav() {
   const pathname = usePathname();
   
   const navItems = [

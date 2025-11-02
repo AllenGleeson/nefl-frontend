@@ -11,13 +11,7 @@ import {
   MatchStatistics 
 } from '@/components/Fixture';
 
-interface FixturePageProps {
-  params: {
-    slug: string;
-  };
-}
-
-export default function FixturePage(_props: FixturePageProps) {
+export default function FixturePage() {
   // Mock data - in real app, this would come from API based on params.slug
   const [fixtureData] = useState({
     homeTeam: {

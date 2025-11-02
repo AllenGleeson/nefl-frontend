@@ -19,7 +19,7 @@ export default function StoreManagementLayout({
     <div className="store-management">
       <StoreManagementHeader currentPage={currentPage} pageTitle={pageTitle} />
       <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
-        <StoreManagementNav currentPage={currentPage} />
+        <StoreManagementNav />
         <div className="mt-6 sm:mt-8">
           {children}
         </div>
