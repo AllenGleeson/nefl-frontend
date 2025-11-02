@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { Club, Player, Formation } from '@/types/clubManagement';
+import { Club, Player, Formation, CreateFormationRequest } from '@/types/clubManagement';
 import { FormationViewer, FormationManager } from '@/components/Management/ClubsManagement/Formation';
 
 export default function ClubManagementPage() {
@@ -96,7 +96,7 @@ export default function ClubManagementPage() {
     fetchClubData();
   }, [clubSlug]);
 
-  const handleFormationCreate = async (data: Record<string, unknown>) => {
+  const handleFormationCreate = async (data: CreateFormationRequest) => {
     // In real app, call API to create formation
     console.log('Creating formation:', data);
   };
