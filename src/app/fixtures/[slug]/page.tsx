@@ -84,45 +84,45 @@ export default function FixturePage() {
       {
         id: '1',
         minute: 15,
-        type: 'goal',
+        type: 'goal' as const,
         player: 'Shane Long',
-        team: 'home',
+        team: 'home' as const,
         description: 'Goal scored',
         additionalInfo: 'Assist by Kevin Doyle'
       },
       {
         id: '2',
         minute: 23,
-        type: 'card',
+        type: 'card' as const,
         player: 'Alan Bennett',
-        team: 'away',
+        team: 'away' as const,
         description: 'Yellow card',
         additionalInfo: 'Foul on Shane Long'
       },
       {
         id: '3',
         minute: 45,
-        type: 'substitution',
+        type: 'substitution' as const,
         player: 'Graham Burke',
-        team: 'home',
+        team: 'home' as const,
         description: 'Substitution',
         additionalInfo: 'Replaced Daryl Murphy'
       },
       {
         id: '4',
         minute: 67,
-        type: 'goal',
+        type: 'goal' as const,
         player: 'Sean Maguire',
-        team: 'away',
+        team: 'away' as const,
         description: 'Goal scored',
         additionalInfo: 'Penalty kick'
       },
       {
         id: '5',
         minute: 89,
-        type: 'goal',
+        type: 'goal' as const,
         player: 'Robbie Keane',
-        team: 'home',
+        team: 'home' as const,
         description: 'Goal scored',
         additionalInfo: 'Free kick'
       }
