@@ -96,7 +96,7 @@ export default function ClubManagementPage() {
     fetchClubData();
   }, [clubSlug]);
 
-  const handleFormationCreate = async (data: any) => {
+  const handleFormationCreate = async (data: Record<string, unknown>) => {
     // In real app, call API to create formation
     console.log('Creating formation:', data);
   };
@@ -136,7 +136,7 @@ export default function ClubManagementPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Club Not Found</h1>
-          <p className="text-gray-600">The club you're looking for doesn't exist.</p>
+          <p className="text-gray-600">The club you&apos;re looking for doesn&apos;t exist.</p>
         </div>
       </div>
     );
@@ -190,7 +190,7 @@ export default function ClubManagementPage() {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'formation' | 'players' | 'stats')}
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-blue-600'

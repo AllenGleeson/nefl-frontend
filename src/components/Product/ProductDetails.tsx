@@ -50,7 +50,7 @@ export default function ProductDetails({ product }: Props) {
         <p className="text-[var(--md-on-surface)] leading-relaxed text-sm sm:text-base">
           This is a short description of the product. Highlight key features,
           quality, or unique selling points here so customers understand why
-          it's worth buying.
+          it&apos;s worth buying.
         </p>
 
         {/* Stock info */}

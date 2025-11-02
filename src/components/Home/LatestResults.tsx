@@ -312,7 +312,7 @@ export default function LatestResults() {
               onChange={(e) => setSelectedLeague(e.target.value as LeagueName)}
               className="w-full px-4 py-3 pr-12 text-base font-medium bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] rounded-xl shadow-sm text-[var(--md-on-surface-variant)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-[var(--md-primary)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)] transition-all duration-200 appearance-none cursor-pointer"
             >
-              {Object.entries(leagues).map(([leagueName, leagueData]) => (
+              {Object.entries(leagues).map(([leagueName]) => (
                 <option 
                   key={leagueName} 
                   value={leagueName}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from 'react'
-import { fixtures, Matchweek, Match } from '@/data/fixtures'
+import { fixtures } from '@/data/fixtures'
 
 type FilterState = {
   competition: string

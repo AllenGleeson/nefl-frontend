@@ -63,9 +63,9 @@ export default function LeagueHistory() {
             groundsman at the MDL, Gerry Moore (Muller).
           </p>
           <blockquote className="border-l-4 border-[var(--md-primary)] pl-3 sm:pl-4 italic text-[var(--md-on-surface-variant)] text-sm sm:text-base">
-            "Thanks very much to <em>The Meath Chronicle</em> for their incredible
+            &quot;Thanks very much to <em>The Meath Chronicle</em> for their incredible
             assistance with the history of the league and in particular thank you to
-            Conall Collier."
+            Conall Collier.&quot;
           </blockquote>
         </>
       )

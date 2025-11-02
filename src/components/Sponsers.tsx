@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 const sponsors = [
   {
     name: "FAI",
@@ -48,7 +46,7 @@ export default function Sponsors() {
         <div className="text-center mb-6 sm:mb-12">
           <h2 className="text-3xl font-bold text-[var(--md-on-surface)] mb-3">Our Partners</h2>
           <p className="text-[var(--md-on-surface-variant)] max-w-2xl mx-auto">
-            We're proud to work with these amazing organizations that support our league and community
+            We&apos;re proud to work with these amazing organizations that support our league and community
           </p>
         </div>
         {/* Sponsors Grid */}

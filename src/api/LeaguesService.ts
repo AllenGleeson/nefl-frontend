@@ -149,7 +149,7 @@ export class LeaguesService {
   }
 
   // Get league statistics
-  static async getLeagueStats(leagueId: string): Promise<any> {
-    return apiRequest<any>(`${API_ENDPOINTS.LEAGUES.BASE}/${leagueId}/stats`, { method: 'GET' });
+  static async getLeagueStats(leagueId: string): Promise<Record<string, unknown>> {
+    return apiRequest<Record<string, unknown>>(`${API_ENDPOINTS.LEAGUES.BASE}/${leagueId}/stats`, { method: 'GET' });
   }
 }

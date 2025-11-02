@@ -37,7 +37,7 @@ export class DevApiService {
     return fixture;
   }
 
-  static async createFixture(data: any) {
+  static async createFixture(data: Record<string, unknown>) {
     await this.delay();
     const newFixture = {
       id: Date.now().toString(),
@@ -62,7 +62,7 @@ export class DevApiService {
     return club;
   }
 
-  static async createClub(data: any) {
+  static async createClub(data: Record<string, unknown>) {
     await this.delay();
     const newClub = {
       id: Date.now().toString(),
@@ -92,7 +92,7 @@ export class DevApiService {
     return product;
   }
 
-  static async createProduct(data: any) {
+  static async createProduct(data: Record<string, unknown>) {
     await this.delay();
     const newProduct = {
       id: Date.now().toString(),

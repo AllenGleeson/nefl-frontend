@@ -73,13 +73,13 @@ export default function NewsSection() {
         {/* Header */}
         <div className="flex justify-between items-center mb-6 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-[var(--md-on-surface)]">Latest News</h2>
-          <a 
+          <Link 
             href="/news"
             className="text-[var(--md-primary)] hover:text-[var(--md-primary)]/80 transition-colors duration-200 flex items-center gap-1"
           >
             GO TO NEWS
             <ChevronRight className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
 
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">

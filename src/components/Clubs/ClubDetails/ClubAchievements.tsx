@@ -30,7 +30,7 @@ export default function ClubAchievements({ achievements }: ClubAchievementsProps
             </svg>
           </div>
           <h3 className="text-lg font-medium mb-2">No Achievements Recorded</h3>
-          <p className="text-white/70">This club's achievements haven't been documented yet.</p>
+          <p className="text-white/70">This club&apos;s achievements haven&apos;t been documented yet.</p>
         </div>
       </div>
     );

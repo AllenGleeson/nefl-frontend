@@ -176,12 +176,12 @@ export class ClubsService {
   }
 
   // Get club statistics
-  static async getClubStats(clubId: string, season?: string): Promise<any> {
+  static async getClubStats(clubId: string, season?: string): Promise<Record<string, unknown>> {
     const url = season 
       ? `${API_ENDPOINTS.CLUBS.STATS}/${clubId}?season=${season}`
       : `${API_ENDPOINTS.CLUBS.STATS}/${clubId}`;
       
-    return apiRequest<any>(url, { method: 'GET' });
+    return apiRequest<Record<string, unknown>>(url, { method: 'GET' });
   }
 
   // Search clubs

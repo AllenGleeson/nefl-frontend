@@ -240,7 +240,7 @@ export default function AddFixtureForm({ isOpen, onClose, onSuccess }: Props) {
             className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 text-gray-600"
             readOnly
           />
-          <p className="text-sm text-gray-500 mt-1">Auto-populated from home team's ground</p>
+          <p className="text-sm text-gray-500 mt-1">Auto-populated from home team&apos;s ground</p>
         </div>
 
         {/* Score Section */}

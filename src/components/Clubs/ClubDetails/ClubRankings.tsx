@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { getClubRankings, localLeagueTablesData } from "@/data/localLeagueTables";
 import { fixturesMatrixData } from "@/data/fixturesMatrix";
-import { LeagueFixtures, TeamFixture } from "@/data/fixturesMatrix";
+import { LeagueFixtures, FixtureResult } from "@/data/fixturesMatrix";
 import Image from "next/image";
 import "@/styles/fixtures-matrix.css";
 
@@ -81,7 +81,7 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
   const filteredTable = getFilteredTable();
   const filteredFixtures = getFilteredFixturesMatrix();
 
-  const getResultClass = (result: any) => {
+  const getResultClass = (result: FixtureResult | null) => {
     if (!result) return "bg-[var(--md-surface-container-low)] text-[var(--md-on-surface-variant)]/50";
 
     switch (result.status) {
@@ -96,7 +96,7 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
     }
   };
 
-  const getResultText = (result: any) => {
+  const getResultText = (result: FixtureResult | null) => {
     if (!result) return "—";
     return `${result.homeScore}-${result.awayScore}`;
   };
@@ -114,7 +114,7 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
                   League Rankings
                 </h1>
                 <p className="text-sm sm:text-base lg:text-lg text-[var(--md-on-surface-variant)] max-w-2xl mx-auto px-4">
-                  View {clubName}'s standings and fixtures across different leagues
+                  View {clubName}&apos;s standings and fixtures across different leagues
                 </p>
               </div>
 
@@ -153,7 +153,7 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
 
                 {/* League Selection Buttons */}
                 <div className="hidden sm:flex flex-wrap justify-center gap-2 sm:gap-3 mb-4">
-        {rankings.map(({ league, team }) => (
+                {rankings.map(({ league }) => (
           <button
             key={league}
             onClick={() => setActiveTab(league)}

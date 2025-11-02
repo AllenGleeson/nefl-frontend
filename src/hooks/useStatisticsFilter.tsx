@@ -1,6 +1,6 @@
 // src/hooks/useStatisticsFilter.ts
 import { useState, useMemo } from "react"
-import { statisticsData, StatRow } from "@/data/statistics"
+import { statisticsData } from "@/data/statistics"
 
 type FilterState = {
   statType: "goals" | "assists"

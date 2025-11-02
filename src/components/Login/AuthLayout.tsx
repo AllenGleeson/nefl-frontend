@@ -1,6 +1,5 @@
 // src/components/Login/AuthLayout.tsx
 import Link from 'next/link';
-import Image from 'next/image';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -64,7 +63,7 @@ export default function AuthLayout({ children, title, subtitle, showRegisterLink
             <div className="mt-6 sm:mt-8 text-center">
               {showRegisterLink ? (
                 <p className="text-gray-600 text-sm sm:text-base">
-                  Don't have an account?{' '}
+                  Don&apos;t have an account?{' '}
                   <Link href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
                     Sign up here
                   </Link>

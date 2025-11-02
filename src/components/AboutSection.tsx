@@ -59,7 +59,7 @@ export default function AboutUs() {
                 Serving the North East of Ireland for over four decades, we provide competitive football opportunities for clubs and players across the region.
               </p>
               <p className="text-[var(--md-on-surface-variant)]/80 text-xs">
-                From grassroots to senior level, we're committed to developing football talent and fostering community spirit.
+                From grassroots to senior level, we&apos;re committed to developing football talent and fostering community spirit.
               </p>
             </div>
           )}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { loginUser } from "@/api/LoginService";
 import { isApiError } from "@/types/ApiError";
 
@@ -115,18 +116,18 @@ export default function Login() {
 
           <div className="mt-6 sm:mt-8 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <a href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
+              Don&apos;t have an account?{' '}
+              <Link href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
                 Sign up here
-              </a>
+              </Link>
             </p>
           </div>
 
           {/* Back to Home */}
           <div className="text-center mt-4">
-            <a href="/" className="text-gray-500 hover:text-gray-700 text-sm">
+            <Link href="/" className="text-gray-500 hover:text-gray-700 text-sm">
               ← Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -51,7 +51,7 @@ export default function MatchTimeline({ events }: MatchTimelineProps) {
             
             <div className="flex-1">
               <div className="flex items-center space-x-2 mb-1">
-                <span className="font-bold text-sm">{event.minute}'</span>
+                <span className="font-bold text-sm">{event.minute}&apos;</span>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${getEventColor(event.type)}`}>
                   {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
                 </span>

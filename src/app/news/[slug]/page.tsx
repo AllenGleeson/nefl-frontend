@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { getAllNewsPosts, getNewsBySlug } from '@/utils/news'
 import Link from 'next/link'
-import { ArrowLeft, Calendar, User, Tag } from 'lucide-react'
+import Image from 'next/image'
+import { ArrowLeft, Calendar, Tag } from 'lucide-react'
 import RelatedArticles from '@/components/News/NewsPost/RelatedArticles'
 
 interface PageProps {
@@ -72,9 +73,11 @@ export default function NewsArticlePage({ params }: PageProps) {
 
         {/* Featured Image */}
         <div className="mb-8">
-          <img
+          <Image
             src={newsPost.image}
             alt={newsPost.title}
+            width={1200}
+            height={384}
             className="w-full h-96 object-cover rounded-lg shadow-lg"
           />
         </div>

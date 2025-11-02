@@ -71,7 +71,7 @@ export default function SquadFormationTabs({ squad, formation }: SquadFormationT
             </svg>
           </div>
           <h3 className="text-lg font-medium mb-2">No Formation Available</h3>
-          <p className="text-white/70">This club hasn't set up a formation yet.</p>
+          <p className="text-white/70">This club hasn&apos;t set up a formation yet.</p>
         </div>
       );
     }

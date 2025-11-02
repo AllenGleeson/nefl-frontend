@@ -7,7 +7,7 @@ import { OrdersList, OrderDetails, OrderFilters } from "@/components/Management/
 
 export default function OrdersManagementPage() {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
-  const [filters, setFilters] = useState({
+  const [_filters, setFilters] = useState({
     status: '',
     paymentStatus: '',
     dateRange: '',
@@ -22,7 +22,7 @@ export default function OrdersManagementPage() {
     setSelectedOrderId(null);
   };
 
-  const handleFiltersChange = (newFilters: any) => {
+  const handleFiltersChange = (newFilters: Record<string, string>) => {
     setFilters(newFilters);
     console.log('Filters changed:', newFilters);
   };

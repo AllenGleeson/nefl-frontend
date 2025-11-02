@@ -22,7 +22,7 @@ export default function ForgotPasswordForm() {
       // Mock password reset logic
       console.log('Sending password reset to:', email);
       setIsSubmitted(true);
-    } catch (err) {
+    } catch (_err) {
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -39,7 +39,7 @@ export default function ForgotPasswordForm() {
         </div>
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Check your email</h2>
         <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
-          We've sent a password reset link to <strong className="break-all">{email}</strong>
+          We&apos;ve sent a password reset link to <strong className="break-all">{email}</strong>
         </p>
         <div className="space-y-3 sm:space-y-4">
           <button

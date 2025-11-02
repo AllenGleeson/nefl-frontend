@@ -181,7 +181,7 @@ export class NewsService {
     shares: number;
     comments: number;
   }> {
-    return apiRequest<any>(`${API_ENDPOINTS.NEWS.BASE}/${id}/stats`, {
+    return apiRequest<{ views: number; likes: number; shares: number; comments: number }>(`${API_ENDPOINTS.NEWS.BASE}/${id}/stats`, {
       method: 'GET',
     });
   }

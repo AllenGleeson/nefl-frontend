@@ -180,17 +180,17 @@ export class StatisticsService {
   }
 
   // Get league statistics summary
-  static async getLeagueStatsSummary(leagueId: string, season?: string): Promise<any> {
+  static async getLeagueStatsSummary(leagueId: string, season?: string): Promise<Record<string, unknown>> {
     const url = season 
       ? `${API_ENDPOINTS.STATISTICS.BASE}/league/${leagueId}?season=${season}`
       : `${API_ENDPOINTS.STATISTICS.BASE}/league/${leagueId}`;
       
-    return apiRequest<any>(url, { method: 'GET' });
+    return apiRequest<Record<string, unknown>>(url, { method: 'GET' });
   }
 
   // Get season statistics summary
-  static async getSeasonStatsSummary(season: string): Promise<any> {
-    return apiRequest<any>(`${API_ENDPOINTS.STATISTICS.BASE}/season/${season}`, {
+  static async getSeasonStatsSummary(season: string): Promise<Record<string, unknown>> {
+    return apiRequest<Record<string, unknown>>(`${API_ENDPOINTS.STATISTICS.BASE}/season/${season}`, {
       method: 'GET',
     });
   }

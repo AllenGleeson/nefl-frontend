@@ -14,7 +14,7 @@ import { useStatisticsFilter } from "@/hooks/useStatisticsFilter"
 import { statisticsData } from "@/data/statistics"
 
 export default function StatisticsIndex() {
-  const { filters, filteredStats, handleFilterChange, handleReset } = useStatisticsFilter()
+  const { filters, filteredStats: _filteredStats, handleFilterChange, handleReset } = useStatisticsFilter()
   const [activeTab, setActiveTab] = useState<'overview' | 'charts' | 'comparison'>('overview')
 
   const tabs = [
@@ -42,7 +42,7 @@ export default function StatisticsIndex() {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'charts' | 'comparison')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? 'border-indigo-500 text-indigo-600'

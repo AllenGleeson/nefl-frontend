@@ -17,7 +17,7 @@ interface FixturePageProps {
   };
 }
 
-export default function FixturePage({ params }: FixturePageProps) {
+export default function FixturePage({ params: _params }: FixturePageProps) {
   // Mock data - in real app, this would come from API based on params.slug
   const [fixtureData] = useState({
     homeTeam: {

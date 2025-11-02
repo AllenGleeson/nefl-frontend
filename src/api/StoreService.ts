@@ -13,7 +13,7 @@ export interface Product {
   stock: number;
   images: string[];
   tags: string[];
-  specifications?: Record<string, any>;
+  specifications?: Record<string, unknown>;
   weight?: number;
   dimensions?: {
     length: number;
@@ -87,7 +87,7 @@ export interface CreateProductRequest {
   stock: number;
   images: string[];
   tags: string[];
-  specifications?: Record<string, any>;
+  specifications?: Record<string, unknown>;
   weight?: number;
   dimensions?: {
     length: number;
@@ -108,7 +108,7 @@ export interface UpdateProductRequest {
   stock?: number;
   images?: string[];
   tags?: string[];
-  specifications?: Record<string, any>;
+  specifications?: Record<string, unknown>;
   weight?: number;
   dimensions?: {
     length: number;
@@ -155,7 +155,7 @@ export class StoreService {
     }
     
     const url = `${API_ENDPOINTS.STORE.PRODUCTS}?${params.toString()}`;
-    return apiRequest<any>(url, { method: 'GET' });
+    return apiRequest<{ products: Product[]; total: number; page: number; totalPages: number }>(url, { method: 'GET' });
   }
 
   // Get product by ID
@@ -230,7 +230,7 @@ export class StoreService {
     params.append('limit', limit.toString());
     
     const url = `${API_ENDPOINTS.STORE.PRODUCTS}/search?${params.toString()}`;
-    return apiRequest<any>(url, { method: 'GET' });
+    return apiRequest<{ products: Product[]; total: number; page: number; totalPages: number }>(url, { method: 'GET' });
   }
 
   // Get featured products
@@ -298,6 +298,12 @@ export class StoreService {
     lowStockProducts: number;
     topSellingProducts: Product[];
   }> {
-    return apiRequest<any>(`${API_ENDPOINTS.STORE.BASE}/stats`, { method: 'GET' });
+    return apiRequest<{
+      totalProducts: number;
+      totalOrders: number;
+      totalRevenue: number;
+      lowStockProducts: number;
+      topSellingProducts: Product[];
+    }>(`${API_ENDPOINTS.STORE.BASE}/stats`, { method: 'GET' });
   }
 }

@@ -95,7 +95,7 @@ export default function FixturesFilter({ onFilterChange }: FixturesFilterProps) 
             <option value="all">All Teams</option>
             <option value="Shamrock Rovers">Shamrock Rovers</option>
             <option value="Bohemians">Bohemians</option>
-            <option value="St. Patrick's Athletic">St. Patrick's Athletic</option>
+            <option value="St. Patrick's Athletic">St. Patrick&apos;s Athletic</option>
             <option value="Walshestown FC">Walshestown FC</option>
             <option value="Athboy Celtic">Athboy Celtic</option>
             <option value="Dublin United">Dublin United</option>

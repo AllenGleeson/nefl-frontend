@@ -1,6 +1,6 @@
 "use client";
 
-import { Player, Club } from "@/data/club";
+import { Player } from "@/data/club";
 import { Formation } from "@/api/ClubsService";
 import SquadFormationTabs from "./SquadFormationTabs";
 

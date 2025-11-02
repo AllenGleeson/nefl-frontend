@@ -12,7 +12,7 @@ interface ClubStatsProps {
 }
 
 export default function ClubStats({ 
-    league, 
+    league: _league, 
     position, 
     matchesPlayed, 
     wins, 
