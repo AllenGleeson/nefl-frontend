@@ -218,10 +218,9 @@ export default function EditFixtureForm({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose}>
+    <Modal isOpen={isOpen} onClose={handleClose} title="Edit Fixture">
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Edit Fixture</h2>
           <p className="text-sm text-gray-600 mt-1">Update fixture details and scores</p>
         </div>
 
