@@ -33,25 +33,6 @@ function FeaturedCard({ post }: Props) {
           <h2 className="text-base sm:text-lg font-semibold group-hover:text-[var(--md-primary)] transition-colors text-[var(--md-on-surface)] line-clamp-2">{post.title}</h2>
           <p className="text-sm text-[var(--md-on-surface-variant)] line-clamp-2">{post.excerpt}</p>
           
-          {/* Author Bio Section */}
-          {post.author && (
-            <div className="border-t border-[var(--md-outline-variant)] pt-3 mt-3">
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                {post.author.avatar && (
-                  <img
-                    src={post.author.avatar}
-                    alt={post.author.name}
-                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
-                  />
-                )}
-                <div className="flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-[var(--md-on-surface)]">{post.author.name}</p>
-                  <p className="text-xs text-[var(--md-on-surface-variant)] leading-relaxed line-clamp-2">{post.author.bio}</p>
-                </div>
-              </div>
-            </div>
-          )}
-          
           <div className="flex flex-wrap gap-2 mt-2">
             {post.tags.map((tag, i) => (
               <span
