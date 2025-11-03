@@ -31,7 +31,7 @@ export default function LeaguesHeader({
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--md-primary)] mb-2 sm:mb-3">
             Leagues
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-[var(--md-on-surface-variant)] max-w-2xl mx-auto px-4">
+          <p className="text-sm sm:text-base lg:text-lg text-[var(--md-on-surface-variant)] max-w-4xl mx-auto px-4">
             Explore league standings and track team performance across different competitions
           </p>
         </div>
@@ -41,58 +41,59 @@ export default function LeaguesHeader({
           {/* Sliders Row */}
           <div className="flex flex-row items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8">
             {/* Gender Selection Slider */}
-            <div className="relative bg-[var(--md-surface-container)] rounded-full p-1 w-36 sm:w-44 lg:w-48 h-10 sm:h-12 shadow-sm">
+            <div className="relative bg-[var(--md-surface-container)] rounded-full p-1 w-44 sm:w-52 lg:w-60 h-10 sm:h-12 shadow-sm">
               {/* Slider Background */}
               <div 
                 className={`absolute top-1 bottom-1 bg-[var(--md-primary)] rounded-full transition-all duration-300 shadow-md ${
-                  selectedGender === "Men" ? "left-1 w-16 sm:w-20 lg:w-22" : "left-18 sm:left-22 lg:left-24 w-16 sm:w-20 lg:w-22"
+                  selectedGender === "Men" 
+                    ? "left-1 w-[76px] sm:w-[92px] lg:w-[108px]" 
+                    : "left-[84px] sm:left-[100px] lg:left-[116px] w-[76px] sm:w-[92px] lg:w-[108px]"
                 }`}
               />
               {(["Men", "Women"] as Gender[]).map((gender, index) => (
                 <button
                   key={gender}
                   onClick={() => onGenderChange(gender)}
-                  className={`absolute top-1 bottom-1 w-16 sm:w-20 lg:w-22 rounded-full font-semibold flex items-center justify-center gap-1 transition-all duration-300 z-10 cursor-pointer ${
+                  className={`absolute top-1 bottom-1 rounded-full font-semibold flex items-center justify-center transition-all duration-300 z-10 cursor-pointer px-3 sm:px-4 ${
                     selectedGender === gender
                       ? "text-[var(--md-on-primary)]"
                       : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"
-                  }`}
-                  style={{ left: `${index * (index === 0 ? 70 : 72) + 4}px` }}
+                  } ${index === 0 ? 'left-1 w-[76px] sm:w-[92px] lg:w-[108px]' : 'left-[84px] sm:left-[100px] lg:left-[116px] right-1'}`}
                 >
-                  <span className="text-xs sm:text-sm lg:text-base">{gender}</span>
+                  <span className="text-xs sm:text-sm lg:text-base whitespace-nowrap">{gender}</span>
                 </button>
               ))}
             </div>
 
             {/* View Mode Toggle Slider */}
-            <div className="relative bg-[var(--md-surface-container)] rounded-full p-1 w-36 sm:w-44 lg:w-48 h-10 sm:h-12 shadow-sm">
+            <div className="relative bg-[var(--md-surface-container)] rounded-full p-1 w-44 sm:w-52 lg:w-60 h-10 sm:h-12 shadow-sm">
               {/* Slider Background */}
               <div 
                 className={`absolute top-1 bottom-1 bg-[var(--md-primary)] rounded-full transition-all duration-300 shadow-md ${
-                  viewMode === 'table' ? "left-1 w-16 sm:w-20 lg:w-22" : "left-18 sm:left-22 lg:left-24 w-16 sm:w-20 lg:w-22"
+                  viewMode === 'table' 
+                    ? "left-1 w-[76px] sm:w-[92px] lg:w-[108px]" 
+                    : "left-[84px] sm:left-[100px] lg:left-[116px] w-[76px] sm:w-[92px] lg:w-[108px]"
                 }`}
               />
               <button
                 onClick={() => onViewModeChange('table')}
-                className={`absolute top-1 bottom-1 w-16 sm:w-20 lg:w-22 rounded-full font-semibold flex items-center justify-center gap-1 transition-all duration-300 z-10 cursor-pointer ${
+                className={`absolute top-1 bottom-1 left-1 rounded-full font-semibold flex items-center justify-center transition-all duration-300 z-10 cursor-pointer px-3 sm:px-4 w-[76px] sm:w-[92px] lg:w-[108px] ${
                   viewMode === 'table'
                     ? "text-[var(--md-on-primary)]"
                     : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"
                 }`}
-                style={{ left: '4px' }}
               >
-                <span className="text-xs sm:text-sm lg:text-base">Table</span>
+                <span className="text-xs sm:text-sm lg:text-base whitespace-nowrap">Table</span>
               </button>
               <button
                 onClick={() => onViewModeChange('fixtures')}
-                className={`absolute top-1 bottom-1 w-16 sm:w-20 lg:w-22 rounded-full font-semibold flex items-center justify-center gap-1 transition-all duration-300 z-10 cursor-pointer ${
+                className={`absolute top-1 bottom-1 left-[84px] sm:left-[100px] lg:left-[116px] right-1 rounded-full font-semibold flex items-center justify-center transition-all duration-300 z-10 cursor-pointer px-3 sm:px-4 ${
                   viewMode === 'fixtures'
                     ? "text-[var(--md-on-primary)]"
                     : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"
                 }`}
-                style={{ left: '74px' }}
               >
-                <span className="text-xs sm:text-sm lg:text-base">Matrix</span>
+                <span className="text-xs sm:text-sm lg:text-base whitespace-nowrap">Fixtures</span>
               </button>
             </div>
           </div>

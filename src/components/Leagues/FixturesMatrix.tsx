@@ -39,7 +39,7 @@ export default function FixturesMatrix({ leagueFixtures, maxRows }: Props) {
   return (
     <div className="fixtures-matrix-container">
       <div className="bg-[var(--md-surface-container-lowest)] overflow-hidden">
-        {/* Matrix Table */}
+        {/* Fixtures Table */}
         <div className="overflow-x-auto">
           <div className="sp-table-wrapper">
             <div className="sp-scrollable-table-wrapper">

@@ -58,29 +58,29 @@ export default function AboutCarousel() {
                     ))}
                 </div>
 
-                {/* Controls */}
-                <button
-                    onClick={prevSlide}
-                    className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2.5 sm:p-3 shadow-lg transition-all duration-200 hover:scale-110 z-10 border border-[var(--md-primary)]"
-                    aria-label="Previous slide"
-                >
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button
-                    onClick={nextSlide}
-                    className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2.5 sm:p-3 shadow-lg transition-all duration-200 hover:scale-110 z-10 border border-[var(--md-primary)]"
-                    aria-label="Next slide"
-                >
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-
-                {/* Image Counter Overlay */}
-                <div className="absolute bottom-4 right-4 bg-[var(--md-surface-container)]/95 backdrop-blur-sm text-[var(--md-on-surface-variant)] px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border border-[var(--md-outline-variant)]">
-                    {current + 1} / {images.length}
+                {/* Controls and Counter */}
+                <div className="absolute bottom-4 right-4 flex items-center gap-2 z-10">
+                    <button
+                        onClick={prevSlide}
+                        className="bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2 sm:p-2.5 shadow-lg transition-all duration-200 hover:scale-110 border border-[var(--md-primary)]"
+                        aria-label="Previous slide"
+                    >
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button
+                        onClick={nextSlide}
+                        className="bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2 sm:p-2.5 shadow-lg transition-all duration-200 hover:scale-110 border border-[var(--md-primary)]"
+                        aria-label="Next slide"
+                    >
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <div className="bg-[var(--md-surface-container)]/95 backdrop-blur-sm text-[var(--md-on-surface-variant)] px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border border-[var(--md-outline-variant)]">
+                        {current + 1} / {images.length}
+                    </div>
                 </div>
             </div>
 

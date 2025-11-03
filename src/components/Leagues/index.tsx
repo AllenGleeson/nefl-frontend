@@ -85,10 +85,10 @@ export default function LeaguesIndex() {
                         </svg>
                       </div>
                       <h3 className="text-xl sm:text-2xl font-semibold text-[var(--md-on-surface)] mb-3 sm:mb-4">
-                        Fixtures Matrix Not Available
+                        Fixtures Not Available
                       </h3>
                       <p className="text-[var(--md-on-surface-variant)] text-base sm:text-lg max-w-md mx-auto px-4">
-                        Fixtures matrix is not available for {selectedLeague} in {selectedGender} leagues.
+                        Fixtures are not available for {selectedLeague} in {selectedGender} leagues.
                       </p>
                     </div>
                   )}
