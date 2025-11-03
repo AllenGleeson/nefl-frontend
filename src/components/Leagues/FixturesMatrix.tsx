@@ -39,37 +39,26 @@ export default function FixturesMatrix({ leagueFixtures, maxRows }: Props) {
   return (
     <div className="fixtures-matrix-container">
       <div className="bg-[var(--md-surface-container-lowest)] overflow-hidden">
-        {/* Header */}
-        <div className="bg-[var(--md-primary)] text-[var(--md-on-primary)] p-4 sm:p-6">
-          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold">{leagueFixtures.leagueName}</h2>
-          <p className="text-[var(--md-primary-container)] mt-1 text-sm sm:text-base">Fixtures Matrix</p>
-        </div>
-
         {/* Matrix Table */}
         <div className="overflow-x-auto">
           <div className="sp-table-wrapper">
             <div className="sp-scrollable-table-wrapper">
               <table className="w-full sp-event-matrix sp-data-table sp-scrollable-table min-w-max">
-                <thead>
+                <thead className="bg-[var(--md-primary)]">
                   <tr>
-                    <th className="sp-event-matrix-home-label bg-[var(--md-surface-variant)] px-2 sm:px-4 py-2 sm:py-3 text-left font-semibold text-[var(--md-on-surface-variant)] border-b border-[var(--md-outline-variant)] text-xs sm:text-sm">
+                    <th className="sp-event-matrix-home-label px-1.5 sm:px-6 py-2 sm:py-4 text-left text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider">
                       Home \ Away
                     </th>
                     {displayTeams.map((team) => (
-                      <th key={team.id} className="sp-event-matrix-label bg-[var(--md-surface-variant)] px-1 sm:px-3 py-2 sm:py-3 text-center border-b border-[var(--md-outline-variant)]">
-                        <div className="flex flex-col items-center space-y-1 sm:space-y-2">
-                          <div className="relative">
-                            <Image
-                              src={team.logo}
-                              alt={team.name}
-                              width={24}
-                              height={24}
-                              className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
-                            />
-                          </div>
-                          <span className="text-xs font-medium text-[var(--md-on-surface-variant)] max-w-16 sm:max-w-20 text-center leading-tight break-words">
-                            {team.name}
-                          </span>
+                      <th key={team.id} className="sp-event-matrix-label px-1.5 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={team.logo}
+                            alt={team.name}
+                            width={24}
+                            height={24}
+                            className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
+                          />
                         </div>
                       </th>
                     ))}

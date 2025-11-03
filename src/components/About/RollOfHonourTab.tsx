@@ -142,13 +142,6 @@ export default function RollOfHonourTab() {
 
   return (
     <div className="roll-of-honour-tab">
-      <div className="mb-6 sm:mb-8">
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[var(--md-on-surface)] mb-2">Roll of Honour</h2>
-        <p className="text-sm sm:text-base text-[var(--md-on-surface-variant)]">
-          Celebrating the achievements and successes of our league throughout the years
-        </p>
-      </div>
-
       {/* Category Navigation */}
       <div className="mb-4 sm:mb-6 relative inline-block w-full sm:w-auto">
         <select

@@ -48,7 +48,7 @@ export default function Timeline() {
                     <button
                         key={index}
                         onClick={() => setActiveIndex(index)}
-                        className={`px-3 sm:px-4 lg:px-6 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-semibold transition-all duration-200 ${
+                        className={`px-2 sm:px-4 lg:px-6 py-1.5 sm:py-3 text-xs sm:text-sm lg:text-base font-semibold transition-all duration-200 ${
                             index === activeIndex
                                 ? "border-b-2 border-[var(--md-primary)] text-[var(--md-primary)] bg-[var(--md-primary-container)]/10"
                                 : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-primary)] hover:bg-[var(--md-surface-container)] border-b-2 border-transparent"
@@ -96,7 +96,7 @@ export default function Timeline() {
                     </div>
                 </div>
                 {/* Right Image */}
-                <div className="flex justify-center order-3 lg:order-3">
+                <div className="hidden lg:flex justify-center order-3 lg:order-3">
                     <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-none aspect-[4/3] overflow-hidden border border-[var(--md-outline-variant)] shadow-lg">
                         <Image
                             src={timelineData[activeIndex].rightImage}
