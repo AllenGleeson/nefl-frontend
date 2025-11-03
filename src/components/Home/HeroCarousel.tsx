@@ -1,7 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { newsPosts } from "@/data/newsPosts";
 
+// Map slides to newsPosts - using first 10 posts
 const slides = [
   {
     id: 0,
@@ -9,8 +12,8 @@ const slides = [
     title: "Premier Football Experience",
     desc: "The premier football league in the North East. Follow your favorite teams, check fixtures, and stay updated with the latest results.",
     cta1: "View Fixtures",
-    cta2: "Latest Results",
     img: "/images/news/news-9.webp",
+    slug: newsPosts[0]?.slug || "",
   },
   {
     id: 1,
@@ -18,8 +21,8 @@ const slides = [
     title: "Upcoming Big Clash",
     desc: "Don't miss this weekend's big clash — get your tickets now and support your team!",
     cta1: "Buy Tickets",
-    cta2: "Match Preview",
     img: "/images/news/news-2.webp",
+    slug: newsPosts[1]?.slug || "",
   },
   {
     id: 2,
@@ -27,8 +30,8 @@ const slides = [
     title: "Weekly Action Recap",
     desc: "Catch up with last week's goals, saves, and key moments in our highlights reel.",
     cta1: "Watch Highlights",
-    cta2: "Read Report",
     img: "/images/news/news-10.webp",
+    slug: newsPosts[2]?.slug || "",
   },
   {
     id: 3,
@@ -36,8 +39,8 @@ const slides = [
     title: "Rising Star of the Month",
     desc: "Meet the young talent making waves in the league. Discover their journey from academy to first team.",
     cta1: "Read Profile",
-    cta2: "View Stats",
     img: "/images/news/news-11.webp",
+    slug: newsPosts[3]?.slug || "",
   },
   {
     id: 4,
@@ -45,8 +48,8 @@ const slides = [
     title: "January Window Updates",
     desc: "Stay informed about all the latest transfers, signings, and contract renewals across the league.",
     cta1: "View Transfers",
-    cta2: "Rumors",
     img: "/images/news/news-5.webp",
+    slug: newsPosts[4]?.slug || "",
   },
   {
     id: 5,
@@ -54,8 +57,8 @@ const slides = [
     title: "Tactical Breakdown",
     desc: "Deep dive into the strategies, formations, and key moments that shaped this week's biggest matches.",
     cta1: "Read Analysis",
-    cta2: "Watch Video",
     img: "/images/news/news-6.webp",
+    slug: newsPosts[5]?.slug || "",
   },
   {
     id: 6,
@@ -63,8 +66,8 @@ const slides = [
     title: "Community Stories",
     desc: "Celebrate the passionate fans, local heroes, and community initiatives that make our league special.",
     cta1: "Share Story",
-    cta2: "Join Community",
     img: "/images/news/news-9.webp",
+    slug: newsPosts[6]?.slug || "",
   },
   {
     id: 7,
@@ -72,8 +75,8 @@ const slides = [
     title: "Academy Excellence",
     desc: "Discover how our youth academies are developing the next generation of football stars.",
     cta1: "Academy Info",
-    cta2: "Apply Now",
     img: "/images/news/news-2.webp",
+    slug: newsPosts[7]?.slug || "",
   },
   {
     id: 8,
@@ -81,8 +84,8 @@ const slides = [
     title: "Fair Play Focus",
     desc: "Learn about the latest rule changes, VAR updates, and how we're improving the game experience.",
     cta1: "Rule Changes",
-    cta2: "Referee Training",
     img: "/images/news/news-10.webp",
+    slug: newsPosts[8]?.slug || "",
   },
   {
     id: 9,
@@ -90,8 +93,8 @@ const slides = [
     title: "Championship Race",
     desc: "Follow the thrilling title race as teams battle for glory in the most competitive season yet.",
     cta1: "League Table",
-    cta2: "Fixtures",
     img: "/images/news/news-11.webp",
+    slug: newsPosts[9]?.slug || "",
   },
 ];
 
@@ -173,12 +176,14 @@ export default function HeroCarousel() {
               {slides[active].desc}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
-              <button className="bg-[var(--md-surface-container-lowest)] text-[var(--md-primary)] px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:bg-[var(--md-surface-container-low)] transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base">
-                {slides[active].cta1}
-              </button>
-              <button className="border-2 border-[var(--md-on-primary)] text-[var(--md-on-primary)] px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:bg-[var(--md-on-primary)] hover:text-[var(--md-primary)] transition-all duration-200 text-sm sm:text-base">
-                {slides[active].cta2}
-              </button>
+              {slides[active].slug && (
+                <Link 
+                  href={`/news/${slides[active].slug}`}
+                  className="bg-[var(--md-surface-container-lowest)] text-[var(--md-primary)] px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:bg-[var(--md-surface-container-low)] transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base text-center"
+                >
+                  {slides[active].cta1}
+                </Link>
+              )}
             </div>
           </div>
         </div>
