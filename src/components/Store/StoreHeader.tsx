@@ -36,8 +36,8 @@ export default function StoreHeader({
     }
 
     return (
-        <div className="py-4 sm:py-6 relative">
-            <div className="container mx-auto px-2 sm:px-4">
+        <div className="py-4 sm:py-6 relative w-full">
+            <div className="container mx-auto px-2 sm:px-4 w-full">
                 {/* Mobile Layout */}
                 <div className="sm:hidden">
                     {/* NEFL Store text - top left on mobile */}
@@ -111,7 +111,7 @@ export default function StoreHeader({
                 </div>
 
                 {/* Desktop Layout */}
-                <div className="hidden sm:flex sm:items-center sm:gap-4 lg:gap-6">
+                <div className={`hidden sm:flex sm:items-center sm:gap-4 lg:gap-6 w-full ${showSearch === false ? 'justify-end' : ''}`}>
                     {/* Search bar */}
                     {showSearch && setSearch && (
                         <div className="flex-1">
@@ -120,60 +120,62 @@ export default function StoreHeader({
                     )}
 
                     {/* Category and Sort By */}
-                    <div className="flex items-center gap-3 lg:gap-4 flex-shrink-0">
-                        {categories && setCategory && (
-                            <div className="relative">
-                                <select
-                                    value={selectedCategory}
-                                    onChange={handleCategoryChange}
-                                    className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-4 py-2.5 pr-10 text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
-                                >
-                                    <option value="All" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">All Categories</option>
-                                    {categories.map((cat) => (
-                                        <option key={cat} value={cat} className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">
-                                            {cat}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                                    <ChevronDown className="w-4 h-4 text-[var(--md-on-primary)]" />
+                    {(categories && setCategory) || setSortBy ? (
+                        <div className="flex items-center gap-3 lg:gap-4 flex-shrink-0">
+                            {categories && setCategory && (
+                                <div className="relative">
+                                    <select
+                                        value={selectedCategory}
+                                        onChange={handleCategoryChange}
+                                        className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-4 py-2.5 pr-10 text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
+                                    >
+                                        <option value="All" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">All Categories</option>
+                                        {categories.map((cat) => (
+                                            <option key={cat} value={cat} className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">
+                                                {cat}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                        <ChevronDown className="w-4 h-4 text-[var(--md-on-primary)]" />
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                        {setSortBy && (
-                            <div className="relative">
-                                <select
-                                    value={sortBy}
-                                    onChange={handleSortChange}
-                                    className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-4 py-2.5 pr-10 text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
-                                >
-                                    <option value="name" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Sort by Name</option>
-                                    <option value="price-low" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Price: Low to High</option>
-                                    <option value="price-high" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Price: High to Low</option>
-                                    <option value="category" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Sort by Category</option>
-                                </select>
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                                    <ChevronDown className="w-4 h-4 text-[var(--md-on-primary)]" />
+                            )}
+                            {setSortBy && (
+                                <div className="relative">
+                                    <select
+                                        value={sortBy}
+                                        onChange={handleSortChange}
+                                        className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-4 py-2.5 pr-10 text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
+                                    >
+                                        <option value="name" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Sort by Name</option>
+                                        <option value="price-low" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Price: Low to High</option>
+                                        <option value="price-high" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Price: High to Low</option>
+                                        <option value="category" className="bg-[var(--md-primary)] text-[var(--md-on-primary)]">Sort by Category</option>
+                                    </select>
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                        <ChevronDown className="w-4 h-4 text-[var(--md-on-primary)]" />
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-
-                        {/* Cart icon */}
-                        <div className="flex-shrink-0">
-                            <button 
-                                className="group relative p-3 text-[var(--md-on-primary)] hover:opacity-80 transition-all duration-200 cursor-not-allowed bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg shadow-sm hover:shadow-md disabled"
-                                disabled
-                                title="Cart feature temporarily disabled"
-                            >
-                                <ShoppingCart className="w-6 h-6" />
-                                {/* Disabled indicator */}
-                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-[var(--md-error)] rounded-full flex items-center justify-center">
-                                    <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
+                            )}
                         </div>
+                    ) : null}
+
+                    {/* Cart icon - always on the right */}
+                    <div className="flex-shrink-0">
+                        <button 
+                            className="group relative p-3 text-[var(--md-on-primary)] hover:opacity-80 transition-all duration-200 cursor-not-allowed bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg shadow-sm hover:shadow-md disabled"
+                            disabled
+                            title="Cart feature temporarily disabled"
+                        >
+                            <ShoppingCart className="w-6 h-6" />
+                            {/* Disabled indicator */}
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-[var(--md-error)] rounded-full flex items-center justify-center">
+                                <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
