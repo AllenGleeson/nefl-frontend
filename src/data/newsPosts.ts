@@ -89,7 +89,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "Arsenal FC has announced the signing of a promising young midfielder from the academy. The 19-year-old is expected to make an immediate impact.",
     date: "2025-07-12",
-    image: "/images/news/news-1.webp",
+    image: "/images/news/news-9.webp",
     tags: ["Arsenal", "Signings", "Academy"],
     slug: generateSlug("New Signing Joins Arsenal Squad"),
   },
@@ -99,7 +99,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "A thrilling London derby that had everything - goals, drama, and controversy. Relive the key moments from this Premier League classic.",
     date: "2025-07-10",
-    image: "/images/news/news-2.webp",
+    image: "/images/news/news-10.webp",
     tags: ["Chelsea", "Tottenham", "London Derby", "Premier League"],
     slug: generateSlug("Match of the Day: Chelsea vs Tottenham"),
   },
@@ -109,7 +109,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "Several key players are set to return from injury just in time for the crucial final stretch of the season. Medical team provides latest updates.",
     date: "2025-07-08",
-    image: "/images/news/news-3.webp",
+    image: "/images/news/news-11.webp",
     tags: ["Injuries", "Medical", "Return"],
     slug: generateSlug("Injury Update: Key Players Return"),
   },
@@ -119,7 +119,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "How the NEFL Youth Academy has produced some of the league's brightest talents. A look at the development pathway and success stories.",
     date: "2025-07-05",
-    image: "/images/news/news-4.webp",
+    image: "/images/news/news-1.webp",
     tags: ["Youth Academy", "Development", "Success"],
     slug: generateSlug("Youth Academy Success Story"),
   },
@@ -129,7 +129,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "Get to know the referees who keep the game fair and safe. Their journey to the top and what it takes to officiate at the highest level.",
     date: "2025-07-02",
-    image: "/images/news/news-5.webp",
+    image: "/images/news/news-2.webp",
     tags: ["Referees", "Officials", "Spotlight"],
     slug: generateSlug("Referee Spotlight: Meet the Officials"),
   },
@@ -139,7 +139,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "Major stadium improvements have been completed across several venues. New facilities, improved seating, and enhanced fan experience await.",
     date: "2025-06-28",
-    image: "/images/news/news-6.webp",
+    image: "/images/news/news-3.webp",
     tags: ["Stadium", "Upgrades", "Facilities"],
     slug: generateSlug("Stadium Upgrades Complete"),
   },
@@ -149,7 +149,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "NEFL's commitment to the community continues with new outreach programs. Football clinics, school visits, and charity events planned.",
     date: "2025-06-25",
-    image: "/images/news/news-1.webp",
+    image: "/images/news/news-4.webp",
     tags: ["Community", "Outreach", "Charity"],
     slug: generateSlug("Community Outreach Program"),
   },
@@ -159,7 +159,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "Exciting news as the women's league expands to include more teams and divisions. A major step forward for women's football in the region.",
     date: "2025-06-22",
-    image: "/images/news/news-2.webp",
+    image: "/images/news/news-5.webp",
     tags: ["Women's Football", "Expansion", "Growth"],
     slug: generateSlug("Women's League Expansion"),
   },
@@ -169,7 +169,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "How modern technology is changing the game. From VAR to performance analytics, explore the innovations shaping football's future.",
     date: "2025-06-20",
-    image: "/images/news/news-3.webp",
+    image: "/images/news/news-6.webp",
     tags: ["Technology", "VAR", "Analytics", "Innovation"],
     slug: generateSlug("Technology in Football"),
   },
@@ -179,7 +179,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "New initiatives to enhance fan engagement and create memorable matchday experiences. Interactive features and digital platforms launched.",
     date: "2025-06-18",
-    image: "/images/news/news-4.webp",
+    image: "/images/news/news-9.webp",
     tags: ["Fan Engagement", "Digital", "Matchday Experience"],
     slug: generateSlug("Fan Engagement Initiatives"),
   },
@@ -189,7 +189,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "The annual NEFL awards ceremony celebrates the best players, managers, and moments of the season. Full list of winners and highlights.",
     date: "2025-06-15",
-    image: "/images/news/news-5.webp",
+    image: "/images/news/news-10.webp",
     tags: ["Awards", "Ceremony", "Winners", "Season"],
     slug: generateSlug("Season Awards Ceremony"),
   },
@@ -199,7 +199,7 @@ export const newsPosts: NewsPost[] = [
     excerpt:
       "Teams return to training as pre-season preparations get underway. Fitness programs, tactical sessions, and team building activities planned.",
     date: "2025-06-12",
-    image: "/images/news/news-6.webp",
+    image: "/images/news/news-11.webp",
     tags: ["Pre-Season", "Training", "Fitness"],
     slug: generateSlug("Pre-Season Training Begins"),
   },
