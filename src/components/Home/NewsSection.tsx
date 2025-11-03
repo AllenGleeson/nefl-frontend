@@ -2,6 +2,16 @@ import Link from "next/link"
 import Image from "next/image"
 import { ChevronRight } from "lucide-react"
 
+// Helper function to generate slugs from titles (same as in newsPosts.ts)
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .trim()
+}
+
 export default function NewsSection() {
   // Sample news data - in a real app, this would come from props or API
   const news = [
@@ -11,7 +21,8 @@ export default function NewsSection() {
       excerpt: "In a thrilling match that went down to the wire, Team A clinched the championship title with a dramatic last-minute goal that sent fans into a frenzy.",
       date: "March 10, 2024",
       category: "Match Report",
-      image: "/images/news/news-1.webp"
+      image: "/images/news/news-1.webp",
+      slug: generateSlug("Team A Secures Championship with Stunning Victory")
     },
     {
       id: 2,
@@ -19,7 +30,8 @@ export default function NewsSection() {
       excerpt: "The league announces the start of construction for a new state-of-the-art stadium that will seat 25,000 fans and feature modern amenities.",
       date: "March 8, 2024",
       category: "Announcement",
-      image: "/images/news/news-2.webp"
+      image: "/images/news/news-2.webp",
+      slug: generateSlug("New Stadium Construction Begins")
     },
     {
       id: 3,
@@ -27,7 +39,8 @@ export default function NewsSection() {
       excerpt: "Team B's star striker John Smith has been named Player of the Month for his outstanding performances and crucial goals throughout February.",
       date: "March 5, 2024",
       category: "Awards",
-      image: "/images/news/news-3.webp"
+      image: "/images/news/news-3.webp",
+      slug: generateSlug("Player of the Month: John Smith")
     },
     {
       id: 4,
@@ -35,7 +48,8 @@ export default function NewsSection() {
       excerpt: "The league's youth academy introduces an innovative training program focused on developing technical skills and tactical awareness for young players.",
       date: "March 3, 2024",
       category: "Development",
-      image: "/images/news/news-4.webp"
+      image: "/images/news/news-4.webp",
+      slug: generateSlug("Youth Academy Launches New Training Program")
     },
     {
       id: 5,
@@ -43,7 +57,8 @@ export default function NewsSection() {
       excerpt: "A comprehensive referee training workshop will be held next month to ensure consistent officiating standards across all league matches.",
       date: "March 1, 2024",
       category: "Training",
-      image: "/images/news/news-5.webp"
+      image: "/images/news/news-5.webp",
+      slug: generateSlug("Referee Training Workshop Scheduled")
     },
     {
       id: 6,
@@ -51,7 +66,8 @@ export default function NewsSection() {
       excerpt: "The league's community outreach program expands to include more schools and local clubs, promoting football at the grassroots level.",
       date: "February 28, 2024",
       category: "Community",
-      image: "/images/news/news-6.webp"
+      image: "/images/news/news-10.webp",
+      slug: generateSlug("Community Outreach Program Expands")
     },
     {
       id: 7,
@@ -59,7 +75,8 @@ export default function NewsSection() {
       excerpt: "The winter transfer window closes with several key signings that are expected to strengthen teams for the second half of the season.",
       date: "February 25, 2024",
       category: "Transfers",
-      image: "/images/news/news-1.webp"
+      image: "/images/news/news-11.webp",
+      slug: generateSlug("Transfer Window Closes with Key Signings")
     }
   ];
 
@@ -85,7 +102,7 @@ export default function NewsSection() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Featured Story - Left Side */}
           <div className="lg:sticky lg:top-8 lg:self-start">
-            <Link href={`/news/${featuredStory.id}`} className="block overflow-hidden cursor-pointer">
+            <Link href={`/news/${featuredStory.slug}`} className="block overflow-hidden cursor-pointer">
               <div className="relative h-64 sm:h-80 md:h-96 lg:h-[28rem] overflow-hidden">
                 <Image
                   src={featuredStory.image}
@@ -108,8 +125,8 @@ export default function NewsSection() {
           {/* Other Stories - Right Side */}
           <div className="space-y-3 sm:space-y-4">
             {otherStories.map((article, index) => (
-              <article key={article.id} className={`overflow-hidden cursor-pointer ${index >= 3 ? 'hidden lg:block' : ''}`}>
-                <div className="flex gap-3 sm:gap-4">
+              <Link key={article.id} href={`/news/${article.slug}`} className={`block overflow-hidden cursor-pointer ${index >= 3 ? 'hidden lg:block' : ''}`}>
+                <article className="flex gap-3 sm:gap-4">
                   {/* Image on the left */}
                   <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex-shrink-0 overflow-hidden rounded">
                     <Image
@@ -131,8 +148,8 @@ export default function NewsSection() {
                       <span className="text-xs text-[var(--md-on-surface-variant)]">{article.date}</span>
                     </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
         </div>
