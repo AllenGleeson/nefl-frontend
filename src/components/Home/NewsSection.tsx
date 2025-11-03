@@ -1,84 +1,26 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ChevronRight } from "lucide-react"
-
-// Helper function to generate slugs from titles (same as in newsPosts.ts)
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
-    .trim()
-}
+import { newsPosts } from "@/data/newsPosts"
 
 export default function NewsSection() {
-  // Sample news data - in a real app, this would come from props or API
-  const news = [
-    {
-      id: 1,
-      title: "Team A Secures Championship with Stunning Victory",
-      excerpt: "In a thrilling match that went down to the wire, Team A clinched the championship title with a dramatic last-minute goal that sent fans into a frenzy.",
-      date: "March 10, 2024",
-      category: "Match Report",
-      image: "/images/news/news-1.webp",
-      slug: generateSlug("Team A Secures Championship with Stunning Victory")
-    },
-    {
-      id: 2,
-      title: "New Stadium Construction Begins",
-      excerpt: "The league announces the start of construction for a new state-of-the-art stadium that will seat 25,000 fans and feature modern amenities.",
-      date: "March 8, 2024",
-      category: "Announcement",
-      image: "/images/news/news-2.webp",
-      slug: generateSlug("New Stadium Construction Begins")
-    },
-    {
-      id: 3,
-      title: "Player of the Month: John Smith",
-      excerpt: "Team B's star striker John Smith has been named Player of the Month for his outstanding performances and crucial goals throughout February.",
-      date: "March 5, 2024",
-      category: "Awards",
-      image: "/images/news/news-3.webp",
-      slug: generateSlug("Player of the Month: John Smith")
-    },
-    {
-      id: 4,
-      title: "Youth Academy Launches New Training Program",
-      excerpt: "The league's youth academy introduces an innovative training program focused on developing technical skills and tactical awareness for young players.",
-      date: "March 3, 2024",
-      category: "Development",
-      image: "/images/news/news-4.webp",
-      slug: generateSlug("Youth Academy Launches New Training Program")
-    },
-    {
-      id: 5,
-      title: "Referee Training Workshop Scheduled",
-      excerpt: "A comprehensive referee training workshop will be held next month to ensure consistent officiating standards across all league matches.",
-      date: "March 1, 2024",
-      category: "Training",
-      image: "/images/news/news-5.webp",
-      slug: generateSlug("Referee Training Workshop Scheduled")
-    },
-    {
-      id: 6,
-      title: "Community Outreach Program Expands",
-      excerpt: "The league's community outreach program expands to include more schools and local clubs, promoting football at the grassroots level.",
-      date: "February 28, 2024",
-      category: "Community",
-      image: "/images/news/news-10.webp",
-      slug: generateSlug("Community Outreach Program Expands")
-    },
-    {
-      id: 7,
-      title: "Transfer Window Closes with Key Signings",
-      excerpt: "The winter transfer window closes with several key signings that are expected to strengthen teams for the second half of the season.",
-      date: "February 25, 2024",
-      category: "Transfers",
-      image: "/images/news/news-11.webp",
-      slug: generateSlug("Transfer Window Closes with Key Signings")
-    }
-  ];
+  // Get the first 7 news posts
+  const news = newsPosts.slice(0, 7);
+
+  // Format date helper
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  // Early return if no news posts
+  if (news.length === 0) {
+    return null;
+  }
 
   // Get featured story (most recent) and other stories
   const featuredStory = news[0];
@@ -113,10 +55,10 @@ export default function NewsSection() {
               </div>
               <div className="p-4 sm:p-6 md:p-8">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-3">
-                  <span className="text-xs sm:text-sm text-[var(--md-primary)] font-medium">{featuredStory.category}</span>
-                  <span className="text-xs sm:text-sm text-[var(--md-on-surface-variant)]">{featuredStory.date}</span>
+                  <span className="text-xs sm:text-sm text-[var(--md-primary)] font-medium">{featuredStory.tags[0] || 'News'}</span>
+                  <span className="text-xs sm:text-sm text-[var(--md-on-surface-variant)]">{formatDate(featuredStory.date)}</span>
                 </div>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 line-clamp-3 text-[var(--md-on-surface)]">{featuredStory.title}</h3>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 line-clamp-3 text-[var(--md-on-surface)]">{featuredStory.title.replace(/^\*WATCH\*\s*/i, '').replace(/^\*/g, '').replace(/\*/g, '')}</h3>
                 <p className="text-sm sm:text-base text-[var(--md-on-surface-variant)] line-clamp-3 sm:line-clamp-4">{featuredStory.excerpt}</p>
               </div>
             </Link>
@@ -140,12 +82,12 @@ export default function NewsSection() {
                   {/* Content on the right */}
                   <div className="flex-1 p-2 sm:p-4 md:p-5 flex flex-col justify-between min-w-0">
                     <div>
-                      <h3 className="text-sm sm:text-base md:text-lg font-bold mb-1 sm:mb-2 line-clamp-2 text-[var(--md-on-surface)]">{article.title}</h3>
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold mb-1 sm:mb-2 line-clamp-2 text-[var(--md-on-surface)]">{article.title.replace(/^\*WATCH\*\s*/i, '').replace(/^\*/g, '').replace(/\*/g, '')}</h3>
                       <p className="text-xs sm:text-sm text-[var(--md-on-surface-variant)] mb-2 sm:mb-3 line-clamp-2 hidden sm:block">{article.excerpt}</p>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-0">
-                      <span className="text-xs text-[var(--md-primary)] font-medium">{article.category}</span>
-                      <span className="text-xs text-[var(--md-on-surface-variant)]">{article.date}</span>
+                      <span className="text-xs text-[var(--md-primary)] font-medium">{article.tags[0] || 'News'}</span>
+                      <span className="text-xs text-[var(--md-on-surface-variant)]">{formatDate(article.date)}</span>
                     </div>
                   </div>
                 </article>
