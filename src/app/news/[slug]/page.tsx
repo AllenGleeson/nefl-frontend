@@ -132,14 +132,14 @@ export default async function NewsArticlePage({ params }: PageProps) {
             {/* Quote block */}
             <blockquote className="border-l-4 border-[var(--md-primary)] pl-6 py-4 my-8 bg-[var(--md-surface-container-low)] italic text-[var(--md-on-surface)]">
               <p className="text-lg mb-2">
-                "{newsPost.title.includes('WATCH')
+                &ldquo;{newsPost.title.includes('WATCH')
                   ? 'The quality of football on display today was exceptional. Both teams played their part in what was a truly entertaining match.'
                   : newsPost.title.includes('Fixtures')
                   ? 'These fixtures represent crucial opportunities for every club. Every point matters at this stage of the season.'
                   : newsPost.title.includes('Preview')
                   ? 'We expect a closely contested match. Both teams have quality players who can make the difference.'
                   : 'This development shows the continued growth and professionalism within the NEFL. We\'re building something special here.'
-                }"
+                }&rdquo;
               </p>
               <footer className="text-sm text-[var(--md-on-surface-variant)] mt-2 not-italic">
                 — NEFL Official Spokesperson
