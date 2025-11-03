@@ -42,28 +42,32 @@ export default function KeyDatesTabs() {
     ]
 
     return (
-        <div className="bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] shadow-lg p-4 sm:p-6">
-            {/* Nav Tabs */}
-            <ul className="flex flex-wrap border-b border-[var(--md-outline-variant)] mb-3 sm:mb-4">
-                {tabs.map((tab) => (
-                    <li key={tab.id}>
+        <div className="h-full">
+            <h3 className="text-base sm:text-lg font-semibold text-[var(--md-on-surface)] mb-4">
+                Planning Details
+            </h3>
+            <div className="bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] shadow-lg overflow-hidden">
+                {/* Nav Tabs */}
+                <div className="flex flex-wrap border-b-2 border-[var(--md-outline-variant)]">
+                    {tabs.map((tab) => (
                         <button
+                            key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold transition-colors cursor-pointer ${
+                            className={`px-3 sm:px-4 lg:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-200 ${
                                 activeTab === tab.id
-                                    ? "border-b-2 border-[var(--md-primary)] text-[var(--md-primary)]"
-                                    : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-primary)] border-b-2 border-transparent"
+                                    ? "border-b-2 border-[var(--md-primary)] text-[var(--md-primary)] bg-[var(--md-primary-container)]/10"
+                                    : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-primary)] hover:bg-[var(--md-surface-container-low)] border-b-2 border-transparent"
                             }`}
                         >
                             {tab.label}
                         </button>
-                    </li>
-                ))}
-            </ul>
+                    ))}
+                </div>
 
-            {/* Tab Content */}
-            <div className="tab-content p-3 sm:p-4 bg-[var(--md-surface-container-low)] text-sm sm:text-base text-[var(--md-on-surface)]">
-                {tabs.find((tab) => tab.id === activeTab)?.content}
+                {/* Tab Content */}
+                <div className="p-4 sm:p-5 lg:p-6 bg-[var(--md-surface-container-low)] text-sm sm:text-base text-[var(--md-on-surface-variant)] leading-relaxed min-h-[120px] sm:min-h-[140px]">
+                    {tabs.find((tab) => tab.id === activeTab)?.content}
+                </div>
             </div>
         </div>
     )

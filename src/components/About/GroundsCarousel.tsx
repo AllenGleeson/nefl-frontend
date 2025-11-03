@@ -5,24 +5,20 @@ import Image from "next/image"
 
 const images = [
     {
-        src: "/images/img4.webp",
-        title: "Dressing Room and Club House",
+        src: "https://i0.wp.com/nefl.ie/wp-content/uploads/2020/12/muller-on-tractor-1170x650.jpg",
+        title: "Muller on Tractor",
     },
     {
-        src: "/images/img4.webp",
-        title: "Pitch 1 Grass and Pitch 2 Fifa One Astro",
+        src: "https://i0.wp.com/nefl.ie/wp-content/uploads/2020/12/Fifaone-day-one-1024x650.jpg",
+        title: "Fifaone Day One",
     },
     {
-        src: "/images/img4.webp",
-        title: "Small Astros 1,2,4 and 5",
+        src: "https://i0.wp.com/nefl.ie/wp-content/uploads/2020/12/mdl-FOF-1170x650.jpg",
+        title: "MDL FOF",
     },
     {
-        src: "/images/img4.webp",
-        title: "Astro Pitches 2,4,3,6 and 7",
-    },
-    {
-        src: "/images/img4.webp",
-        title: "Pitches 2,3 and 4",
+        src: "https://i0.wp.com/nefl.ie/wp-content/uploads/2020/12/martino-neil-visit-1170x650.jpg",
+        title: "Martino Neil Visit",
     },
 ]
 
@@ -38,57 +34,68 @@ export default function GroundsCarousel() {
     }
 
     return (
-        <div className="relative w-full max-w-4xl mx-auto mt-6 sm:mt-8">
+        <div className="relative w-full max-w-6xl mx-auto mt-6 mb-6 sm:mb-8 lg:mb-12 px-2 sm:px-4 lg:px-8">
             {/* ✅ Heading */}
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-4 sm:mb-6 relative inline-block text-[var(--md-on-surface)]">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-4 sm:mb-6 relative inline-block w-full text-[var(--md-on-surface)]">
                 Gallery MDL Grounds
                 <span className="block w-12 sm:w-16 h-1 bg-[var(--md-primary)] mx-auto mt-2"></span>
             </h2>
 
-            {/* Image */}
-            <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden shadow-lg">
-                <Image
-                    src={images[current].src}
-                    alt={images[current].title}
-                    fill
-                    className="object-cover transition-all duration-500"
-                />
+            {/* Images Container */}
+            <div className="relative overflow-hidden border border-[var(--md-outline-variant)] shadow-xl bg-[var(--md-surface-container-low)]">
+                <div className="relative w-full aspect-video">
+                    <Image
+                        src={images[current].src}
+                        alt={images[current].title}
+                        fill
+                        className="object-cover transition-all duration-500 ease-in-out"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1152px"
+                        unoptimized
+                    />
+                </div>
+
+                {/* Controls */}
+                <button
+                    onClick={prevSlide}
+                    className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2.5 sm:p-3 shadow-lg transition-all duration-200 hover:scale-110 z-10 border border-[var(--md-primary)]"
+                    aria-label="Previous slide"
+                >
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button
+                    onClick={nextSlide}
+                    className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2.5 sm:p-3 shadow-lg transition-all duration-200 hover:scale-110 z-10 border border-[var(--md-primary)]"
+                    aria-label="Next slide"
+                >
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                {/* Image Counter Overlay */}
+                <div className="absolute bottom-4 right-4 bg-[var(--md-surface-container)]/95 backdrop-blur-sm text-[var(--md-on-surface-variant)] px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border border-[var(--md-outline-variant)]">
+                    {current + 1} / {images.length}
+                </div>
             </div>
 
             {/* Title */}
-            <div className="text-center mt-3 sm:mt-4 font-semibold text-sm sm:text-base text-[var(--md-on-surface)]">
+            <div className="text-center mt-4 sm:mt-6 font-semibold text-sm sm:text-base text-[var(--md-on-surface)] bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] p-3 sm:p-4">
                 {images[current].title}
             </div>
 
-            {/* Controls */}
-            <button
-                onClick={prevSlide}
-                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-[var(--md-surface-container)]/90 hover:bg-[var(--md-surface-container)] text-[var(--md-on-surface)] p-2 sm:p-2.5 rounded-full shadow-lg transition-all duration-200"
-                aria-label="Previous slide"
-            >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button
-                onClick={nextSlide}
-                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-[var(--md-surface-container)]/90 hover:bg-[var(--md-surface-container)] text-[var(--md-on-surface)] p-2 sm:p-2.5 rounded-full shadow-lg transition-all duration-200"
-                aria-label="Next slide"
-            >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-
             {/* Dots */}
-            <div className="flex justify-center mt-3 sm:mt-4 gap-2">
+            <div className="flex justify-center mt-4 sm:mt-6 gap-2 sm:gap-3">
                 {images.map((_, i) => (
                     <button
                         key={i}
                         onClick={() => setCurrent(i)}
-                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${
-                            i === current ? "bg-[var(--md-primary)]" : "bg-[var(--md-outline-variant)]"
-                        }`}
+                        className={`transition-all duration-200 ${
+                            i === current 
+                                ? "w-8 h-2.5 sm:w-10 sm:h-3 bg-[var(--md-primary)] shadow-md" 
+                                : "w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[var(--md-outline-variant)] hover:bg-[var(--md-primary)]/50"
+                        } rounded-full`}
                         aria-label={`Go to slide ${i + 1}`}
                     />
                 ))}

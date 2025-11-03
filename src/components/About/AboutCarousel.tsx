@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react"
+import Image from "next/image"
 
 export default function AboutCarousel() {
     const images = [
@@ -36,54 +37,64 @@ export default function AboutCarousel() {
     }
 
     return (
-        <section className="relative w-full max-w-4xl mx-auto my-6 sm:my-8 lg:my-12 px-2 sm:px-4 lg:px-8">
-            {/* Images */}
-            <div className="overflow-hidden shadow-lg">
+        <section className="relative w-full max-w-6xl mx-auto mt-0 mb-6 sm:mb-8 lg:mb-12 px-2 sm:px-4 lg:px-8">
+            {/* Images Container */}
+            <div className="relative overflow-hidden border border-[var(--md-outline-variant)] shadow-xl bg-[var(--md-surface-container-low)]">
                 <div
-                    className="flex transition-transform duration-500"
+                    className="flex transition-transform duration-500 ease-in-out"
                     style={{ transform: `translateX(-${current * 100}%)` }}
                 >
                     {images.map((img, index) => (
-                        <img
-                            key={index}
-                            src={img.src}
-                            alt={img.alt}
-                            className="w-full flex-shrink-0 h-48 sm:h-64 md:h-80 lg:h-96 object-cover"
-                        />
+                        <div key={index} className="w-full flex-shrink-0 relative aspect-video">
+                            <Image
+                                src={img.src}
+                                alt={img.alt}
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1152px"
+                                unoptimized
+                            />
+                        </div>
                     ))}
+                </div>
+
+                {/* Controls */}
+                <button
+                    onClick={prevSlide}
+                    className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2.5 sm:p-3 shadow-lg transition-all duration-200 hover:scale-110 z-10 border border-[var(--md-primary)]"
+                    aria-label="Previous slide"
+                >
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button
+                    onClick={nextSlide}
+                    className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-[var(--md-primary)] hover:bg-[var(--md-primary-fixed-dim)] text-[var(--md-on-primary)] rounded-full p-2.5 sm:p-3 shadow-lg transition-all duration-200 hover:scale-110 z-10 border border-[var(--md-primary)]"
+                    aria-label="Next slide"
+                >
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                {/* Image Counter Overlay */}
+                <div className="absolute bottom-4 right-4 bg-[var(--md-surface-container)]/95 backdrop-blur-sm text-[var(--md-on-surface-variant)] px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border border-[var(--md-outline-variant)]">
+                    {current + 1} / {images.length}
                 </div>
             </div>
 
-            {/* Controls */}
-            <button
-                onClick={prevSlide}
-                className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-[var(--md-surface-container)]/90 hover:bg-[var(--md-surface-container)] text-[var(--md-on-surface)] rounded-full p-2 sm:p-2.5 shadow-lg transition-all duration-200"
-                aria-label="Previous slide"
-            >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button
-                onClick={nextSlide}
-                className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-[var(--md-surface-container)]/90 hover:bg-[var(--md-surface-container)] text-[var(--md-on-surface)] rounded-full p-2 sm:p-2.5 shadow-lg transition-all duration-200"
-                aria-label="Next slide"
-            >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-
             {/* Dots */}
-            <div className="flex justify-center mt-3 sm:mt-4 gap-2">
+            <div className="flex justify-center mt-4 sm:mt-6 gap-2 sm:gap-3">
                 {images.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrent(index)}
-                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${current === index 
-                            ? "bg-[var(--md-primary)]" 
-                            : "bg-[var(--md-outline-variant)]"
-                        }`}
+                        className={`transition-all duration-200 ${
+                            current === index 
+                                ? "w-8 h-2.5 sm:w-10 sm:h-3 bg-[var(--md-primary)] shadow-md" 
+                                : "w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[var(--md-outline-variant)] hover:bg-[var(--md-primary)]/50"
+                        } rounded-full`}
                         aria-label={`Go to slide ${index + 1}`}
                     />
                 ))}

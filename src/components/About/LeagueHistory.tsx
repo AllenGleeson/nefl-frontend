@@ -73,9 +73,7 @@ export default function LeagueHistory() {
   ]
 
   return (
-    <section className="max-w-6xl mx-auto my-6 sm:my-8 lg:my-12 px-2 sm:px-4 lg:px-8">
-      <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-center mb-4 sm:mb-6 lg:mb-8 text-[var(--md-on-surface)]">History of League</h2>
-      
+    <section className="max-w-6xl mx-auto mt-0 mb-6 sm:mt-0 sm:mb-8 lg:mt-0 lg:mb-12 px-2 sm:px-4 lg:px-8">
       {/* Mobile: Arrow navigation */}
       <div className="block sm:hidden relative">
         <div className="relative overflow-hidden">
