@@ -1,7 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { X } from "lucide-react"
+import { fixtures } from "@/data/fixtures"
+import { leagueTablesDataLong } from "@/data/leagueTablesDataLong"
+import { leagueMatchweeks } from "@/data/matchweeks"
 
 type FilterOption = {
   value: string
@@ -20,50 +23,70 @@ type Props = {
   onReset: () => void
 }
 
-const competitions: FilterOption[] = [
-  { value: "all", label: "All Competitions" },
-  { value: "premier", label: "Premier League" },
-  { value: "division1", label: "Division 1" },
-  { value: "cup", label: "Cup Competitions" },
-  { value: "shield", label: "Shield Competitions" }
-]
-
-const seasons: FilterOption[] = [
-  { value: "all", label: "All Seasons" },
-  { value: "2025-26", label: "2025/26" },
-  { value: "2024-25", label: "2024/25" },
-  { value: "2023-24", label: "2023/24" }
-]
-
-const matchweeks: FilterOption[] = [
-  { value: "all", label: "All Matchweeks" },
-  { value: "1", label: "Matchweek 1" },
-  { value: "2", label: "Matchweek 2" },
-  { value: "3", label: "Matchweek 3" },
-  { value: "cup1", label: "Cup Round 1" },
-  { value: "cup2", label: "Cup Round 2" },
-  { value: "shield1", label: "Shield Round 1" }
-]
-
-const clubs: FilterOption[] = [
-  { value: "all", label: "All Clubs" },
-  { value: "drogheda", label: "Drogheda Town FC" },
-  { value: "navan", label: "Navan Town FC" },
-  { value: "kentstown", label: "Kentstown Rovers" },
-  { value: "duleek", label: "Duleek FC" },
-  { value: "walshestown", label: "Walshestown FC" },
-  { value: "athboy", label: "Athboy Celtic" },
-  { value: "trim", label: "Trim Celtic" },
-  { value: "slane", label: "Slane Wanderers" },
-  { value: "parkvilla", label: "Parkvilla FC" },
-  { value: "torro", label: "Torro United" },
-  { value: "bellurgan", label: "Bellurgan United" },
-  { value: "carrick", label: "Carrick Rovers" },
-  { value: "dromin", label: "Dromin United" },
-  { value: "ardee", label: "Ardee Celtic" }
-]
-
 export default function FixturesFilter({ onFilterChange, onReset }: Props) {
+  // Extract leagues from leagueTablesDataLong for competition dropdown
+  const competitionsList = useMemo(() => {
+    const comps: FilterOption[] = [{ value: "all", label: "All Competitions" }]
+    
+    // Add Men's leagues
+    const menLeagues = Object.keys(leagueTablesDataLong.Men)
+    menLeagues.forEach(league => {
+      comps.push({ value: league, label: league })
+    })
+    
+    // Add Women's leagues
+    const womenLeagues = Object.keys(leagueTablesDataLong.Women)
+    womenLeagues.forEach(league => {
+      comps.push({ value: league, label: league })
+    })
+    
+    return comps
+  }, [])
+
+  // Extract unique seasons from fixtures data
+  const seasonsList = useMemo(() => {
+    const seasonSet = new Set<string>()
+    fixtures.forEach(week => 
+      week.days.forEach(day => 
+        day.matches.forEach(match => {
+          if (match.season) seasonSet.add(match.season)
+        })
+      )
+    )
+    const seasons: FilterOption[] = [{ value: "all", label: "All Seasons" }]
+    Array.from(seasonSet).sort().reverse().forEach(season => {
+      seasons.push({ value: season, label: season.replace('-', '/') })
+    })
+    return seasons
+  }, [])
+
+  // Extract matchweeks from leagueMatchweeks data
+  const matchweeksList = useMemo(() => {
+    const weeks: FilterOption[] = [{ value: "all", label: "All Matchweeks" }]
+    leagueMatchweeks.forEach(week => {
+      weeks.push({ value: week.id.toString(), label: week.title })
+    })
+    return weeks
+  }, [])
+
+  // Extract unique teams from league matchweeks data
+  const clubsList = useMemo(() => {
+    const teamSet = new Set<string>()
+    leagueMatchweeks.forEach(week => 
+      week.days.forEach(day => 
+        day.matches.forEach(match => {
+          teamSet.add(match.home_team)
+          teamSet.add(match.away_team)
+        })
+      )
+    )
+    const teams: FilterOption[] = [{ value: "all", label: "All Clubs" }]
+    Array.from(teamSet).sort().forEach(team => {
+      const slug = team.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+      teams.push({ value: slug, label: team })
+    })
+    return teams
+  }, [])
   const [filters, setFilters] = useState<FilterState>({
     competition: "all",
     season: "2025-26",
@@ -123,7 +146,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
                   onChange={(e) => handleFilterChange("competition", e.target.value)}
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-8 sm:pr-10 border border-[var(--md-primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 text-sm sm:text-base appearance-none cursor-pointer"
                 >
-                  {competitions.map((option) => (
+                  {competitionsList.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -148,7 +171,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
                   onChange={(e) => handleFilterChange("season", e.target.value)}
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-8 sm:pr-10 border border-[var(--md-primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 text-sm sm:text-base appearance-none cursor-pointer"
                 >
-                  {seasons.map((option) => (
+                  {seasonsList.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -173,7 +196,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
                   onChange={(e) => handleFilterChange("matchweek", e.target.value)}
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-8 sm:pr-10 border border-[var(--md-primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 text-sm sm:text-base appearance-none cursor-pointer"
                 >
-                  {matchweeks.map((option) => (
+                  {matchweeksList.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -198,7 +221,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
                   onChange={(e) => handleFilterChange("club", e.target.value)}
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-8 sm:pr-10 border border-[var(--md-primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 text-sm sm:text-base appearance-none cursor-pointer"
                 >
-                  {clubs.map((option) => (
+                  {clubsList.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -223,7 +246,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
           <div className="flex flex-wrap gap-2 sm:gap-3">
             {filters.competition !== "all" && (
               <span className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] border border-[var(--md-outline)] hover:bg-[var(--md-primary-container)]/80 transition-colors duration-200">
-                {competitions.find(c => c.value === filters.competition)?.label}
+                {competitionsList.find(c => c.value === filters.competition)?.label}
                 <button
                   onClick={() => handleFilterChange("competition", "all")}
                   className="ml-2 hover:opacity-70 p-1 rounded-full transition-opacity duration-200"
@@ -234,7 +257,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
             )}
             {filters.season !== "all" && (
               <span className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] border border-[var(--md-outline)] hover:bg-[var(--md-secondary-container)]/80 transition-colors duration-200">
-                {seasons.find(s => s.value === filters.season)?.label}
+                {seasonsList.find(s => s.value === filters.season)?.label}
                 <button
                   onClick={() => handleFilterChange("season", "all")}
                   className="ml-2 hover:opacity-70 p-1 rounded-full transition-opacity duration-200"
@@ -245,7 +268,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
             )}
             {filters.matchweek !== "all" && (
               <span className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium bg-[var(--md-tertiary-container)] text-[var(--md-on-tertiary-container)] border border-[var(--md-outline)] hover:bg-[var(--md-tertiary-container)]/80 transition-colors duration-200">
-                {matchweeks.find(m => m.value === filters.matchweek)?.label}
+                {matchweeksList.find(m => m.value === filters.matchweek)?.label}
                 <button
                   onClick={() => handleFilterChange("matchweek", "all")}
                   className="ml-2 hover:opacity-70 p-1 rounded-full transition-opacity duration-200"
@@ -256,7 +279,7 @@ export default function FixturesFilter({ onFilterChange, onReset }: Props) {
             )}
             {filters.club !== "all" && (
               <span className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] border border-[var(--md-outline)] hover:bg-[var(--md-primary-container)]/80 transition-colors duration-200">
-                {clubs.find(c => c.value === filters.club)?.label}
+                {clubsList.find(c => c.value === filters.club)?.label}
                 <button
                   onClick={() => handleFilterChange("club", "all")}
                   className="ml-2 hover:opacity-70 p-1 rounded-full transition-opacity duration-200"

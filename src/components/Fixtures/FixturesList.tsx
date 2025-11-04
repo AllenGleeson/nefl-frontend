@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Calendar, Clock, ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
+import { getLeagueNameForMatch } from "@/utils/matchLeagueMapper"
 
 type Match = {
   id: number
@@ -16,6 +17,8 @@ type Match = {
   home_badge: string
   away_badge: string
   league: string
+  season?: string
+  competition?: string
   venue?: string
   referee?: string
 }
@@ -93,7 +96,7 @@ function CollapsibleDay({ day }: CollapsibleDayProps) {
                 {/* Match Header - Competition Info */}
                 <div className="px-4 sm:px-6 py-3 border-b border-[var(--md-outline-variant)]">
                   <p className="text-xs sm:text-sm font-semibold text-[var(--md-on-surface)] mb-1">
-                    {match.league}
+                    {getLeagueNameForMatch(match.home_team, match.away_team, match.competition)}
                   </p>
                   <div className="flex items-center gap-2 text-xs text-[var(--md-on-surface-variant)]">
                     {match.venue && (
@@ -104,6 +107,12 @@ function CollapsibleDay({ day }: CollapsibleDayProps) {
                     )}
                     {match.referee && (
                       <span>Ref: {match.referee}</span>
+                    )}
+                    {match.season && (
+                      <>
+                        {(match.venue || match.referee) && <span>·</span>}
+                        <span>{match.season.replace('-', '/')}</span>
+                      </>
                     )}
                   </div>
                 </div>
@@ -141,8 +150,13 @@ function CollapsibleDay({ day }: CollapsibleDayProps) {
                         </div>
                       ) : (
                         <div className="flex items-center space-x-1 text-[var(--md-on-surface-variant)]">
-                          <Clock className="w-4 h-4" />
-                          <span className="text-sm sm:text-base font-semibold">{match.time}</span>
+                          <Calendar className="w-4 h-4" />
+                          <span className="text-sm sm:text-base font-semibold">
+                            {match.date ? new Date(match.date).toLocaleDateString('en-GB', { 
+                              day: 'numeric', 
+                              month: 'short'
+                            }) : match.time}
+                          </span>
                         </div>
                       )}
                       {/* Status Badge */}
