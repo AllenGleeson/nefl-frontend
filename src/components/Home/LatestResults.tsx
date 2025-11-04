@@ -25,14 +25,6 @@ type Match = {
   status: "live" | "FT" | "Scheduled";
 };
 
-// Helper function to get team abbreviation
-function getTeamAbbr(teamName: string): string {
-  const words = teamName.split(' ');
-  if (words.length >= 2) {
-    return (words[0][0] + words[1][0]).toUpperCase();
-  }
-  return teamName.substring(0, 3).toUpperCase();
-}
 
 // Latest results data using real teams from league tables
 const leaguesData = {

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo } from 'react'
-import { fixtures } from '@/data/fixtures'
 import { leagueTablesDataLong } from '@/data/leagueTablesDataLong'
 import { leagueMatchweeks } from '@/data/matchweeks'
 

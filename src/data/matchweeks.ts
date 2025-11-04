@@ -2,7 +2,7 @@ import fixturesData from './fixtures.json'
 import { Match, Matchweek } from './fixtures'
 
 // Filter out Cup and Shield matches
-function isLeagueMatch(match: any): boolean {
+function isLeagueMatch(match: Match | { competition?: string }): boolean {
   if (!match.competition) return true
   return !match.competition.includes("Cup") && !match.competition.includes("Shield")
 }

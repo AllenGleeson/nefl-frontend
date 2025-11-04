@@ -1,7 +1,7 @@
 // components/Fixtures/FixturesList.tsx
 import Image from "next/image"
 import Link from "next/link"
-import { Calendar, Clock, ChevronDown, ChevronRight } from "lucide-react"
+import { Calendar, ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { getLeagueNameForMatch } from "@/utils/matchLeagueMapper"
 
