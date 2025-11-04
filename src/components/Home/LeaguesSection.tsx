@@ -13,7 +13,10 @@ type Gender = 'Men' | 'Women';
 
 export default function LeaguesSection() {
   const [selectedGender, setSelectedGender] = useState<Gender>('Men');
-  const [selectedLeague, setSelectedLeague] = useState<string>('Premier League');
+  const [selectedLeague, setSelectedLeague] = useState<string>(() => {
+    const firstLeague = Object.keys(leagueTablesDataLong['Men'])[0];
+    return firstLeague || '';
+  });
   const [viewMode, setViewMode] = useState<ViewMode>('table');
 
   const availableLeagues = Object.keys(leagueTablesDataLong[selectedGender]);

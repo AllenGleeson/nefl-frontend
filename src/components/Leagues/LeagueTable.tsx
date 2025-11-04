@@ -20,8 +20,8 @@ export default function LeagueTable({ leagueTables, showMore = true, selectedGen
 
   const fullTable: TeamRow[] =
     currentGender === "Men"
-      ? leagueTables.Men[currentLeague as LeagueKey<"Men">]
-      : leagueTables.Women[currentLeague as LeagueKey<"Women">]
+      ? leagueTables.Men[currentLeague as LeagueKey<"Men">] || []
+      : leagueTables.Women[currentLeague as LeagueKey<"Women">] || []
   
   // Limit table to maxRows if specified
   const table = maxRows ? fullTable.slice(0, maxRows) : fullTable
