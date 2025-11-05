@@ -6,6 +6,11 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "NEFL",
   description: "The Official North East Football League Site",
+  icons: {
+    icon: "/images/nefl-logo.webp",
+    shortcut: "/images/nefl-logo.webp",
+    apple: "/images/nefl-logo.webp",
+  },
 };
 
 export default function RootLayout({
