@@ -50,7 +50,7 @@ export default function MatchStatistics({ stats }: MatchStatisticsProps) {
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="rounded-lg p-6">
       <h3 className="text-lg font-bold mb-4">Match Statistics</h3>
       
       <div className="space-y-4">

@@ -18,7 +18,7 @@ export default function SubstitutesSection({ substitutes }: SubstitutesSectionPr
   const awaySubs = substitutes.filter(sub => sub.team === 'away');
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div className="rounded-lg p-6 mb-6">
       <h3 className="text-lg font-bold mb-4">Substitutes</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

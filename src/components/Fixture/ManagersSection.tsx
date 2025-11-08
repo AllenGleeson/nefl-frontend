@@ -14,7 +14,7 @@ interface ManagersSectionProps {
 
 export default function ManagersSection({ homeManager, awayManager }: ManagersSectionProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div className="rounded-lg p-6 mb-6">
       <h3 className="text-lg font-bold mb-4">Managers</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
