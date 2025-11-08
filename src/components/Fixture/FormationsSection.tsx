@@ -2,6 +2,7 @@
 
 // src/components/Fixture/FormationsSection.tsx
 import { useState } from 'react';
+import Pitch from './Pitch';
 
 interface Player {
   id: string;
@@ -11,77 +12,160 @@ interface Player {
   team: 'home' | 'away';
 }
 
+interface Manager {
+  name: string;
+  photo: string;
+  team: string;
+}
+
 interface FormationsSectionProps {
   homeFormation: string;
   awayFormation: string;
   homePlayers: Player[];
   awayPlayers: Player[];
+  homeManager: Manager;
+  awayManager: Manager;
 }
 
-export default function FormationsSection({ homeFormation, awayFormation, homePlayers, awayPlayers }: FormationsSectionProps) {
+export default function FormationsSection({ homeFormation, awayFormation, homePlayers, awayPlayers, homeManager, awayManager }: FormationsSectionProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
-  const renderFormation = (players: Player[], team: 'home' | 'away') => {
-    const positions = {
-      'GK': { x: 50, y: 95 },
-      'DEF': { x: 50, y: 80 },
-      'MID': { x: 50, y: 50 },
-      'FWD': { x: 50, y: 20 }
-    };
-
-    return (
-      <div className="relative w-full h-64 bg-green-100 rounded-lg border-2 border-green-300">
-        <div className="absolute inset-0 p-4">
-          <div className="text-center text-xs font-bold text-gray-600 mb-2">
-            {team === 'home' ? homeFormation : awayFormation}
-          </div>
-          
-          {/* Goal */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-8 border-2 border-gray-400 rounded-t"></div>
-          
-          {/* Players */}
-          {players.map((player) => (
-            <div
-              key={player.id}
-              className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
-                selectedPlayer?.id === player.id ? 'scale-110 z-10' : 'hover:scale-105'
-              }`}
-              style={{
-                left: `${positions[player.position as keyof typeof positions]?.x || 50}%`,
-                top: `${positions[player.position as keyof typeof positions]?.y || 50}%`
-              }}
-              onClick={() => setSelectedPlayer(player)}
-            >
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                team === 'home' ? 'bg-blue-500 text-white' : 'bg-red-500 text-white'
-              }`}>
-                {player.number}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
+  // Parse formation string (e.g., "4-4-2") and return array [defenders, midfielders, forwards]
+  const parseFormation = (formation: string): number[] => {
+    return formation.split('-').map(Number); // [4, 4, 2] for "4-4-2"
   };
 
+  // Get player positions based on formation
+  const getPlayerPositions = (players: Player[], formation: string, team: 'home' | 'away') => {
+    const [defCount, midCount, fwdCount] = parseFormation(formation);
+    const positions: Array<{ player: Player; x: number; y: number }> = [];
+
+    // Filter players by position
+    const gk = players.filter(p => p.position === 'GK');
+    const def = players.filter(p => p.position === 'DEF');
+    const mid = players.filter(p => p.position === 'MID');
+    const fwd = players.filter(p => p.position === 'FWD');
+
+    // Home team plays on left side (0-50%), Away team on right side (50-100%)
+    const isHome = team === 'home';
+
+    // Goalkeeper - at the back near their goal
+    if (gk.length > 0) {
+      const xPos = isHome ? 8 : 92; // Near their goal
+      positions.push({ player: gk[0], x: xPos, y: 50 });
+    }
+
+    // Defenders - in front of goalkeeper
+    const defToUse = def.slice(0, Math.min(def.length, defCount));
+    if (defToUse.length > 0) {
+      const spacing = 100 / (defToUse.length + 1);
+      defToUse.forEach((player, index) => {
+        const xPos = isHome ? 18 : 82; // In front of goal
+        const yPos = spacing * (index + 1);
+        positions.push({ player, x: xPos, y: yPos });
+      });
+    }
+
+    // Midfielders - in the middle of their half
+    const midToUse = mid.slice(0, Math.min(mid.length, midCount));
+    if (midToUse.length > 0) {
+      const spacing = 100 / (midToUse.length + 1);
+      midToUse.forEach((player, index) => {
+        const xPos = isHome ? 28 : 72; // Middle of their half
+        const yPos = spacing * (index + 1);
+        positions.push({ player, x: xPos, y: yPos });
+      });
+    }
+
+    // Forwards - near the center line
+    const fwdToUse = fwd.slice(0, Math.min(fwd.length, fwdCount));
+    if (fwdToUse.length > 0) {
+      const spacing = 100 / (fwdToUse.length + 1);
+      fwdToUse.forEach((player, index) => {
+        const xPos = isHome ? 38 : 62; // Near center line
+        const yPos = spacing * (index + 1);
+        positions.push({ player, x: xPos, y: yPos });
+      });
+    }
+
+    return positions;
+  };
+
+  const homePositions = getPlayerPositions(homePlayers, homeFormation, 'home');
+  const awayPositions = getPlayerPositions(awayPlayers, awayFormation, 'away');
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h3 className="text-lg font-bold mb-4">Formations</h3>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Home Formation */}
-        <div>
-          <h4 className="font-semibold text-sm text-gray-600 mb-3">Home Team</h4>
-          {renderFormation(homePlayers, 'home')}
+    <div className="rounded-lg px-6 py-4">
+      {/* Managers on opposite sides with formations near them */}
+      <div className="flex items-center justify-between">
+        {/* Home Manager with Formation */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 rounded-lg flex items-center justify-center">
+              <span className="text-xl">👨‍💼</span>
+            </div>
+            <div>
+              <h4 className="font-semibold text-xs text-gray-600">{homeManager.team}</h4>
+              <p className="font-bold text-sm">{homeManager.name}</p>
+            </div>
+          </div>
+          <span className="font-semibold text-sm">Formation: {homeFormation}</span>
         </div>
         
-        {/* Away Formation */}
-        <div>
-          <h4 className="font-semibold text-sm text-gray-600 mb-3">Away Team</h4>
-          {renderFormation(awayPlayers, 'away')}
+        {/* Away Manager with Formation */}
+        <div className="flex items-center gap-4">
+          <span className="font-semibold text-sm">Formation: {awayFormation}</span>
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 rounded-lg flex items-center justify-center">
+              <span className="text-xl">👨‍💼</span>
+            </div>
+            <div>
+              <h4 className="font-semibold text-xs text-gray-600">{awayManager.team}</h4>
+              <p className="font-bold text-sm">{awayManager.name}</p>
+            </div>
+          </div>
         </div>
       </div>
-      
+
+      {/* Single Pitch */}
+      <Pitch>
+        {/* Home Team Players */}
+        {homePositions.map(({ player, x, y }) => (
+          <div
+            key={player.id}
+            className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${selectedPlayer?.id === player.id ? 'scale-125 z-20' : 'hover:scale-110 z-10'
+              }`}
+            style={{
+              left: `${x}%`,
+              top: `${y}%`
+            }}
+            onClick={() => setSelectedPlayer(player)}
+          >
+            <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold bg-blue-500 text-white border-2 border-white shadow-lg">
+              {player.number}
+            </div>
+          </div>
+        ))}
+
+        {/* Away Team Players */}
+        {awayPositions.map(({ player, x, y }) => (
+          <div
+            key={player.id}
+            className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${selectedPlayer?.id === player.id ? 'scale-125 z-20' : 'hover:scale-110 z-10'
+              }`}
+            style={{
+              left: `${x}%`,
+              top: `${y}%`
+            }}
+            onClick={() => setSelectedPlayer(player)}
+          >
+            <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold bg-red-500 text-white border-2 border-white shadow-lg">
+              {player.number}
+            </div>
+          </div>
+        ))}
+      </Pitch>
+
       {/* Selected Player Info */}
       {selectedPlayer && (
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
