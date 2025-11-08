@@ -2,41 +2,42 @@
 
 // src/app/fixtures/[slug]/page.tsx
 import { useState } from 'react';
-import { 
-  FixtureHeader, 
-  ManagersSection, 
-  SubstitutesSection, 
-  FormationsSection, 
-  MatchTimeline, 
-  MatchStatistics 
-} from '@/components/Fixture';
+import Fixture, { type FixtureData } from '@/components/Fixture';
+import { clubs } from '@/data/club';
 
 export default function FixturePage() {
+  // Use real teams from clubs data - selecting Parkvilla FC vs Duleek AFC as example
+  const homeClub = clubs.find(c => c.name === 'Parkvilla FC') || clubs[0];
+  const awayClub = clubs.find(c => c.name === 'Duleek AFC') || clubs[1];
+  
+  // Get the league (assuming both teams are in the same league for this fixture)
+  const league = homeClub.leagues?.[0] || awayClub.leagues?.[0] || '';
+  
   // Mock data - in real app, this would come from API based on params.slug
-  const [fixtureData] = useState({
+  const [fixtureData] = useState<FixtureData>({
     homeTeam: {
-      name: 'Dublin United',
-      logo: '/logos/dublin-united.png',
+      name: homeClub.name,
+      logo: homeClub.logo,
       score: 2
     },
     awayTeam: {
-      name: 'Cork City FC',
-      logo: '/logos/cork-city.png',
+      name: awayClub.name,
+      logo: awayClub.logo,
       score: 1
     },
     status: 'FT',
     date: 'Saturday, January 15, 2024',
-    venue: 'Aviva Stadium, Dublin',
+    league: league,
     
     homeManager: {
       name: 'John O\'Brien',
       photo: '/managers/john-obrien.jpg',
-      team: 'Dublin United'
+      team: homeClub.name
     },
     awayManager: {
       name: 'Michael Murphy',
       photo: '/managers/michael-murphy.jpg',
-      team: 'Cork City FC'
+      team: awayClub.name
     },
     
     homeFormation: '4-4-2',
@@ -130,7 +131,7 @@ export default function FixturePage() {
     
     matchStats: {
       homeTeam: {
-        name: 'Dublin United',
+        name: homeClub.name,
         stats: {
           yellowCards: 2,
           redCards: 0,
@@ -144,7 +145,7 @@ export default function FixturePage() {
         }
       },
       awayTeam: {
-        name: 'Cork City FC',
+        name: awayClub.name,
         stats: {
           yellowCards: 3,
           redCards: 0,
@@ -163,46 +164,7 @@ export default function FixturePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Fixture Header */}
-        <FixtureHeader
-          homeTeam={fixtureData.homeTeam}
-          awayTeam={fixtureData.awayTeam}
-          status={fixtureData.status}
-          date={fixtureData.date}
-          venue={fixtureData.venue}
-        />
-        
-        {/* Managers Section */}
-        <ManagersSection
-          homeManager={fixtureData.homeManager}
-          awayManager={fixtureData.awayManager}
-        />
-        
-        {/* Formations and Timeline Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <div className="space-y-6">
-            <FormationsSection
-              homeFormation={fixtureData.homeFormation}
-              awayFormation={fixtureData.awayFormation}
-              homePlayers={fixtureData.homePlayers}
-              awayPlayers={fixtureData.awayPlayers}
-            />
-            <SubstitutesSection
-              substitutes={fixtureData.substitutes}
-            />
-          </div>
-          
-          <div>
-            <MatchTimeline
-              events={fixtureData.timelineEvents}
-            />
-          </div>
-        </div>
-        
-        {/* Match Statistics */}
-        <MatchStatistics
-          stats={fixtureData.matchStats}
-        />
+        <Fixture fixtureData={fixtureData} />
       </div>
     </div>
   );
