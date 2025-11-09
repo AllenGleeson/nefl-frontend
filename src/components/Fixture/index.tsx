@@ -102,7 +102,7 @@ interface FixtureProps {
 
 export default function Fixture({ fixtureData }: FixtureProps) {
   return (
-    <>
+    <div className="bg-white/50 backdrop-blur-sm rounded-lg p-6 space-y-6">
       {/* Fixture Header */}
       <FixtureHeader
         homeTeam={fixtureData.homeTeam}
@@ -137,7 +137,7 @@ export default function Fixture({ fixtureData }: FixtureProps) {
       <MatchStatistics
         stats={fixtureData.matchStats}
       />
-    </>
+    </div>
   );
 }
 

@@ -162,8 +162,58 @@ export default function FixturePage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: 'url(/images/fixturepage.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgba(0,0,0,0.35)',
+        backgroundBlendMode: 'multiply',
+      }}
+    >
+      {/* Decorative home team logo on left */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute z-0 opacity-20"
+        style={{
+          top: '30%',
+          left: '5%',
+          transform: 'translateY(-50%)',
+          backgroundImage: `url(${homeClub.logo})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'contain',
+          width: '30vw',
+          height: '30vw',
+          maxWidth: '500px',
+          maxHeight: '500px',
+          filter: 'grayscale(20%)',
+        }}
+      />
+
+      {/* Decorative away team logo on right */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute z-0 opacity-20"
+        style={{
+          top: '30%',
+          right: '5%',
+          transform: 'translateY(-50%)',
+          backgroundImage: `url(${awayClub.logo})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'contain',
+          width: '30vw',
+          height: '30vw',
+          maxWidth: '500px',
+          maxHeight: '500px',
+          filter: 'grayscale(20%)',
+        }}
+      />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4 py-8">
         <Fixture fixtureData={fixtureData} />
       </div>
     </div>

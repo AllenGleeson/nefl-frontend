@@ -96,33 +96,27 @@ export default function FormationsSection({ homeFormation, awayFormation, homePl
 
   return (
     <div className="rounded-lg px-6 py-4">
-      {/* Managers on opposite sides with formations near them */}
+      {/* Managers on opposite sides */}
       <div className="flex items-center justify-between">
-        {/* Home Manager with Formation */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-              <span className="text-xl">👨‍💼</span>
-            </div>
-            <div>
-              <h4 className="font-semibold text-xs text-gray-600">{homeManager.team}</h4>
-              <p className="font-bold text-sm">{homeManager.name}</p>
-            </div>
+        {/* Home Manager */}
+        <div className="flex items-center space-x-3">
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center">
+            <span className="text-xl">👨‍💼</span>
           </div>
-          <span className="font-semibold text-sm">Formation: {homeFormation}</span>
+          <div>
+            <h4 className="font-semibold text-xs text-gray-600">{homeManager.team}</h4>
+            <p className="font-bold text-sm">{homeManager.name}</p>
+          </div>
         </div>
         
-        {/* Away Manager with Formation */}
-        <div className="flex items-center gap-4">
-          <span className="font-semibold text-sm">Formation: {awayFormation}</span>
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-              <span className="text-xl">👨‍💼</span>
-            </div>
-            <div>
-              <h4 className="font-semibold text-xs text-gray-600">{awayManager.team}</h4>
-              <p className="font-bold text-sm">{awayManager.name}</p>
-            </div>
+        {/* Away Manager */}
+        <div className="flex items-center space-x-3">
+          <div>
+            <h4 className="font-semibold text-xs text-gray-600">{awayManager.team}</h4>
+            <p className="font-bold text-sm">{awayManager.name}</p>
+          </div>
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center">
+            <span className="text-xl">👨‍💼</span>
           </div>
         </div>
       </div>
@@ -165,6 +159,12 @@ export default function FormationsSection({ homeFormation, awayFormation, homePl
           </div>
         ))}
       </Pitch>
+
+      {/* Formations under pitch */}
+      <div className="flex items-center justify-center gap-80">
+        <span className="font-semibold text-lg">{homeFormation}</span>
+        <span className="font-semibold text-lg">{awayFormation}</span>
+      </div>
 
       {/* Selected Player Info */}
       {selectedPlayer && (
