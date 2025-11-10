@@ -53,12 +53,12 @@ export default function MatchTimeline({ events }: MatchTimelineProps) {
   };
 
   return (
-    <div className="rounded-lg px-12 py-0">
-      <div className="relative">
+    <div className="rounded-lg py-0">
+      <div className="relative px-4">
         {/* Main Timeline Container */}
         <div className="relative w-full" style={{ height: '200px' }}>
           {/* Main Timeline Line (0-90 minutes) */}
-          <div className="absolute top-20 left-0 right-0 h-1 bg-gray-300"></div>
+          <div className="absolute top-10 left-0 right-0 h-1 bg-gray-300"></div>
           
           {/* Overtime Extension Line (red) */}
           {hasOvertime && (
@@ -72,12 +72,12 @@ export default function MatchTimeline({ events }: MatchTimelineProps) {
             ></div>
           )}
           
-          {/* Time Markers at Ends */}
-          <div className="absolute top-16 left-0 text-sm font-bold text-gray-600">0&apos;</div>
-          <div className="absolute top-16 right-0 text-sm font-bold text-gray-600">90&apos;</div>
+          {/* Time Markers at Ends - positioned to the left and right of the line */}
+          <div className="absolute top-8 left-0 text-sm font-bold text-gray-200 transform -translate-x-full pr-2">00&apos;</div>
+          <div className="absolute top-8 right-0 text-sm font-bold text-gray-200 transform translate-x-full pl-2">90&apos;</div>
           {hasOvertime && (
             <div 
-              className="absolute top-16 text-sm font-bold text-red-600"
+              className="absolute top-10 text-sm font-bold text-red-300"
               style={{
                 left: `${100 + (overtimeMinutes / 30) * 10}%`,
                 transform: 'translateX(-50%)'
@@ -103,21 +103,21 @@ export default function MatchTimeline({ events }: MatchTimelineProps) {
               >
                 {/* Vertical Line from Timeline to Event */}
                 <div 
-                  className={`absolute top-20 w-0.5 ${isOvertime ? 'bg-red-500' : 'bg-gray-400'}`}
-                  style={{ height: '60px' }}
+                  className={`absolute top-10 w-0.5 ${isOvertime ? 'bg-red-500' : 'bg-gray-400'}`}
+                  style={{ height: '40px' }}
                 ></div>
                 
                 {/* Event Icon */}
-                <div className="absolute top-24 left-1/2 transform -translate-x-1/2">
+                <div className="absolute top-14 left-1/2 transform -translate-x-1/2">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white ${getEventColor(event.type)} shadow-lg`}>
                     <span className="text-lg">{getEventIcon(event.type)}</span>
                   </div>
                 </div>
                 
                 {/* Event Info */}
-                <div className="absolute top-36 left-1/2 transform -translate-x-1/2 text-center whitespace-nowrap">
-                  <div className="text-xs font-bold text-gray-700 mb-1">{event.minute}&apos;</div>
-                  <div className={`text-xs font-semibold ${event.team === 'home' ? 'text-blue-600' : 'text-red-600'}`}>
+                <div className="absolute top-25 left-1/2 transform -translate-x-1/2 text-center whitespace-nowrap">
+                  <div className="text-xs font-bold text-gray-200 mb-1">{event.minute}&apos;</div>
+                  <div className={`text-xs font-semibold ${event.team === 'home' ? 'text-blue-300' : 'text-red-300'}`}>
                     {event.player}
                   </div>
                 </div>
