@@ -96,31 +96,6 @@ export default function FormationsSection({ homeFormation, awayFormation, homePl
 
   return (
     <div className="rounded-lg px-6 py-4">
-      {/* Managers on opposite sides */}
-      <div className="flex items-center justify-between">
-        {/* Home Manager */}
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-            <span className="text-xl">👨‍💼</span>
-          </div>
-          <div>
-            <h4 className="font-semibold text-xs text-gray-600">{homeManager.team}</h4>
-            <p className="font-bold text-sm">{homeManager.name}</p>
-          </div>
-        </div>
-        
-        {/* Away Manager */}
-        <div className="flex items-center space-x-3">
-          <div>
-            <h4 className="font-semibold text-xs text-gray-600">{awayManager.team}</h4>
-            <p className="font-bold text-sm">{awayManager.name}</p>
-          </div>
-          <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-            <span className="text-xl">👨‍💼</span>
-          </div>
-        </div>
-      </div>
-
       {/* Single Pitch */}
       <Pitch>
         {/* Home Team Players */}
