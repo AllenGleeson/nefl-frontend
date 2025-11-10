@@ -2,11 +2,9 @@
 "use client";
 
 import FixtureHeader from './FixtureHeader';
-import ManagersSection from './ManagersSection';
 import SubstitutesSection from './SubstitutesSection';
 import FormationsSection from './FormationsSection';
 import MatchTimeline from './MatchTimeline';
-import MatchStatistics from './MatchStatistics';
 
 export interface FixtureData {
   homeTeam: {
@@ -102,7 +100,7 @@ interface FixtureProps {
 
 export default function Fixture({ fixtureData }: FixtureProps) {
   return (
-    <div className="bg-white/50 backdrop-blur-sm rounded-lg p-6 space-y-6">
+    <div className="p-6 space-y-6">
       {/* Fixture Header */}
       <FixtureHeader
         homeTeam={fixtureData.homeTeam}
@@ -129,22 +127,20 @@ export default function Fixture({ fixtureData }: FixtureProps) {
         />
         
         <SubstitutesSection
+          homePlayers={fixtureData.homePlayers}
+          awayPlayers={fixtureData.awayPlayers}
           substitutes={fixtureData.substitutes}
+          timelineEvents={fixtureData.timelineEvents}
+          homeManager={fixtureData.homeManager}
+          awayManager={fixtureData.awayManager}
         />
       </div>
-      
-      {/* Match Statistics */}
-      <MatchStatistics
-        stats={fixtureData.matchStats}
-      />
     </div>
   );
 }
 
 // Export individual components for direct use if needed
 export { default as FixtureHeader } from './FixtureHeader';
-export { default as ManagersSection } from './ManagersSection';
 export { default as SubstitutesSection } from './SubstitutesSection';
 export { default as FormationsSection } from './FormationsSection';
 export { default as MatchTimeline } from './MatchTimeline';
-export { default as MatchStatistics } from './MatchStatistics';
