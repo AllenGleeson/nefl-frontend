@@ -92,13 +92,12 @@ function Category({ data, showRunnerUp = false }: CategoryProps) {
             </thead>
             <tbody className="bg-[var(--md-surface-container-lowest)] divide-y divide-[var(--md-outline-variant)]">
               {data.map((item, index) => (
-                <tr 
-                  key={index} 
-                  className={`transition-all duration-200 ${
-                    index % 2 === 0 
-                      ? 'bg-[var(--md-surface-container-lowest)] hover:bg-[var(--md-surface-container-low)]' 
+                <tr
+                  key={index}
+                  className={`transition-all duration-200 ${index % 2 === 0
+                      ? 'bg-[var(--md-surface-container-lowest)] hover:bg-[var(--md-surface-container-low)]'
                       : 'bg-[var(--md-surface-container-low)] hover:bg-[var(--md-surface-container)]'
-                  }`}
+                    }`}
                 >
                   <td className="px-1.5 sm:px-6 py-2 sm:py-5 text-xs sm:text-sm font-semibold text-[var(--md-primary)]">
                     {item.year}

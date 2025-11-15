@@ -86,8 +86,8 @@ export default function GroundsCarousel() {
                         key={i}
                         onClick={() => setCurrent(i)}
                         className={`transition-all duration-200 ${i === current
-                                ? "w-8 h-2.5 sm:w-10 sm:h-3 bg-[var(--md-primary)] shadow-md"
-                                : "w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[var(--md-outline-variant)] hover:bg-[var(--md-primary)]/50"
+                            ? "w-8 h-2.5 sm:w-10 sm:h-3 bg-[var(--md-primary)] shadow-md"
+                            : "w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[var(--md-outline-variant)] hover:bg-[var(--md-primary)]/50"
                             } rounded-full`}
                         aria-label={`Go to slide ${i + 1}`}
                     />
