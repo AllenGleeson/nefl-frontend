@@ -22,7 +22,7 @@ export default function Clubs() {
       return clubs
     }
     const query = searchQuery.toLowerCase()
-    return clubs.filter(club => 
+    return clubs.filter(club =>
       club.name.toLowerCase().includes(query) ||
       club.leagues.some(league => league.toLowerCase().includes(query)) ||
       club.bio.toLowerCase().includes(query)
@@ -73,7 +73,7 @@ export default function Clubs() {
   }
 
   return (
-    <div 
+    <div
       className="clubs-page relative min-h-screen bg-fixed"
       style={{
         backgroundImage: 'url(/images/clubspage.webp)',
@@ -85,11 +85,11 @@ export default function Clubs() {
         backgroundBlendMode: 'multiply',
       }}
     >
-      
+
       {/* Content */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 py-12">
         <ClubsHeader setSearch={setSearchQuery} showSearch={true} />
-        
+
         {filteredClubs.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-white text-lg">No clubs found matching your search.</p>
@@ -98,13 +98,12 @@ export default function Clubs() {
           <>
             <div className="relative min-h-[600px]">
               {/* All cards - disappear immediately when one is selected */}
-              <div className={`grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 md:grid-cols-3 lg:grid-cols-4 ${
-                selectedClubSlug ? 'opacity-0 pointer-events-none' : ''
-              }`}>
+              <div className={`grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 md:grid-cols-3 lg:grid-cols-4 ${selectedClubSlug ? 'opacity-0 pointer-events-none' : ''
+                }`}>
                 {currentClubs.map((club) => (
-                  <ClubsCard 
-                    key={club.slug} 
-                    club={club} 
+                  <ClubsCard
+                    key={club.slug}
+                    club={club}
                     isSelected={false}
                     onCardClick={handleCardClick}
                     shouldHide={false}
@@ -114,9 +113,8 @@ export default function Clubs() {
 
               {/* Large expanded image */}
               {selectedClubSlug && (
-                <div className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-2000 ${
-                  showLargeImage ? 'opacity-100' : 'opacity-0'
-                }`}>
+                <div className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-2000 ${showLargeImage ? 'opacity-100' : 'opacity-0'
+                  }`}>
                   {(() => {
                     const selectedClub = currentClubs.find(club => club.slug === selectedClubSlug)
                     if (!selectedClub) return null
@@ -152,11 +150,10 @@ export default function Clubs() {
                     <button
                       key={page}
                       onClick={() => goToPage(page)}
-                      className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-                        page === currentPage
+                      className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${page === currentPage
                           ? 'text-gray-900 bg-white border border-white'
                           : 'text-white bg-white/10 border border-white/30 hover:bg-white/20'
-                      }`}
+                        }`}
                     >
                       {page}
                     </button>
