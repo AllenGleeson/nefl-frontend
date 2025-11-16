@@ -124,6 +124,11 @@ export default function Fixture({ fixtureData }: FixtureProps) {
         {/* Match Timeline */}
         <MatchTimeline
           events={fixtureData.timelineEvents}
+          homeTeamLogo={fixtureData.homeTeam.logo}
+          awayTeamLogo={fixtureData.awayTeam.logo}
+          homePlayers={fixtureData.homePlayers}
+          awayPlayers={fixtureData.awayPlayers}
+          substitutes={fixtureData.substitutes}
         />
         
         <SubstitutesSection
