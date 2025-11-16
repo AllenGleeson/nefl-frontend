@@ -1,6 +1,8 @@
 "use client";
 
 // src/components/Fixture/MatchTimeline.tsx
+import Image from 'next/image';
+
 interface TimelineEvent {
   id: string;
   minute: number;
@@ -11,11 +13,52 @@ interface TimelineEvent {
   additionalInfo?: string;
 }
 
-interface MatchTimelineProps {
-  events: TimelineEvent[];
+interface Player {
+  id: string;
+  name: string;
+  number: number;
+  team: 'home' | 'away';
 }
 
-export default function MatchTimeline({ events }: MatchTimelineProps) {
+interface MatchTimelineProps {
+  events: TimelineEvent[];
+  homeTeamLogo: string;
+  awayTeamLogo: string;
+  homePlayers: Player[];
+  awayPlayers: Player[];
+  substitutes?: Player[];
+}
+
+export default function MatchTimeline({ events, homeTeamLogo, awayTeamLogo, homePlayers, awayPlayers, substitutes = [] }: MatchTimelineProps) {
+  // Get player data by name and team
+  const getPlayer = (playerName: string, team: 'home' | 'away') => {
+    const players = team === 'home' ? homePlayers : awayPlayers;
+    let player = players.find(p => p.name === playerName);
+    
+    // If not found in main players, check substitutes
+    if (!player && substitutes) {
+      player = substitutes.find(p => p.name === playerName && p.team === team);
+    }
+    
+    return player;
+  };
+
+  // Format player name as "A. Green" (first initial + last name)
+  const formatPlayerName = (playerName: string, team: 'home' | 'away'): string => {
+    const nameParts = playerName.trim().split(' ');
+    if (nameParts.length === 0) return playerName;
+    
+    const firstName = nameParts[0];
+    const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+    
+    if (lastName) {
+      const firstInitial = firstName.charAt(0).toUpperCase();
+      return `${firstInitial}. ${lastName}`;
+    } else {
+      return playerName;
+    }
+  };
+
   const getEventIcon = (type: string) => {
     switch (type) {
       case 'goal': return '⚽';
@@ -91,6 +134,7 @@ export default function MatchTimeline({ events }: MatchTimelineProps) {
           {events.map((event) => {
             const position = getPosition(event.minute);
             const isOvertime = event.minute > 90;
+            const player = getPlayer(event.player, event.team);
             
             return (
               <div
@@ -108,17 +152,38 @@ export default function MatchTimeline({ events }: MatchTimelineProps) {
                 ></div>
                 
                 {/* Event Icon */}
-                <div className="absolute top-14 left-1/2 transform -translate-x-1/2">
+                <div className="absolute top-16 -left-5 relative">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white ${getEventColor(event.type)} shadow-lg`}>
                     <span className="text-lg">{getEventIcon(event.type)}</span>
+                  </div>
+                  {/* Club Logo at bottom right of event icon */}
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full overflow-hidden flex-shrink-0 border-2 border-white shadow-md bg-white">
+                    <Image
+                      src={event.team === 'home' ? homeTeamLogo : awayTeamLogo}
+                      alt={event.team === 'home' ? 'Home team logo' : 'Away team logo'}
+                      width={20}
+                      height={20}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                 </div>
                 
                 {/* Event Info */}
-                <div className="absolute top-25 left-1/2 transform -translate-x-1/2 text-center whitespace-nowrap">
-                  <div className="text-xs font-bold text-gray-200 mb-1">{event.minute}&apos;</div>
-                  <div className={`text-xs font-semibold ${event.team === 'home' ? 'text-blue-300' : 'text-red-300'}`}>
-                    {event.player}
+                {/* Time - centered under icon */}
+                <div className="absolute top-28 -left-2 text-center whitespace-nowrap">
+                  <div className="text-xs font-bold text-gray-200">{event.minute}&apos;</div>
+                </div>
+                {/* Player name - left aligned */}
+                <div className="absolute top-32 -left-8 text-left whitespace-nowrap">
+                  <div className="flex items-center gap-2">
+                    <div className={`text-xs font-semibold ${event.team === 'home' ? 'text-blue-300' : 'text-red-300'}`}>
+                      {formatPlayerName(event.player, event.team)}
+                    </div>
+                    {player?.number && (
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white border-1 border-white shadow-md ${event.team === 'home' ? 'bg-blue-500' : 'bg-red-500'}`}>
+                        {player.number}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
