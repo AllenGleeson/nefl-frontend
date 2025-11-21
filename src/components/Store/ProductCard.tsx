@@ -1,5 +1,6 @@
 "use client"
 
+import { memo } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Product } from "@/types/product"
@@ -8,7 +9,7 @@ type Props = {
     product: Product
 }
 
-export default function ProductCard({ product }: Props) {
+function ProductCard({ product }: Props) {
     return (
         <Link 
             href={`/store/product/${product.slug}`}
@@ -37,3 +38,5 @@ export default function ProductCard({ product }: Props) {
         </Link>
     )
 }
+
+export default memo(ProductCard)

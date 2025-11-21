@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import StoreHeader from "./StoreHeader"
 import StoreFilter from "./StoreFilter"
 import { products } from "@/data/products"
@@ -11,7 +11,10 @@ export default function StoreIndex() {
   const [category, setCategory] = useState("All")
   const [sortBy, setSortBy] = useState("name")
 
-  const categories = Array.from(new Set(products.map((p) => p.category)))
+  const categories = useMemo(
+    () => Array.from(new Set(products.map((p) => p.category))),
+    []
+  )
 
   return (
     <div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Product } from "@/types/product"
 import ProductCard from "./ProductCard"
@@ -22,33 +22,43 @@ export default function ProductGrid({ products, search = "", category = "All", s
         setCurrentPage(1)
     }, [search, category, sortBy])
 
-    // Filter and sort products
-    const filtered = products.filter(
-        (p) =>
-            p.name.toLowerCase().includes(search.toLowerCase()) &&
-            (category === "All" || p.category === category)
+    // Filter products - memoized
+    const filtered = useMemo(() => 
+        products.filter(
+            (p) =>
+                p.name.toLowerCase().includes(search.toLowerCase()) &&
+                (category === "All" || p.category === category)
+        ),
+        [products, search, category]
     )
 
-    const sorted = [...filtered].sort((a, b) => {
-        switch (sortBy) {
-            case "name":
-                return a.name.localeCompare(b.name)
-            case "price-low":
-                return a.price - b.price
-            case "price-high":
-                return b.price - a.price
-            case "category":
-                return a.category.localeCompare(b.category)
-            default:
-                return 0
-        }
-    })
+    // Sort products - memoized
+    const sorted = useMemo(() => 
+        [...filtered].sort((a, b) => {
+            switch (sortBy) {
+                case "name":
+                    return a.name.localeCompare(b.name)
+                case "price-low":
+                    return a.price - b.price
+                case "price-high":
+                    return b.price - a.price
+                case "category":
+                    return a.category.localeCompare(b.category)
+                default:
+                    return 0
+            }
+        }),
+        [filtered, sortBy]
+    )
 
-    // Pagination logic
-    const indexOfLastProduct = currentPage * productsPerPage
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-    const currentProducts = sorted.slice(indexOfFirstProduct, indexOfLastProduct)
-    const totalPages = Math.ceil(sorted.length / productsPerPage)
+    // Pagination logic - memoized
+    const { currentProducts, totalPages } = useMemo(() => {
+        const indexOfLastProduct = currentPage * productsPerPage
+        const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+        const currentProducts = sorted.slice(indexOfFirstProduct, indexOfLastProduct)
+        const totalPages = Math.ceil(sorted.length / productsPerPage)
+        return { currentProducts, totalPages }
+    }, [sorted, currentPage, productsPerPage])
 
     return (
         <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
