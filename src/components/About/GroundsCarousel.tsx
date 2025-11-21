@@ -44,7 +44,6 @@ export default function GroundsCarousel() {
                         fill
                         className="object-cover transition-all duration-500 ease-in-out"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1152px"
-                        unoptimized
                     />
                 </div>
 

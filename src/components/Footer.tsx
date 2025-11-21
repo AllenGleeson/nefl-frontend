@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 const sponsors = [
   {
@@ -97,9 +98,11 @@ export default function Footer() {
                 className="group flex justify-center items-center transition-opacity duration-300 cursor-not-allowed"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <img
+                <Image
                   src={sponsor.logo}
                   alt={`${sponsor.name} logo`}
+                  width={100}
+                  height={50}
                   className="object-contain filter grayscale-0 transition-all duration-300"
                   style={{ maxWidth: '100px', maxHeight: '50px' }}
                   onError={(e) => {

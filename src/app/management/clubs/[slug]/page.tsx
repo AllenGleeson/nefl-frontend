@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 import { Club, Player, Formation, CreateFormationRequest } from '@/types/clubManagement';
 import { FormationViewer, FormationManager } from '@/components/Management/ClubsManagement/Formation';
 
@@ -157,7 +158,7 @@ export default function ClubManagementPage() {
               </button>
               <div className="flex items-center">
                 {club.logo && (
-                  <img src={club.logo} alt={club.name} className="h-10 w-10 rounded-full mr-3" />
+                  <Image src={club.logo} alt={club.name} width={40} height={40} className="h-10 w-10 rounded-full mr-3 object-contain" />
                 )}
                 <div>
                   <h1 className="text-xl font-semibold text-gray-900">{club.name}</h1>

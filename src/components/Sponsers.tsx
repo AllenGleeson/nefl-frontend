@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const sponsors = [
   {
     name: "FAI",
@@ -70,11 +72,12 @@ export default function Sponsors() {
                   animationDelay: `${index * 100}ms`
                 }}
               >
-                <div className="w-full h-12 flex items-center justify-center px-2">
-                  <img
+                <div className="w-full h-12 flex items-center justify-center px-2 relative">
+                  <Image
                     src={sponsor.logo}
                     alt={`${sponsor.name} logo`}
-                    className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300 w-full h-full"
+                    fill
+                    className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300"
                     onError={(e) => {
                       console.log('Image failed to load:', sponsor.logo);
                       e.currentTarget.style.border = `2px solid var(--md-error)`;
@@ -105,11 +108,12 @@ export default function Sponsors() {
                     animationDelay: `${index * 100}ms`
                   }}
                 >
-                  <div className="w-full h-20 md:h-24 flex items-center justify-center px-2">
-                    <img
+                  <div className="w-full h-20 md:h-24 flex items-center justify-center px-2 relative">
+                    <Image
                       src={sponsor.logo}
                       alt={`${sponsor.name} logo`}
-                      className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300 w-full h-full"
+                      fill
+                      className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300"
                       onError={(e) => {
                         console.log('Image failed to load:', sponsor.logo);
                         e.currentTarget.style.border = `2px solid var(--md-error)`;
@@ -138,11 +142,12 @@ export default function Sponsors() {
                     width: 'calc(25% - 0.75rem)'
                   }}
                 >
-                  <div className="w-full h-20 md:h-24 flex items-center justify-center px-2">
-                    <img
+                  <div className="w-full h-20 md:h-24 flex items-center justify-center px-2 relative">
+                    <Image
                       src={sponsor.logo}
                       alt={`${sponsor.name} logo`}
-                      className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300 w-full h-full"
+                      fill
+                      className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300"
                       onError={(e) => {
                         console.log('Image failed to load:', sponsor.logo);
                         e.currentTarget.style.border = `2px solid var(--md-error)`;
