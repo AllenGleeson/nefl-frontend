@@ -32,7 +32,6 @@ interface MatchTimelineProps {
 
 // Constants
 const REGULAR_TIME_MINUTES = 90;
-const OVERTIME_MAX_MINUTES = 120;
 const OVERTIME_EXTRA_PERCENT = 10;
 
 // Helper functions moved outside component for better performance
