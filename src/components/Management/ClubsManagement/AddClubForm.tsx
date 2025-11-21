@@ -361,6 +361,7 @@ export default function AddClubForm({ isOpen, onClose, onSuccess }: Props) {
               {formData.logo && (
                 <div className="flex items-center space-x-4">
                   <div className="w-20 h-20 border border-gray-300 rounded-lg overflow-hidden bg-gray-50">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={URL.createObjectURL(formData.logo)}
                       alt="Logo preview"

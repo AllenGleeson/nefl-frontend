@@ -1,5 +1,6 @@
 import { newsPosts } from "@/data/newsPosts"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function FeaturedStories() {
   const featuredPosts = newsPosts.filter(post => post.isFeatured)
@@ -24,11 +25,14 @@ function FeaturedCard({ post }: Props) {
   return (
     <Link href={`/news/${post.slug}`} className="block group">
       <article className="overflow-hidden hover:shadow-lg transition-all duration-300">
-        <img
-          src={post.image}
-          alt={post.title}
-          className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+        <div className="relative w-full h-56 sm:h-64 overflow-hidden">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
         <div className="p-4 sm:p-6 space-y-2 sm:space-y-3">
           <h2 className="text-base sm:text-lg font-semibold group-hover:text-[var(--md-primary)] transition-colors text-[var(--md-on-surface)] line-clamp-2">{post.title}</h2>
           <p className="text-sm text-[var(--md-on-surface-variant)] line-clamp-2">{post.excerpt}</p>

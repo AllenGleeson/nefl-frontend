@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getRelatedNewsPosts } from '@/utils/news'
 
 type Props = {
@@ -24,11 +25,14 @@ export default function RelatedArticles({ currentPostId, limit = 3 }: Props) {
             className="block group"
           >
             <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <img
-                src={relatedPost.image}
-                alt={relatedPost.title}
-                className="w-full h-48 object-cover"
-              />
+              <div className="relative w-full h-48 overflow-hidden">
+                <Image
+                  src={relatedPost.image}
+                  alt={relatedPost.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                   {relatedPost.title}

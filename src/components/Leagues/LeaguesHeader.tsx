@@ -1,6 +1,7 @@
 // src/components/Leagues/LeaguesHeader.tsx
 "use client";
 
+import Image from "next/image";
 import { getLeagueLogo } from "@/utils/leagueLogos";
 
 type Gender = 'Men' | 'Women';
@@ -148,9 +149,11 @@ export default function LeaguesHeader({
                 }`}
               >
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-[var(--md-primary-container)] rounded-full flex items-center justify-center">
-                  <img 
+                  <Image 
                     src={getLeagueLogo(league)} 
                     alt={`${league} Logo`} 
+                    width={20}
+                    height={20}
                     className="w-3 h-3 sm:w-5 sm:h-5 object-contain"
                   />
                 </div>

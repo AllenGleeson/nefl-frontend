@@ -2,6 +2,7 @@
 
 // src/components/Management/FixturesManagement/FixturesList.tsx
 import { useState, useMemo } from 'react';
+import Image from 'next/image';
 import ScoreEntry from './ScoreEntry';
 import EditFixtureForm from './EditFixtureForm';
 
@@ -332,9 +333,11 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
                 <div className="flex-1">
                   <div className="flex items-center justify-between sm:justify-center space-x-2 sm:space-x-4">
                     <div className="text-center min-w-0 flex-1 flex flex-col items-center">
-                      <img 
+                      <Image 
                         src={fixture.logo} 
                         alt={`${fixture.homeTeam} logo`}
+                        width={40}
+                        height={40}
                         className="w-8 h-8 sm:w-10 sm:h-10 object-contain mb-1"
                       />
                       <p className="text-sm sm:text-base font-semibold truncate">{fixture.homeTeam}</p>
@@ -347,9 +350,11 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
                       <p className="text-xs text-gray-600 hidden sm:block">{fixture.date} {fixture.time}</p>
                     </div>
                     <div className="text-center min-w-0 flex-1 flex flex-col items-center">
-                      <img 
+                      <Image 
                         src={fixture.logo} 
                         alt={`${fixture.awayTeam} logo`}
+                        width={40}
+                        height={40}
                         className="w-8 h-8 sm:w-10 sm:h-10 object-contain mb-1"
                       />
                       <p className="text-sm sm:text-base font-semibold truncate">{fixture.awayTeam}</p>

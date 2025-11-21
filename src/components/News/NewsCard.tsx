@@ -1,23 +1,26 @@
+import { memo } from "react"
 import { NewsPost } from "@/data/newsPosts"
 import Badge from "./Badge"
 import Link from "next/link"
+import Image from "next/image"
 
 type Props = {
   post: NewsPost
   viewMode?: 'grid' | 'list'
 }
 
-export default function NewsCard({ post, viewMode = 'grid' }: Props) {
+function NewsCard({ post, viewMode = 'grid' }: Props) {
   if (viewMode === 'list') {
     return (
       <Link href={`/news/${post.slug}`} className="block group">
         <article className="overflow-hidden hover:shadow-lg transition-all duration-300">
           <div className="flex flex-col sm:flex-row h-auto sm:h-56">
             <div className="relative w-full sm:w-56 h-56 sm:h-full flex-shrink-0 overflow-hidden">
-              <img
+              <Image
                 src={post.image}
                 alt={post.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div className="p-4 sm:p-6 flex-1 flex flex-col sm:flex-col justify-between">
@@ -50,10 +53,11 @@ export default function NewsCard({ post, viewMode = 'grid' }: Props) {
     <Link href={`/news/${post.slug}`} className="block group">
       <article className="overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <div className="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden">
-          <img
+          <Image
             src={post.image}
             alt={post.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-500"
           />
         </div>
         <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between sm:min-h-[200px]">
@@ -81,3 +85,5 @@ export default function NewsCard({ post, viewMode = 'grid' }: Props) {
     </Link>
   )
 }
+
+export default memo(NewsCard)
