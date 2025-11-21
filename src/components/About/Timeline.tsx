@@ -69,7 +69,6 @@ export default function Timeline() {
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                            unoptimized
                         />
                     </div>
                 </div>
@@ -104,7 +103,6 @@ export default function Timeline() {
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
-                            unoptimized
                         />
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 "use client";
 
 // src/components/Fixture/MatchTimeline.tsx
+import { useMemo, useCallback } from 'react';
 import Image from 'next/image';
 
 interface TimelineEvent {
@@ -29,9 +30,46 @@ interface MatchTimelineProps {
   substitutes?: Player[];
 }
 
+// Constants
+const REGULAR_TIME_MINUTES = 90;
+const OVERTIME_MAX_MINUTES = 120;
+const OVERTIME_EXTRA_PERCENT = 10;
+
+// Helper functions moved outside component for better performance
+const getEventIcon = (type: string) => {
+  switch (type) {
+    case 'goal': return '⚽';
+    case 'substitution': return '🔄';
+    case 'card': return '🟨';
+    case 'penalty': return '⚽';
+    default: return '📝';
+  }
+};
+
+const getEventColor = (type: string) => {
+  switch (type) {
+    case 'goal': return 'bg-green-500';
+    case 'substitution': return 'bg-blue-500';
+    case 'card': return 'bg-yellow-500';
+    case 'penalty': return 'bg-purple-500';
+    default: return 'bg-gray-500';
+  }
+};
+
+// Calculate position on timeline (0-90 minutes = 0-100%, overtime extends beyond)
+const getPosition = (minute: number) => {
+  if (minute <= REGULAR_TIME_MINUTES) {
+    return (minute / REGULAR_TIME_MINUTES) * 100;
+  } else {
+    // Overtime extends beyond 100%
+    const overtimePercent = ((minute - REGULAR_TIME_MINUTES) / 30) * OVERTIME_EXTRA_PERCENT;
+    return 100 + overtimePercent;
+  }
+};
+
 export default function MatchTimeline({ events, homeTeamLogo, awayTeamLogo, homePlayers, awayPlayers, substitutes = [] }: MatchTimelineProps) {
   // Get player data by name and team
-  const getPlayer = (playerName: string, team: 'home' | 'away') => {
+  const getPlayer = useCallback((playerName: string, team: 'home' | 'away') => {
     const players = team === 'home' ? homePlayers : awayPlayers;
     let player = players.find(p => p.name === playerName);
     
@@ -41,10 +79,10 @@ export default function MatchTimeline({ events, homeTeamLogo, awayTeamLogo, home
     }
     
     return player;
-  };
+  }, [homePlayers, awayPlayers, substitutes]);
 
   // Format player name as "A. Green" (first initial + last name)
-  const formatPlayerName = (playerName: string, team: 'home' | 'away'): string => {
+  const formatPlayerName = useCallback((playerName: string): string => {
     const nameParts = playerName.trim().split(' ');
     if (nameParts.length === 0) return playerName;
     
@@ -57,43 +95,12 @@ export default function MatchTimeline({ events, homeTeamLogo, awayTeamLogo, home
     } else {
       return playerName;
     }
-  };
+  }, []);
 
-  const getEventIcon = (type: string) => {
-    switch (type) {
-      case 'goal': return '⚽';
-      case 'substitution': return '🔄';
-      case 'card': return '🟨';
-      case 'penalty': return '⚽';
-      default: return '📝';
-    }
-  };
-
-  const getEventColor = (type: string) => {
-    switch (type) {
-      case 'goal': return 'bg-green-500';
-      case 'substitution': return 'bg-blue-500';
-      case 'card': return 'bg-yellow-500';
-      case 'penalty': return 'bg-purple-500';
-      default: return 'bg-gray-500';
-    }
-  };
-
-  // Find max minute (for overtime calculation)
-  const maxMinute = Math.max(...events.map(e => e.minute), 90);
-  const hasOvertime = maxMinute > 90;
-  const overtimeMinutes = hasOvertime ? maxMinute - 90 : 0;
-
-  // Calculate position on timeline (0-90 minutes = 0-100%, overtime extends beyond)
-  const getPosition = (minute: number) => {
-    if (minute <= 90) {
-      return (minute / 90) * 100;
-    } else {
-      // Overtime extends beyond 100%
-      const overtimePercent = ((minute - 90) / 30) * 10; // Max 10% extra for up to 120 minutes
-      return 100 + overtimePercent;
-    }
-  };
+  // Find max minute (for overtime calculation) - memoized
+  const maxMinute = useMemo(() => Math.max(...events.map(e => e.minute), REGULAR_TIME_MINUTES), [events]);
+  const hasOvertime = useMemo(() => maxMinute > REGULAR_TIME_MINUTES, [maxMinute]);
+  const overtimeMinutes = useMemo(() => hasOvertime ? maxMinute - REGULAR_TIME_MINUTES : 0, [hasOvertime, maxMinute]);
 
   return (
     <div className="rounded-lg py-0">
@@ -133,7 +140,7 @@ export default function MatchTimeline({ events, homeTeamLogo, awayTeamLogo, home
           {/* Events */}
           {events.map((event) => {
             const position = getPosition(event.minute);
-            const isOvertime = event.minute > 90;
+            const isOvertime = event.minute > REGULAR_TIME_MINUTES;
             const player = getPlayer(event.player, event.team);
             
             return (
@@ -177,7 +184,7 @@ export default function MatchTimeline({ events, homeTeamLogo, awayTeamLogo, home
                 <div className="absolute top-32 -left-8 text-left whitespace-nowrap">
                   <div className="flex items-center gap-2">
                     <div className={`text-xs font-semibold ${event.team === 'home' ? 'text-blue-300' : 'text-red-300'}`}>
-                      {formatPlayerName(event.player, event.team)}
+                      {formatPlayerName(event.player)}
                     </div>
                     {player?.number && (
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white border-1 border-white shadow-md ${event.team === 'home' ? 'bg-blue-500' : 'bg-red-500'}`}>

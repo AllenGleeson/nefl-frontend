@@ -1,6 +1,7 @@
 "use client";
 
 // src/components/Fixture/SubstitutesSection.tsx
+import { useMemo } from 'react';
 interface Player {
   id: string;
   name: string;
@@ -123,8 +124,11 @@ function calculatePlayerStats(playerName: string, team: 'home' | 'away', events:
 }
 
 export default function SubstitutesSection({ homePlayers, awayPlayers, substitutes, timelineEvents, homeManager, awayManager }: SubstitutesSectionProps) {
-  const homeSubs = substitutes.filter(sub => sub.team === 'home');
-  const awaySubs = substitutes.filter(sub => sub.team === 'away');
+  // Memoize filtered substitutes
+  const { homeSubs, awaySubs } = useMemo(() => ({
+    homeSubs: substitutes.filter(sub => sub.team === 'home'),
+    awaySubs: substitutes.filter(sub => sub.team === 'away')
+  }), [substitutes]);
 
   return (
     <div className="rounded-lg p-6 mb-6 bg-white/80 backdrop-blur-sm shadow-sm">
@@ -171,13 +175,13 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">⚽</span>
                           {stats.goals === 1 ? (
-                            <span className="text-xs font-bold text-gray-700">{stats.goalMinutes[0]}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.goalMinutes[0]}&apos;</span>
                           ) : (
                             <>
                               <span className="text-xs font-bold text-gray-700">{stats.goals}</span>
                               {/* Goals Tooltip */}
                               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
-                                {stats.goalMinutes.map(m => `${m}'`).join(', ')}
+                                {stats.goalMinutes.map(m => `${m}&apos;`).join(', ')}
                                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
                               </div>
                             </>
@@ -188,13 +192,13 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">🟨</span>
                           {stats.yellowCards === 1 ? (
-                            <span className="text-xs font-bold text-gray-700">{stats.yellowCardMinutes[0]}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.yellowCardMinutes[0]}&apos;</span>
                           ) : (
                             <>
                               <span className="text-xs font-bold text-gray-700">{stats.yellowCards}</span>
                               {/* Yellow Cards Tooltip */}
                               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
-                                {stats.yellowCardMinutes.map(m => `${m}'`).join(', ')}
+                                {stats.yellowCardMinutes.map(m => `${m}&apos;`).join(', ')}
                                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
                               </div>
                             </>
@@ -205,13 +209,13 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">🟥</span>
                           {stats.redCards === 1 ? (
-                            <span className="text-xs font-bold text-gray-700">{stats.redCardMinutes[0]}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.redCardMinutes[0]}&apos;</span>
                           ) : (
                             <>
                               <span className="text-xs font-bold text-gray-700">{stats.redCards}</span>
                               {/* Red Cards Tooltip */}
                               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
-                                {stats.redCardMinutes.map(m => `${m}'`).join(', ')}
+                                {stats.redCardMinutes.map(m => `${m}&apos;`).join(', ')}
                                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
                               </div>
                             </>
@@ -221,7 +225,7 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                       {stats.substitution && (
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">🔄</span>
-                          <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}'</span>
+                          <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}&apos;</span>
                           {/* Substitution Tooltip */}
                           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
                             {stats.substitution.wasSubstitutedOut 
@@ -285,7 +289,7 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         {stats.substitution && (
                           <div className="relative group flex flex-col items-center">
                             <span className="text-lg">🔄</span>
-                            <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}&apos;</span>
                             {/* Substitution Tooltip */}
                             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
                               {stats.substitution.wasSubstitutedOut 
@@ -347,13 +351,13 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">⚽</span>
                           {stats.goals === 1 ? (
-                            <span className="text-xs font-bold text-gray-700">{stats.goalMinutes[0]}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.goalMinutes[0]}&apos;</span>
                           ) : (
                             <>
                               <span className="text-xs font-bold text-gray-700">{stats.goals}</span>
                               {/* Goals Tooltip */}
                               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
-                                {stats.goalMinutes.map(m => `${m}'`).join(', ')}
+                                {stats.goalMinutes.map(m => `${m}&apos;`).join(', ')}
                                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
                               </div>
                             </>
@@ -364,13 +368,13 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">🟨</span>
                           {stats.yellowCards === 1 ? (
-                            <span className="text-xs font-bold text-gray-700">{stats.yellowCardMinutes[0]}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.yellowCardMinutes[0]}&apos;</span>
                           ) : (
                             <>
                               <span className="text-xs font-bold text-gray-700">{stats.yellowCards}</span>
                               {/* Yellow Cards Tooltip */}
                               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
-                                {stats.yellowCardMinutes.map(m => `${m}'`).join(', ')}
+                                {stats.yellowCardMinutes.map(m => `${m}&apos;`).join(', ')}
                                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
                               </div>
                             </>
@@ -381,13 +385,13 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">🟥</span>
                           {stats.redCards === 1 ? (
-                            <span className="text-xs font-bold text-gray-700">{stats.redCardMinutes[0]}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.redCardMinutes[0]}&apos;</span>
                           ) : (
                             <>
                               <span className="text-xs font-bold text-gray-700">{stats.redCards}</span>
                               {/* Red Cards Tooltip */}
                               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
-                                {stats.redCardMinutes.map(m => `${m}'`).join(', ')}
+                                {stats.redCardMinutes.map(m => `${m}&apos;`).join(', ')}
                                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
                               </div>
                             </>
@@ -397,7 +401,7 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                       {stats.substitution && (
                         <div className="relative group flex flex-col items-center">
                           <span className="text-lg">🔄</span>
-                          <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}'</span>
+                          <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}&apos;</span>
                           {/* Substitution Tooltip */}
                           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
                             {stats.substitution.wasSubstitutedOut 
@@ -461,7 +465,7 @@ export default function SubstitutesSection({ homePlayers, awayPlayers, substitut
                         {stats.substitution && (
                           <div className="relative group flex flex-col items-center">
                             <span className="text-lg">🔄</span>
-                            <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}'</span>
+                            <span className="text-xs font-bold text-gray-700">{stats.substitution.minute}&apos;</span>
                             {/* Substitution Tooltip */}
                             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 whitespace-nowrap z-20">
                               {stats.substitution.wasSubstitutedOut 

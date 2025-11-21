@@ -1,7 +1,7 @@
 "use client";
 
 // src/components/Fixture/FormationsSection.tsx
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Pitch from './Pitch';
 
 interface Player {
@@ -27,16 +27,16 @@ interface FormationsSectionProps {
   awayManager: Manager;
 }
 
-export default function FormationsSection({ homeFormation, awayFormation, homePlayers, awayPlayers, homeManager, awayManager }: FormationsSectionProps) {
+export default function FormationsSection({ homeFormation, awayFormation, homePlayers, awayPlayers }: FormationsSectionProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
   // Parse formation string (e.g., "4-4-2") and return array [defenders, midfielders, forwards]
-  const parseFormation = (formation: string): number[] => {
+  const parseFormation = useCallback((formation: string): number[] => {
     return formation.split('-').map(Number); // [4, 4, 2] for "4-4-2"
-  };
+  }, []);
 
   // Get player positions based on formation
-  const getPlayerPositions = (players: Player[], formation: string, team: 'home' | 'away') => {
+  const getPlayerPositions = useCallback((players: Player[], formation: string, team: 'home' | 'away') => {
     const [defCount, midCount, fwdCount] = parseFormation(formation);
     const positions: Array<{ player: Player; x: number; y: number }> = [];
 
@@ -89,10 +89,22 @@ export default function FormationsSection({ homeFormation, awayFormation, homePl
     }
 
     return positions;
-  };
+  }, []);
 
-  const homePositions = getPlayerPositions(homePlayers, homeFormation, 'home');
-  const awayPositions = getPlayerPositions(awayPlayers, awayFormation, 'away');
+  // Memoize position calculations
+  const homePositions = useMemo(
+    () => getPlayerPositions(homePlayers, homeFormation, 'home'),
+    [homePlayers, homeFormation, getPlayerPositions]
+  );
+  
+  const awayPositions = useMemo(
+    () => getPlayerPositions(awayPlayers, awayFormation, 'away'),
+    [awayPlayers, awayFormation, getPlayerPositions]
+  );
+
+  const handlePlayerClick = useCallback((player: Player) => {
+    setSelectedPlayer(player);
+  }, []);
 
   return (
     <div className="rounded-lg px-6 py-4">
@@ -108,7 +120,7 @@ export default function FormationsSection({ homeFormation, awayFormation, homePl
               left: `${x}%`,
               top: `${y}%`
             }}
-            onClick={() => setSelectedPlayer(player)}
+            onClick={() => handlePlayerClick(player)}
           >
             <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold bg-blue-500 text-white border-2 border-white shadow-lg">
               {player.number}
@@ -126,7 +138,7 @@ export default function FormationsSection({ homeFormation, awayFormation, homePl
               left: `${x}%`,
               top: `${y}%`
             }}
-            onClick={() => setSelectedPlayer(player)}
+            onClick={() => handlePlayerClick(player)}
           >
             <div className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold bg-red-500 text-white border-2 border-white shadow-lg">
               {player.number}

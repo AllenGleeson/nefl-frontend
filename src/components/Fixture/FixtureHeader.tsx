@@ -19,7 +19,7 @@ interface FixtureHeaderProps {
   league?: string;
 }
 
-export default function FixtureHeader({ homeTeam, awayTeam, status, date, league }: FixtureHeaderProps) {
+export default function FixtureHeader({ homeTeam, awayTeam, date, league }: FixtureHeaderProps) {
   return (
     <div className="rounded-lg p-6 mt-16 mb-6">
       <div className="flex items-center justify-between mb-4">
