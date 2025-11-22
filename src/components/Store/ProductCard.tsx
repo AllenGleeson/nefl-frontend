@@ -13,7 +13,7 @@ function ProductCard({ product }: Props) {
     return (
         <Link 
             href={`/store/product/${product.slug}`}
-            className="block flex flex-col group cursor-pointer bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300"
+            className="block flex flex-col group cursor-pointer bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] overflow-hidden hover:shadow-lg transition-all duration-300"
         >
             {/* Product Image */}
             <div className="relative w-full h-48 sm:h-64 md:h-80 overflow-hidden">
