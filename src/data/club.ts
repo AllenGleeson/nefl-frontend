@@ -1,6 +1,5 @@
 // /data/clubs.ts
 import { getClubLogo } from "@/utils/clubLogos";
-import { localLeagueTablesData } from "@/data/localLeagueTables";
 
 export type Fixture = {
   date: string;
@@ -23,17 +22,6 @@ export type Club = {
   ground: string;
   bio: string;
   website?: string;
-
-  // 🔽 extra fields for club detail page
-  stats?: {
-    leaguePosition: number;
-    matchesPlayed: number;
-    wins: number;
-    draws: number;
-    losses: number;
-    goalsFor: number;
-    goalsAgainst: number;
-  };
 
   squad?: Player[];
 
@@ -69,25 +57,6 @@ export type Club = {
   };
 };
 
-// Helper function to get stats from league tables
-const getClubStats = (clubName: string, leagueName: string) => {
-  const leagueData = localLeagueTablesData[leagueName];
-  if (!leagueData) return undefined;
-  
-  const team = leagueData.find(t => t.name === clubName);
-  if (!team) return undefined;
-  
-  return {
-    leaguePosition: team.position,
-    matchesPlayed: team.played,
-    wins: team.won,
-    draws: team.drawn,
-    losses: team.lost,
-    goalsFor: team.goalsFor,
-    goalsAgainst: team.goalsAgainst,
-  };
-};
-
 export const clubs: Club[] = [
   {
     name: "Parkvilla FC",
@@ -98,7 +67,6 @@ export const clubs: Club[] = [
     ground: "Parkvilla Stadium",
     bio: "League leaders with a strong attacking style and excellent defensive record. Consistently competing at the top of the Premier Division.",
     website: "https://example.com",
-    stats: getClubStats("Parkvilla FC", "UHY Farrelly Dawe White Premier Division"),
     squad: [
       { name: "John Smith", position: "GK", number: 1 },
       { name: "David Kelly", position: "GK", number: 13 },
@@ -181,7 +149,6 @@ export const clubs: Club[] = [
     ground: "Duleek Sports Ground",
     bio: "Strong Premier Division side with excellent defensive record and consistent performances. Always challenging for league honors.",
     website: "https://example.com/duleek-afc",
-    stats: getClubStats("Duleek AFC", "UHY Farrelly Dawe White Premier Division"),
     squad: [
       { name: "Brian Murphy", position: "GK", number: 1 },
       { name: "Sean O'Connor", position: "GK", number: 16 },
@@ -219,7 +186,6 @@ export const clubs: Club[] = [
     ground: "Rock Park",
     bio: "Established Premier Division side with loyal support and a rich tradition of success. Known for consistent performances.",
     website: "https://example.com/rock-celtic-fc",
-    stats: getClubStats("Rock Celtic FC", "UHY Farrelly Dawe White Premier Division"),
     squad: [
       { name: "David Murphy", position: "GK", number: 1 },
       { name: "Sean Kelly", position: "GK", number: 12 },
@@ -301,7 +267,6 @@ export const clubs: Club[] = [
     ground: "Quay Park",
     bio: "Competitive Premier Division side with a strong attacking style. Known for exciting football and passionate local support.",
     website: "https://example.com/quay-celtic-fc",
-    stats: getClubStats("Quay Celtic FC", "UHY Farrelly Dawe White Premier Division"),
     fixtures: [
       { date: "16/08/2025", opponent: "Bellurgan United", result: "2 - 0" },
       { date: "19/09/2025", opponent: "Glenmuir FC" },
@@ -321,7 +286,6 @@ export const clubs: Club[] = [
     ground: "Bellurgan Park",
     bio: "Established Premier Division club with a proud history and strong community presence. Known for developing local talent.",
     website: "https://example.com/bellurgan-united",
-    stats: getClubStats("Bellurgan United", "UHY Farrelly Dawe White Premier Division"),
     fixtures: [
       { date: "16/08/2025", opponent: "Quay Celtic FC", result: "0 - 2" },
       { date: "30/08/2025", opponent: "Quay Celtic FC" },
@@ -342,7 +306,6 @@ export const clubs: Club[] = [
     ground: "Johnstown Park",
     bio: "Division 1 leaders with an impressive record. Strong attacking team with excellent goal difference and consistent performances.",
     website: "https://example.com/johnstown-fc",
-    stats: getClubStats("Johnstown FC", "O Neills Sportswear Division 1"),
     squad: [
       { name: "Michael Reilly", position: "GK", number: 1 },
       { name: "Tommy Walsh", position: "GK", number: 13 },
@@ -384,7 +347,6 @@ export const clubs: Club[] = [
     ground: "Townspark, Ardee",
     bio: "A historic club known for nurturing young talent in County Louth with a strong emphasis on youth development. Currently competing strongly in Division 1.",
     website: "https://example.com/ardee-celtic",
-    stats: getClubStats("Ardee Celtic FC", "O Neills Sportswear Division 1"),
     squad: [
       { name: "Tommy Murphy", position: "GK", number: 1 },
       { name: "James O'Brien", position: "GK", number: 12 },
@@ -466,7 +428,6 @@ export const clubs: Club[] = [
     ground: "Torro Sports Centre",
     bio: "Competitive Division 1 side with strong attacking capabilities. Known for exciting matches and passionate local support.",
     website: "https://example.com/torro-united-fc",
-    stats: getClubStats("Torro United FC", "O Neills Sportswear Division 1"),
     fixtures: [
       { date: "17/08/2025", opponent: "Ardee Celtic FC", result: "2 - 0" },
       { date: "20/09/2025", opponent: "Johnstown FC", result: "1 - 3" },
@@ -487,7 +448,6 @@ export const clubs: Club[] = [
     ground: "Robinstown Ground",
     bio: "Solid Division 1 team with consistent performances. Known for their disciplined approach and strong team spirit.",
     website: "https://example.com/robinstown-fc",
-    stats: getClubStats("Robinstown FC", "O Neills Sportswear Division 1"),
     fixtures: [
       { date: "17/08/2025", opponent: "Kingscourt Harps AFC", result: "3 - 1" },
       { date: "20/09/2025", opponent: "Ardee Celtic FC", result: "2 - 2" },
@@ -508,7 +468,6 @@ export const clubs: Club[] = [
     ground: "O'Rourke Park, Kingscourt",
     bio: "Cavan's representative club, blending tradition and ambition with a focus on developing local talent. Competing in Division 1.",
     website: "https://example.com/kingscourt-harps-afc",
-    stats: getClubStats("Kingscourt Harps AFC", "O Neills Sportswear Division 1"),
     squad: [
       { name: "Michael Murphy", position: "GK", number: 1 },
       { name: "Tommy Kelly", position: "GK", number: 13 },
@@ -549,7 +508,6 @@ export const clubs: Club[] = [
     ground: "The Green, Athboy",
     bio: "Passionate local side known for grit and hard-fought victories with strong community backing. Competing in Division 1.",
     website: "https://example.com/athboy-celtic-fc",
-    stats: getClubStats("Athboy Celtic FC", "O Neills Sportswear Division 1"),
     squad: [
       { name: "Brian Murphy", position: "GK", number: 1 },
       { name: "Sean Kelly", position: "GK", number: 15 },
@@ -590,7 +548,6 @@ export const clubs: Club[] = [
     ground: "Walshestown Ground",
     bio: "Division 1 side with a strong community focus. Known for their fighting spirit and commitment to developing local players.",
     website: "https://example.com/walshestown-fc",
-    stats: getClubStats("Walshestown FC", "O Neills Sportswear Division 1"),
     fixtures: [
       { date: "16/08/2025", opponent: "Athboy Celtic FC", result: "2 - 4" },
       { date: "27/09/2025", opponent: "Navan Town Cosmos", result: "1 - 0" },
@@ -611,7 +568,6 @@ export const clubs: Club[] = [
     ground: "Tully Park, Trim",
     bio: "Youth development and grassroots football are at the heart of the club, with a focus on community engagement. Competing in both Premier Division and Division 1.",
     website: "https://example.com/trim-celtic",
-    stats: getClubStats("Trim Celtic AFC", "UHY Farrelly Dawe White Premier Division"),
     squad: [
       { name: "Tommy O'Brien", position: "GK", number: 1 },
       { name: "James Murphy", position: "GK", number: 14 },
@@ -650,7 +606,6 @@ export const clubs: Club[] = [
     ground: "Navan Sports Centre",
     bio: "Relatively new club with ambitious plans. Competing in Division 1 with a focus on building a strong foundation.",
     website: "https://example.com/navan-town-cosmos",
-    stats: getClubStats("Navan Town Cosmos", "O Neills Sportswear Division 1"),
     fixtures: [
       { date: "29/08/2025", opponent: "Walshestown FC" },
       { date: "27/09/2025", opponent: "Walshestown FC", result: "0 - 1" },
@@ -670,7 +625,6 @@ export const clubs: Club[] = [
     ground: "Glenmuir Ground",
     bio: "Premier Division side with a long history in the NEFL. Known for their commitment to the local community.",
     website: "https://example.com/glenmuir-fc",
-    stats: getClubStats("Glenmuir FC", "UHY Farrelly Dawe White Premier Division"),
     fixtures: [
       { date: "22/08/2025", opponent: "Albion Rovers FC" },
       { date: "19/09/2025", opponent: "Quay Celtic FC" },
@@ -690,7 +644,6 @@ export const clubs: Club[] = [
     ground: "Carrick Sports Grounds",
     bio: "One of the fastest-growing clubs in Monaghan with strong youth academies and ambitious plans for the future. Competing in the Premier Division.",
     website: "https://example.com/carrick-rovers-afc",
-    stats: getClubStats("Carrick Rovers AFC", "UHY Farrelly Dawe White Premier Division"),
     squad: [
       { name: "David Murphy", position: "GK", number: 1 },
       { name: "Sean Kelly", position: "GK", number: 12 },
@@ -729,7 +682,6 @@ export const clubs: Club[] = [
     ground: "Kentstown Park",
     bio: "Premier Division club with a strong local following. Known for their competitive spirit and commitment to the game.",
     website: "https://example.com/kentstown-rovers-fc",
-    stats: getClubStats("Kentstown Rovers FC", "UHY Farrelly Dawe White Premier Division"),
     fixtures: [
       { date: "15/08/2025", opponent: "Rock Celtic FC", result: "0 - 3" },
       { date: "26/09/2025", opponent: "Bellurgan United" },
@@ -749,7 +701,6 @@ export const clubs: Club[] = [
     ground: "Navan Sports Centre",
     bio: "Premier Division side with a proud history. Working hard to maintain their position in the top flight.",
     website: "https://example.com/albion-rovers-fc",
-    stats: getClubStats("Albion Rovers FC", "UHY Farrelly Dawe White Premier Division"),
     fixtures: [
       { date: "22/08/2025", opponent: "Glenmuir FC" },
       { date: "19/09/2025", opponent: "Rock Celtic FC", result: "1 - 2" },
@@ -769,7 +720,6 @@ export const clubs: Club[] = [
     ground: "BJD Ground",
     bio: "Division 2 leaders with an exceptional record. Strong attacking team with excellent defensive organization.",
     website: "https://example.com/bjd-celtic",
-    stats: getClubStats("BJD Celtic", "PM Blinds & Shutters Division 2"),
     fixtures: [
       { date: "21/09/2025", opponent: "Black Bull FC", result: "4 - 0" },
       { date: "05/10/2025", opponent: "Enfield Celtic FC", result: "0 - 2" },
@@ -788,7 +738,6 @@ export const clubs: Club[] = [
     ground: "Gortakeegan",
     bio: "Community-focused club representing Monaghan with dedication and passion. Currently leading Division 3.",
     website: "https://example.com/monaghan-united-fc",
-    stats: getClubStats("Monaghan United FC", "Superior Racking & Shelving Division 3"),
     fixtures: [
       { date: "28/09/2025", opponent: "Monaghan Town FC", result: "2 - 1" },
     ],
@@ -805,7 +754,6 @@ export const clubs: Club[] = [
     ground: "Gortakeegan Grounds",
     bio: "A proud Monaghan side with deep community roots and competitive spirit. Competing in Division 3.",
     website: "https://example.com",
-    stats: getClubStats("Monaghan Town FC", "Superior Racking & Shelving Division 3"),
     squad: [
       { name: "John Smith", position: "GK", number: 1 },
       { name: "David Kelly", position: "GK", number: 13 },
