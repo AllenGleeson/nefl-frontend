@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { isApiError } from "@/types/ApiError";
+import { isApiError } from "../types/ApiError";
 
 // Mock login function for demo - in production, this would call the actual API
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

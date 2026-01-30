@@ -9,6 +9,10 @@ interface ClubPageProps {
   }>;
 }
 
+export async function generateStaticParams() {
+  return clubs.map((club) => ({ slug: club.slug }));
+}
+
 export default async function ClubPage({ params }: ClubPageProps) {
   const { slug } = await params;
   const club = clubs.find((club) => club.slug === slug);
