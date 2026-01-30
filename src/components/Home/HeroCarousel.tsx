@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { newsPosts } from "@/data/newsPosts";
+import { assetUrl } from "@/utils/assetUrl";
 
 // Map slides to newsPosts - using first 10 posts
 const slides = [
@@ -12,7 +13,7 @@ const slides = [
     title: "Premier Football Experience",
     desc: "The premier football league in the North East. Follow your favorite teams, check fixtures, and stay updated with the latest results.",
     cta1: "Read More",
-    img: "/images/news/news-9.webp",
+    img: assetUrl("/images/news/news-9.webp"),
     slug: newsPosts[0]?.slug || "",
   },
   {
@@ -21,7 +22,7 @@ const slides = [
     title: "Upcoming Big Clash",
     desc: "Don't miss this weekend's big clash — get your tickets now and support your team!",
     cta1: "Read More",
-    img: "/images/news/news-2.webp",
+    img: assetUrl("/images/news/news-2.webp"),
     slug: newsPosts[1]?.slug || "",
   },
   {
@@ -30,7 +31,7 @@ const slides = [
     title: "Weekly Action Recap",
     desc: "Catch up with last week's goals, saves, and key moments in our highlights reel.",
     cta1: "Read More",
-    img: "/images/news/news-10.webp",
+    img: assetUrl("/images/news/news-10.webp"),
     slug: newsPosts[2]?.slug || "",
   },
   {
@@ -39,7 +40,7 @@ const slides = [
     title: "Rising Star of the Month",
     desc: "Meet the young talent making waves in the league. Discover their journey from academy to first team.",
     cta1: "Read More",
-    img: "/images/news/news-11.webp",
+    img: assetUrl("/images/news/news-11.webp"),
     slug: newsPosts[3]?.slug || "",
   },
   {
@@ -48,7 +49,7 @@ const slides = [
     title: "January Window Updates",
     desc: "Stay informed about all the latest transfers, signings, and contract renewals across the league.",
     cta1: "Read More",
-    img: "/images/news/news-5.webp",
+    img: assetUrl("/images/news/news-5.webp"),
     slug: newsPosts[4]?.slug || "",
   },
   {
@@ -57,7 +58,7 @@ const slides = [
     title: "Tactical Breakdown",
     desc: "Deep dive into the strategies, formations, and key moments that shaped this week's biggest matches.",
     cta1: "Read More",
-    img: "/images/news/news-6.webp",
+    img: assetUrl("/images/news/news-6.webp"),
     slug: newsPosts[5]?.slug || "",
   },
   {
@@ -66,7 +67,7 @@ const slides = [
     title: "Community Stories",
     desc: "Celebrate the passionate fans, local heroes, and community initiatives that make our league special.",
     cta1: "Read More",
-    img: "/images/news/news-9.webp",
+    img: assetUrl("/images/news/news-9.webp"),
     slug: newsPosts[6]?.slug || "",
   },
   {
@@ -75,7 +76,7 @@ const slides = [
     title: "Academy Excellence",
     desc: "Discover how our youth academies are developing the next generation of football stars.",
     cta1: "Read More",
-    img: "/images/news/news-2.webp",
+    img: assetUrl("/images/news/news-2.webp"),
     slug: newsPosts[7]?.slug || "",
   },
   {
@@ -84,7 +85,7 @@ const slides = [
     title: "Fair Play Focus",
     desc: "Learn about the latest rule changes, VAR updates, and how we're improving the game experience.",
     cta1: "Read More",
-    img: "/images/news/news-10.webp",
+    img: assetUrl("/images/news/news-10.webp"),
     slug: newsPosts[8]?.slug || "",
   },
   {
@@ -93,7 +94,7 @@ const slides = [
     title: "Championship Race",
     desc: "Follow the thrilling title race as teams battle for glory in the most competitive season yet.",
     cta1: "Read More",
-    img: "/images/news/news-11.webp",
+    img: assetUrl("/images/news/news-11.webp"),
     slug: newsPosts[9]?.slug || "",
   },
 ];

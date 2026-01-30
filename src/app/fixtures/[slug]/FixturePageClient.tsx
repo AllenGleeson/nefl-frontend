@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Fixture, { type FixtureData } from '@/components/Fixture';
 import { clubs } from '@/data/club';
+import { assetUrl } from '@/utils/assetUrl';
 
 export default function FixturePageClient() {
   // Use real teams from clubs data - selecting Parkvilla FC vs Duleek AFC as example
@@ -165,7 +166,7 @@ export default function FixturePageClient() {
     <div
       className="min-h-screen relative overflow-hidden"
       style={{
-        backgroundImage: 'url(/images/fixturepage.jpg)',
+        backgroundImage: `url(${assetUrl("/images/fixturepage.jpg")})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -181,7 +182,7 @@ export default function FixturePageClient() {
           top: '30%',
           left: '5%',
           transform: 'translateY(-50%)',
-          backgroundImage: `url(${homeClub.logo})`,
+          backgroundImage: `url(${assetUrl(homeClub.logo)})`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
           backgroundSize: 'contain',
@@ -201,7 +202,7 @@ export default function FixturePageClient() {
           top: '30%',
           right: '5%',
           transform: 'translateY(-50%)',
-          backgroundImage: `url(${awayClub.logo})`,
+          backgroundImage: `url(${assetUrl(awayClub.logo)})`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
           backgroundSize: 'contain',

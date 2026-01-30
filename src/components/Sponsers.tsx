@@ -1,42 +1,43 @@
 "use client";
 
 import Image from "next/image";
+import { assetUrl } from "@/utils/assetUrl";
 
 const sponsors = [
   {
     name: "FAI",
     url: "https://www.fai.ie/",
-    logo: "/images/logos/fai.webp", // put these in /public/logos
+    logo: assetUrl("/images/logos/fai.webp"),
   },
   {
     name: "Leinster FA",
     url: "http://www.leinsterfa.ie/",
-    logo: "/images/logos/lfa.webp",
+    logo: assetUrl("/images/logos/lfa.webp"),
   },
   {
     name: "O’Neills",
     url: "https://www.oneills.com/shop-by-team/soccer.html",
-    logo: "/images/logos/oneills_logo.webp",
+    logo: assetUrl("/images/logos/oneills_logo.webp"),
   },
   {
     name: "Superior",
     url: "https://nefl.ie", // replace with actual site
-    logo: "/images/logos/superior.webp",
+    logo: assetUrl("/images/logos/superior.webp"),
   },
   {
     name: "Conrad",
     url: "https://nefl.ie", // replace with actual site
-    logo: "/images/logos/conrad.webp",
+    logo: assetUrl("/images/logos/conrad.webp"),
   },
   {
     name: "UHY",
     url: "https://nefl.ie", // replace with actual site
-    logo: "/images/logos/UHY_Logo.webp",
+    logo: assetUrl("/images/logos/UHY_Logo.webp"),
   },
   {
     name: "PM Blinds",
     url: "https://nefl.ie", // replace with actual site
-    logo: "/images/logos/pm-blinds.webp",
+    logo: assetUrl("/images/logos/pm-blinds.webp"),
   }
 ];
 

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Club } from "@/data/club";
+import { assetUrl } from "@/utils/assetUrl";
 
 interface ClubsCardProps {
   club: Club;
@@ -31,7 +32,7 @@ export default function ClubsCard({ club, isSelected = false, shouldHide = false
           : 'p-3'
         }`}>
         <Image
-          src={club.logo}
+          src={assetUrl(club.logo)}
           alt={club.name}
           width={isSelected ? 800 : 200}
           height={isSelected ? 800 : 200}

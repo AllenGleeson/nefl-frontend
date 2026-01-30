@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { Product as ProductType } from "@/types/product"
+import { assetUrl } from "@/utils/assetUrl"
 
 type Props = {
   product: ProductType
@@ -13,7 +14,7 @@ export default function ProductDetails({ product }: Props) {
       {/* Product Image */}
       <div className="relative w-full lg:w-1/2 h-80 sm:h-96 md:h-[28rem] lg:h-[40rem] overflow-hidden">
         <Image
-          src={product.image}
+          src={assetUrl(product.image)}
           alt={product.name}
           fill
           className="object-cover"

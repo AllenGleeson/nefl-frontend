@@ -3,6 +3,7 @@
 
 import Image from "next/image";
 import { getLeagueLogo } from "@/utils/leagueLogos";
+import { assetUrl } from "@/utils/assetUrl";
 
 type Gender = 'Men' | 'Women';
 type ViewMode = 'table' | 'fixtures';
@@ -150,7 +151,7 @@ export default function LeaguesHeader({
               >
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-[var(--md-primary-container)] rounded-full flex items-center justify-center">
                   <Image 
-                    src={getLeagueLogo(league)} 
+                    src={assetUrl(getLeagueLogo(league))} 
                     alt={`${league} Logo`} 
                     width={20}
                     height={20}

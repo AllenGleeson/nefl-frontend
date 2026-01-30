@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Product } from "@/types/product"
+import { assetUrl } from "@/utils/assetUrl"
 
 type Props = {
     products: Product[]
@@ -29,7 +30,7 @@ export default function RelatedProducts({ products, currentProduct }: Props) {
                     >
                         <div className="relative w-full h-32 sm:h-40 md:h-48 lg:h-56 overflow-hidden">
                             <Image
-                                src={product.image}
+                                src={assetUrl(product.image)}
                                 alt={product.name}
                                 fill
                                 className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Calendar, ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { getLeagueNameForMatch } from "@/utils/matchLeagueMapper"
+import { assetUrl } from "@/utils/assetUrl"
 
 type Match = {
   id: number
@@ -125,7 +126,7 @@ function CollapsibleDay({ day }: CollapsibleDayProps) {
                     <div className="flex flex-col items-center flex-1">
                       <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
                         <Image
-                          src={match.home_badge}
+                          src={assetUrl(match.home_badge)}
                           alt={match.home_team}
                           fill
                           className="object-contain"
@@ -173,7 +174,7 @@ function CollapsibleDay({ day }: CollapsibleDayProps) {
                     <div className="flex flex-col items-center flex-1">
                       <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
                         <Image
-                          src={match.away_badge}
+                          src={assetUrl(match.away_badge)}
                           alt={match.away_team}
                           fill
                           className="object-contain"

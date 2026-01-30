@@ -2,43 +2,16 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { assetUrl } from '@/utils/assetUrl';
 
 const sponsors = [
-  {
-    name: 'Conrad Hotel',
-    logo: '/images/logos/conrad.webp',
-    url: 'https://www.conradhotels.com'
-  },
-  {
-    name: 'FAI',
-    logo: '/images/logos/fai.webp',
-    url: 'https://www.fai.ie'
-  },
-  {
-    name: 'LFA',
-    logo: '/images/logos/lfa.webp',
-    url: 'https://www.lfa.ie'
-  },
-  {
-    name: 'O\'Neills',
-    logo: '/images/logos/oneills_logo.webp',
-    url: 'https://www.oneills.com'
-  },
-  {
-    name: 'PM Blinds',
-    logo: '/images/logos/pm-blinds.webp',
-    url: 'https://www.pmblinds.ie'
-  },
-  {
-    name: 'Superior',
-    logo: '/images/logos/superior.webp',
-    url: 'https://www.superior.ie'
-  },
-  {
-    name: 'UHY',
-    logo: '/images/logos/UHY_Logo.webp',
-    url: 'https://www.uhy.ie'
-  }
+  { name: 'Conrad Hotel', logo: assetUrl('/images/logos/conrad.webp'), url: 'https://www.conradhotels.com' },
+  { name: 'FAI', logo: assetUrl('/images/logos/fai.webp'), url: 'https://www.fai.ie' },
+  { name: 'LFA', logo: assetUrl('/images/logos/lfa.webp'), url: 'https://www.lfa.ie' },
+  { name: 'O\'Neills', logo: assetUrl('/images/logos/oneills_logo.webp'), url: 'https://www.oneills.com' },
+  { name: 'PM Blinds', logo: assetUrl('/images/logos/pm-blinds.webp'), url: 'https://www.pmblinds.ie' },
+  { name: 'Superior', logo: assetUrl('/images/logos/superior.webp'), url: 'https://www.superior.ie' },
+  { name: 'UHY', logo: assetUrl('/images/logos/UHY_Logo.webp'), url: 'https://www.uhy.ie' }
 ];
 
 export default function Footer() {

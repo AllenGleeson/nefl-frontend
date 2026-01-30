@@ -5,6 +5,7 @@ import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import ScoreEntry from './ScoreEntry';
 import EditFixtureForm from './EditFixtureForm';
+import { assetUrl } from '@/utils/assetUrl';
 
 interface Fixture {
   id: string;
@@ -44,7 +45,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       venue: 'Walshestown Park',
       league: 'Division 1',
       status: 'scheduled',
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '2',
@@ -57,7 +58,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       status: 'completed',
       homeScore: 2,
       awayScore: 1,
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '3',
@@ -70,7 +71,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       status: 'completed',
       homeScore: 0,
       awayScore: 3,
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '4',
@@ -81,7 +82,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       venue: 'Turner\'s Cross',
       league: 'Division 1',
       status: 'scheduled',
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     
     // Division 2 Fixtures
@@ -96,7 +97,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       status: 'live',
       homeScore: 1,
       awayScore: 0,
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '6',
@@ -109,7 +110,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       status: 'completed',
       homeScore: 2,
       awayScore: 2,
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '7',
@@ -120,7 +121,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       venue: 'Waterford Regional Sports Centre',
       league: 'Division 2',
       status: 'scheduled',
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     
     // Premier League Fixtures
@@ -133,7 +134,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       venue: 'Tallaght Stadium',
       league: 'Premier League',
       status: 'scheduled',
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '9',
@@ -146,7 +147,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       status: 'completed',
       homeScore: 1,
       awayScore: 2,
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '10',
@@ -157,7 +158,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       venue: 'Dalymount Park',
       league: 'Premier League',
       status: 'postponed',
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     
     // More Division 1
@@ -170,7 +171,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       venue: 'Walshestown Park',
       league: 'Division 1',
       status: 'scheduled',
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '12',
@@ -183,7 +184,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       status: 'live',
       homeScore: 1,
       awayScore: 1,
-      logo: '/images/Ardee-Celtic.webp'
+      logo: assetUrl('/images/Ardee-Celtic.webp')
     }
   ]);
 
@@ -334,7 +335,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
                   <div className="flex items-center justify-between sm:justify-center space-x-2 sm:space-x-4">
                     <div className="text-center min-w-0 flex-1 flex flex-col items-center">
                       <Image 
-                        src={fixture.logo} 
+                        src={assetUrl(fixture.logo)} 
                         alt={`${fixture.homeTeam} logo`}
                         width={40}
                         height={40}
@@ -351,7 +352,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
                     </div>
                     <div className="text-center min-w-0 flex-1 flex flex-col items-center">
                       <Image 
-                        src={fixture.logo} 
+                        src={assetUrl(fixture.logo)} 
                         alt={`${fixture.awayTeam} logo`}
                         width={40}
                         height={40}

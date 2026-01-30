@@ -4,6 +4,7 @@
 import Image from "next/image";
 import { LeagueFixtures, FixtureResult } from "@/data/fixturesMatrix";
 import "@/styles/fixtures-matrix.css";
+import { assetUrl } from "@/utils/assetUrl";
 
 type Props = {
   leagueFixtures: LeagueFixtures;
@@ -53,7 +54,7 @@ export default function FixturesMatrix({ leagueFixtures, maxRows }: Props) {
                       <th key={team.id} className="sp-event-matrix-label px-1.5 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider">
                         <div className="flex items-center justify-center">
                           <Image
-                            src={team.logo}
+                            src={assetUrl(team.logo)}
                             alt={team.name}
                             width={24}
                             height={24}
@@ -72,7 +73,7 @@ export default function FixturesMatrix({ leagueFixtures, maxRows }: Props) {
                         <div className="flex items-center space-x-2 sm:space-x-3">
                           <div className="relative">
                             <Image
-                              src={homeTeam.logo}
+                              src={assetUrl(homeTeam.logo)}
                               alt={homeTeam.name}
                               width={24}
                               height={24}

@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useCart } from './CartContext'
 import { CartItem as CartItemType } from '@/types/cart'
+import { assetUrl } from '@/utils/assetUrl'
 
 interface CartItemProps {
   item: CartItemType
@@ -24,7 +25,7 @@ export default function CartItem({ item }: CartItemProps) {
       {/* Product Image */}
       <div className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
         <Image
-          src={item.product.image}
+          src={assetUrl(item.product.image)}
           alt={item.product.name}
           fill
           className="object-cover"

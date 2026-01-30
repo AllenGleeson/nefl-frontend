@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getRelatedNewsPosts } from '@/utils/news'
+import { assetUrl } from '@/utils/assetUrl'
 
 type Props = {
   currentPostId: number
@@ -27,7 +28,7 @@ export default function RelatedArticles({ currentPostId, limit = 3 }: Props) {
             <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative w-full h-48 overflow-hidden">
                 <Image
-                  src={relatedPost.image}
+                  src={assetUrl(relatedPost.image)}
                   alt={relatedPost.title}
                   fill
                   className="object-cover"

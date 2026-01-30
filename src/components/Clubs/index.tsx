@@ -6,6 +6,7 @@ import Image from "next/image"
 import { clubs } from "@/data/club";
 import ClubsHeader from "./ClubsHeader";
 import ClubsCard from "./ClubsCard";
+import { assetUrl } from "@/utils/assetUrl";
 
 export default function Clubs() {
   const router = useRouter()
@@ -76,7 +77,7 @@ export default function Clubs() {
     <div
       className="clubs-page relative min-h-screen bg-fixed"
       style={{
-        backgroundImage: 'url(/images/clubspage.webp)',
+        backgroundImage: `url(${assetUrl("/images/clubspage.webp")})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -121,7 +122,7 @@ export default function Clubs() {
                     return (
                       <div className="w-full h-full flex items-center justify-center p-12">
                         <Image
-                          src={selectedClub.logo}
+                          src={assetUrl(selectedClub.logo)}
                           alt={selectedClub.name}
                           width={800}
                           height={800}

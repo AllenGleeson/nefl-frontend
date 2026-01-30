@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { assetUrl } from "@/utils/assetUrl";
 import { useState, useEffect } from "react";
 // import UserProfile from "./Login/UserProfile"; // Disabled for development
 
@@ -62,7 +63,7 @@ export default function Nav() {
               <div className="flex-shrink-0">
                 <Link href="/" className="flex items-center space-x-2 text-2xl font-bold">
                   <Image 
-                    src="/images/nefl-logo.webp" 
+                    src={assetUrl("/images/nefl-logo.webp")} 
                     alt="NEFL Logo" 
                     width={100} 
                     height={100}

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { clubs } from "@/data/club"; // fixed typo: was club
 import ClubDetails from "@/components/Clubs/ClubDetails";
+import { assetUrl } from "@/utils/assetUrl";
 
 interface ClubPageProps {
   params: Promise<{
@@ -25,7 +26,7 @@ export default async function ClubPage({ params }: ClubPageProps) {
     <div
       className="px-4 py-8 relative overflow-hidden"
       style={{
-        backgroundImage: 'url(/images/clubspage.webp)',
+        backgroundImage: `url(${assetUrl("/images/clubspage.webp")})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { Club, Player, Formation, CreateFormationRequest } from '@/types/clubManagement';
 import { FormationViewer, FormationManager } from '@/components/Management/ClubsManagement/Formation';
+import { assetUrl } from '@/utils/assetUrl';
 
 export default function ManagementClubPageClient() {
   const params = useParams();
@@ -37,7 +38,7 @@ export default function ManagementClubPageClient() {
           email: 'info@walshestownfc.com',
           phone: '+353 1 234 5678',
           address: 'Walshestown Park, Dublin, Ireland',
-          logo: '/images/Ardee-Celtic.webp',
+          logo: assetUrl('/images/Ardee-Celtic.webp'),
           colors: {
             primary: '#1E40AF',
             secondary: '#F59E0B'
@@ -158,7 +159,7 @@ export default function ManagementClubPageClient() {
               </button>
               <div className="flex items-center">
                 {club.logo && (
-                  <Image src={club.logo} alt={club.name} width={40} height={40} className="h-10 w-10 rounded-full mr-3 object-contain" />
+                  <Image src={assetUrl(club.logo)} alt={club.name} width={40} height={40} className="h-10 w-10 rounded-full mr-3 object-contain" />
                 )}
                 <div>
                   <h1 className="text-xl font-semibold text-gray-900">{club.name}</h1>

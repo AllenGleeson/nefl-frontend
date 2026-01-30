@@ -7,6 +7,7 @@ import FixturesMatrix from "./FixturesMatrix";
 import LeaguesHeader from "./LeaguesHeader";
 import { leagueTablesDataLong } from "@/data/leagueTablesDataLong";
 import { fixturesMatrixData } from "@/data/fixturesMatrix";
+import { assetUrl } from "@/utils/assetUrl";
 
 type ViewMode = 'table' | 'fixtures';
 type Gender = 'Men' | 'Women';
@@ -40,7 +41,7 @@ export default function LeaguesIndex() {
     <div
       className="relative md:pt-6 md:pb-6"
       style={{
-        backgroundImage: 'url(/images/img4.webp)',
+        backgroundImage: `url(${assetUrl("/images/img4.webp")})`,
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',

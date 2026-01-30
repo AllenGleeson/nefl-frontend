@@ -4,6 +4,7 @@
 import { useState, useMemo } from 'react';
 import Image from "next/image";
 import { StatRow } from '@/data/statistics';
+import { assetUrl } from '@/utils/assetUrl';
 
 interface Props {
   data: StatRow[];
@@ -182,7 +183,7 @@ export default function EnhancedStatisticsTable({ data, statType, season, league
                     <td className="px-4 py-3 font-medium">
                       <div className="flex items-center gap-3">
                         <Image
-                          src={row.badge}
+                          src={assetUrl(row.badge)}
                           alt={row.team}
                           width={24}
                           height={24}

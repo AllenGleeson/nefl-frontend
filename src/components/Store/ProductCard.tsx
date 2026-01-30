@@ -4,6 +4,7 @@ import { memo } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Product } from "@/types/product"
+import { assetUrl } from "@/utils/assetUrl"
 
 type Props = {
     product: Product
@@ -18,7 +19,7 @@ function ProductCard({ product }: Props) {
             {/* Product Image */}
             <div className="relative w-full h-48 sm:h-64 md:h-80 overflow-hidden">
                 <Image
-                    src={product.image}
+                    src={assetUrl(product.image)}
                     alt={product.name}
                     fill
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"

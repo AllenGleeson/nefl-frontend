@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { dummyProducts } from "@/data/dummyProductsDisplay";
+import { assetUrl } from "@/utils/assetUrl";
 
 export default function StoreHighlights() {
   const [currentIndex, setCurrentIndex] = useState(0); // For desktop: slide index
@@ -71,7 +72,7 @@ export default function StoreHighlights() {
                     {/* Product Image */}
                     <div className="relative w-full h-80 overflow-hidden">
                       <Image
-                        src={product.img}
+                        src={assetUrl(product.img)}
                         alt={product.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -103,7 +104,7 @@ export default function StoreHighlights() {
                     {/* Product Image */}
                     <div className="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden">
                       <Image
-                        src={product.img}
+                        src={assetUrl(product.img)}
                         alt={product.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"

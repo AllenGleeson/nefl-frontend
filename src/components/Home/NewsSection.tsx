@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ChevronRight } from "lucide-react"
 import { newsPosts } from "@/data/newsPosts"
+import { assetUrl } from "@/utils/assetUrl"
 
 export default function NewsSection() {
   // Get the first 7 news posts
@@ -72,7 +73,7 @@ export default function NewsSection() {
                   {/* Image on the left */}
                   <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex-shrink-0 overflow-hidden rounded">
                     <Image
-                      src={article.image}
+                      src={assetUrl(article.image)}
                       alt={article.title}
                       fill
                       className="object-cover"

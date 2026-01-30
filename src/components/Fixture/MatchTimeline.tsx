@@ -3,6 +3,7 @@
 // src/components/Fixture/MatchTimeline.tsx
 import { useMemo, useCallback } from 'react';
 import Image from 'next/image';
+import { assetUrl } from '@/utils/assetUrl';
 
 interface TimelineEvent {
   id: string;
@@ -165,7 +166,7 @@ export default function MatchTimeline({ events, homeTeamLogo, awayTeamLogo, home
                   {/* Club Logo at bottom right of event icon */}
                   <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full overflow-hidden flex-shrink-0 border-2 border-white shadow-md bg-white">
                     <Image
-                      src={event.team === 'home' ? homeTeamLogo : awayTeamLogo}
+                      src={assetUrl(event.team === 'home' ? homeTeamLogo : awayTeamLogo)}
                       alt={event.team === 'home' ? 'Home team logo' : 'Away team logo'}
                       width={20}
                       height={20}

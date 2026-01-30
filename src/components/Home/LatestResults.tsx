@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { getLeagueLogo } from "@/utils/leagueLogos";
 import { getClubLogo } from "@/utils/clubLogos";
+import { assetUrl } from "@/utils/assetUrl";
 
 // Match type definition
 type Match = {
@@ -429,7 +430,7 @@ export default function LatestResults() {
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/50 rounded-full flex items-center justify-center">
                       <Image 
-                        src={leagueData.logo} 
+                        src={assetUrl(leagueData.logo)} 
                         alt={`${leagueName} Logo`} 
                         width={20}
                         height={20}
@@ -483,7 +484,7 @@ export default function LatestResults() {
                   <div className="flex flex-col items-center flex-1">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
                       <Image
-                        src={match.home_logo}
+                        src={assetUrl(match.home_logo)}
                         alt={match.home}
                         fill
                         className="object-contain"
@@ -512,7 +513,7 @@ export default function LatestResults() {
                   <div className="flex flex-col items-center flex-1">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
                       <Image
-                        src={match.away_logo}
+                        src={assetUrl(match.away_logo)}
                         alt={match.away}
                         fill
                         className="object-contain"
@@ -566,7 +567,7 @@ export default function LatestResults() {
                   <div className="flex flex-col items-center flex-1">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
                       <Image
-                        src={match.home_logo}
+                        src={assetUrl(match.home_logo)}
                         alt={match.home}
                         fill
                         className="object-contain"
@@ -595,7 +596,7 @@ export default function LatestResults() {
                   <div className="flex flex-col items-center flex-1">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
                       <Image
-                        src={match.away_logo}
+                        src={assetUrl(match.away_logo)}
                         alt={match.away}
                         fill
                         className="object-contain"

@@ -2,6 +2,7 @@
 
 // src/components/Fixture/FixtureHeader.tsx
 import Image from "next/image";
+import { assetUrl } from "@/utils/assetUrl";
 
 interface FixtureHeaderProps {
   homeTeam: {
@@ -30,7 +31,7 @@ export default function FixtureHeader({ homeTeam, awayTeam, date, league }: Fixt
           </div>
           <div className="w-24 h-24 rounded-lg flex items-center justify-center overflow-hidden">
             <Image
-              src={homeTeam.logo}
+              src={assetUrl(homeTeam.logo)}
               alt={`${homeTeam.name} logo`}
               width={96}
               height={96}
@@ -50,7 +51,7 @@ export default function FixtureHeader({ homeTeam, awayTeam, date, league }: Fixt
         <div className="flex items-center space-x-4 flex-1">
           <div className="w-24 h-24 rounded-lg flex items-center justify-center overflow-hidden">
             <Image
-              src={awayTeam.logo}
+              src={assetUrl(awayTeam.logo)}
               alt={`${awayTeam.name} logo`}
               width={96}
               height={96}

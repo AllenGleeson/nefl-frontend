@@ -3,6 +3,7 @@ import { NewsPost } from "@/data/newsPosts"
 import Badge from "./Badge"
 import Link from "next/link"
 import Image from "next/image"
+import { assetUrl } from "@/utils/assetUrl"
 
 type Props = {
   post: NewsPost
@@ -17,7 +18,7 @@ function NewsCard({ post, viewMode = 'grid' }: Props) {
           <div className="flex flex-col sm:flex-row h-auto sm:h-56">
             <div className="relative w-full sm:w-56 h-56 sm:h-full flex-shrink-0 overflow-hidden">
               <Image
-                src={post.image}
+                src={assetUrl(post.image)}
                 alt={post.title}
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -54,7 +55,7 @@ function NewsCard({ post, viewMode = 'grid' }: Props) {
       <article className="overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <div className="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden">
           <Image
-            src={post.image}
+            src={assetUrl(post.image)}
             alt={post.title}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-500"

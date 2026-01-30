@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { assetUrl } from "@/utils/assetUrl";
 
 export const metadata: Metadata = {
   title: "NEFL",
   description: "The Official North East Football League Site",
   icons: {
-    icon: "/images/nefl-logo.webp",
-    shortcut: "/images/nefl-logo.webp",
-    apple: "/images/nefl-logo.webp",
+    icon: assetUrl("/images/nefl-logo.webp"),
+    shortcut: assetUrl("/images/nefl-logo.webp"),
+    apple: assetUrl("/images/nefl-logo.webp"),
   },
 };
 

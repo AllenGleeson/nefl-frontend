@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Calendar, Tag } from 'lucide-react'
 import RelatedArticles from '@/components/News/NewsPost/RelatedArticles'
+import { assetUrl } from '@/utils/assetUrl'
 
 interface PageProps {
   params: Promise<{
@@ -77,7 +78,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
         <div className="mb-10">
           <div className="relative w-full aspect-video overflow-hidden shadow-xl">
           <Image
-            src={newsPost.image}
+            src={assetUrl(newsPost.image)}
             alt={newsPost.title}
             width={1200}
               height={675}

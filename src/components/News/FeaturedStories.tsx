@@ -1,6 +1,7 @@
 import { newsPosts } from "@/data/newsPosts"
 import Link from "next/link"
 import Image from "next/image"
+import { assetUrl } from "@/utils/assetUrl"
 
 export default function FeaturedStories() {
   const featuredPosts = newsPosts.filter(post => post.isFeatured)
@@ -27,7 +28,7 @@ function FeaturedCard({ post }: Props) {
       <article className="overflow-hidden hover:shadow-lg transition-all duration-300">
         <div className="relative w-full h-56 sm:h-64 overflow-hidden">
           <Image
-            src={post.image}
+            src={assetUrl(post.image)}
             alt={post.title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
