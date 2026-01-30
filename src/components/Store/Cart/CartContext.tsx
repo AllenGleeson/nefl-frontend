@@ -160,7 +160,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             })
           })
         }
-      } catch (error) {
+      } catch {
       }
     }
   }, [])

@@ -41,7 +41,7 @@ export default function AddCategoryForm({ isOpen, onClose, onSuccess, parentCate
       
       onSuccess?.();
       onClose();
-    } catch (error) {
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

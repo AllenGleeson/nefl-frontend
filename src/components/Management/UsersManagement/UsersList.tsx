@@ -176,7 +176,7 @@ export default function UsersList({ onAddUser, onEditUser, onViewUser }: Props) 
     );
   };
 
-  const handleBulkAction = (action: string) => {
+  const handleBulkAction = (_action: string) => {
     // Implement bulk actions here
     setSelectedUsers([]);
   };

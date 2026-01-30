@@ -21,7 +21,7 @@ export default function UserProfile() {
       if (userData) {
         try {
           setUser(JSON.parse(userData));
-        } catch (error) {
+        } catch {
           localStorage.removeItem('nefl_user');
         }
       }

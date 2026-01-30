@@ -88,7 +88,7 @@ export default function ManagementClubPageClient() {
         setPlayers(mockPlayers);
         setFormations(mockClub.formation ? [mockClub.formation] : []);
         setSelectedFormation(mockClub.formation || undefined);
-      } catch (error) {
+      } catch {
       } finally {
         setIsLoading(false);
       }
@@ -97,15 +97,15 @@ export default function ManagementClubPageClient() {
     fetchClubData();
   }, [clubSlug]);
 
-  const handleFormationCreate = async (data: CreateFormationRequest) => {
+  const handleFormationCreate = async (_data: CreateFormationRequest) => {
     // In real app, call API to create formation
   };
 
-  const handleFormationUpdate = async (formationId: string, data: Partial<Formation>) => {
+  const handleFormationUpdate = async (_formationId: string, _data: Partial<Formation>) => {
     // In real app, call API to update formation
   };
 
-  const handleFormationDelete = async (formationId: string) => {
+  const handleFormationDelete = async (_formationId: string) => {
     // In real app, call API to delete formation
   };
 
@@ -113,7 +113,7 @@ export default function ManagementClubPageClient() {
     setSelectedFormation(formation);
   };
 
-  const handlePlayerAssign = async (positionId: string, playerId: string) => {
+  const handlePlayerAssign = async (_positionId: string, _playerId: string) => {
     // In real app, call API to assign player to position
   };
 

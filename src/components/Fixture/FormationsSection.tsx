@@ -89,7 +89,7 @@ export default function FormationsSection({ homeFormation, awayFormation, homePl
     }
 
     return positions;
-  }, []);
+  }, [parseFormation]);
 
   // Memoize position calculations
   const homePositions = useMemo(

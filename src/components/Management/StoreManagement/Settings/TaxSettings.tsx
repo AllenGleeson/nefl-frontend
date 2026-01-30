@@ -56,7 +56,7 @@ export default function TaxSettings() {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       // Here you would make the actual API call to save tax settings
-    } catch (error) {
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

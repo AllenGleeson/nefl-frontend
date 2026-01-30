@@ -47,7 +47,7 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
             return;
           }
         }
-      } catch (error) {
+      } catch {
         router.push('/login');
       } finally {
         setIsLoading(false);

@@ -54,7 +54,7 @@ export default function AuthGuard({
             return;
           }
         }
-      } catch (error) {
+      } catch {
         router.push(redirectTo);
       } finally {
         setIsLoading(false);

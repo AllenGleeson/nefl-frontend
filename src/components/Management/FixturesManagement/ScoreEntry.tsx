@@ -71,7 +71,7 @@ export default function ScoreEntry({
       await new Promise(resolve => setTimeout(resolve, 500));
       onScoreUpdate(fixtureId, homeScore, awayScore, homeGoals, awayGoals);
       onSuccess();
-    } catch (error) {
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

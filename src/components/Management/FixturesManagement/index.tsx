@@ -123,7 +123,7 @@ export default function FixturesManagement() {
         awayTeam={selectedFixture?.awayTeam || ''}
         currentHomeScore={selectedFixture?.homeScore}
         currentAwayScore={selectedFixture?.awayScore}
-        onScoreUpdate={(fixtureId, homeScore, awayScore, homeGoals, awayGoals) => {
+        onScoreUpdate={(_fixtureId, _homeScore, _awayScore, _homeGoals, _awayGoals) => {
           handleScoreUpdated();
         }}
       />

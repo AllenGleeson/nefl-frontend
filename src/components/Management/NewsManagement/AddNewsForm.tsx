@@ -46,7 +46,7 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
       
       onSuccess?.();
       onClose();
-    } catch (error) {
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

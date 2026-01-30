@@ -44,7 +44,7 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
       
       onSuccess?.();
       onClose();
-    } catch (error) {
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

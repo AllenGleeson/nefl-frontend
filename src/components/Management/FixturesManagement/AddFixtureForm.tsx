@@ -87,7 +87,7 @@ export default function AddFixtureForm({ isOpen, onClose, onSuccess }: Props) {
       
       onSuccess?.();
       onClose();
-    } catch (error) {
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

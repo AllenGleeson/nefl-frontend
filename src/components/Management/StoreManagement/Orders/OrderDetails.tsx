@@ -52,7 +52,7 @@ export default function OrderDetails({ orderId, onClose }: OrderDetailsProps) {
     ]
   });
 
-  const handleStatusUpdate = (newStatus: string) => {
+  const handleStatusUpdate = (_newStatus: string) => {
   };
 
   return (
