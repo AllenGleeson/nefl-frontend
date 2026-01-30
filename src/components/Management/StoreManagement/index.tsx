@@ -18,7 +18,6 @@ export default function StoreManagement() {
   };
 
   const handleProductAdded = () => {
-    console.log('Product added successfully');
     setIsAddProductModalOpen(false);
   };
 

@@ -18,7 +18,6 @@ export default function CategoriesManagementPage() {
   };
 
   const handleCategoryAdded = () => {
-    console.log('Category added successfully');
     setIsAddCategoryModalOpen(false);
   };
 

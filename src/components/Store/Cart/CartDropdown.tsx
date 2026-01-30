@@ -105,7 +105,6 @@ export default function CartDropdown({ className = "" }: CartDropdownProps) {
         {cart.items.length > 0 && (
           <CartSummary onCheckout={() => {
             // TODO: Implement checkout navigation
-            console.log('Proceeding to checkout...')
             closeCart()
           }} />
         )}

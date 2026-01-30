@@ -22,7 +22,6 @@ export default function UserProfile() {
         try {
           setUser(JSON.parse(userData));
         } catch (error) {
-          console.error('Error parsing user data:', error);
           localStorage.removeItem('nefl_user');
         }
       }

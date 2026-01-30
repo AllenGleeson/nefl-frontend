@@ -20,7 +20,6 @@ export default function NewsManagement() {
 
   const handleNewsAdded = () => {
     // Here you could refresh the news list or show a success message
-    console.log('News article added successfully!');
   };
 
   return (

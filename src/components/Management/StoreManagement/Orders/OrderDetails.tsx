@@ -53,7 +53,6 @@ export default function OrderDetails({ orderId, onClose }: OrderDetailsProps) {
   });
 
   const handleStatusUpdate = (newStatus: string) => {
-    console.log(`Updating order ${order.id} status to ${newStatus}`);
   };
 
   return (

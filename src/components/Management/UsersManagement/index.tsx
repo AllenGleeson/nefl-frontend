@@ -53,7 +53,6 @@ export default function UsersManagement() {
 
   const handleUserAdded = () => {
     // Here you could refresh the users list or show a success message
-    console.log('User added successfully!');
   };
 
   return (

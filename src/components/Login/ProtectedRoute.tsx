@@ -48,7 +48,6 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
           }
         }
       } catch (error) {
-        console.error('Auth check failed:', error);
         router.push('/login');
       } finally {
         setIsLoading(false);

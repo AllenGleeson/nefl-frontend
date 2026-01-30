@@ -30,7 +30,6 @@ export default function AddProductForm({ isOpen, onClose, onSuccess }: Props) {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      console.log('Adding product:', formData);
       // Here you would make the actual API call to save the product
       
       // Reset form and close modal on success
@@ -46,7 +45,6 @@ export default function AddProductForm({ isOpen, onClose, onSuccess }: Props) {
       onSuccess?.();
       onClose();
     } catch (error) {
-      console.error('Error adding product:', error);
     } finally {
       setIsSubmitting(false);
     }

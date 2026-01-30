@@ -20,7 +20,6 @@ export default function ForgotPasswordForm() {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Mock password reset logic
-      console.log('Sending password reset to:', email);
       setIsSubmitted(true);
     } catch {
       setError('An error occurred. Please try again.');

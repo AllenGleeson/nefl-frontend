@@ -226,7 +226,7 @@ export async function generateMetadata({ params }: PageProps) {
     openGraph: {
       title: newsPost.title,
       description: newsPost.excerpt,
-      images: [newsPost.image],
+      images: [assetUrl(newsPost.image)],
       type: 'article',
       publishedTime: newsPost.date,
     },
@@ -234,7 +234,7 @@ export async function generateMetadata({ params }: PageProps) {
       card: 'summary_large_image',
       title: newsPost.title,
       description: newsPost.excerpt,
-      images: [newsPost.image],
+      images: [assetUrl(newsPost.image)],
     },
   }
 }

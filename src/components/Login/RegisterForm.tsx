@@ -56,7 +56,6 @@ export default function RegisterForm() {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Mock registration logic
-      console.log('Registering user:', formData);
       
       // Redirect to login with success message
       router.push('/login?registered=true');

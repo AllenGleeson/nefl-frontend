@@ -31,7 +31,6 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      console.log('Adding news article:', formData);
       // Here you would make the actual API call to save the news article
       
       // Reset form and close modal on success
@@ -48,7 +47,6 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
       onSuccess?.();
       onClose();
     } catch (error) {
-      console.error('Error adding news article:', error);
     } finally {
       setIsSubmitting(false);
     }

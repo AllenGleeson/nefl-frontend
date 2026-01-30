@@ -43,10 +43,8 @@ export default function StoreSettingsForm() {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Saving store settings:', settings);
       // Here you would make the actual API call to save settings
     } catch (error) {
-      console.error('Error saving settings:', error);
     } finally {
       setIsSubmitting(false);
     }

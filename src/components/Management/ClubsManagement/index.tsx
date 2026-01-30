@@ -29,7 +29,6 @@ export default function ClubsManagement() {
 
   const handleClubAdded = () => {
     // Here you could refresh the clubs list or show a success message
-    console.log('Club added successfully!');
   };
   return (
     <div className="clubs-management">

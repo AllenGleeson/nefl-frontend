@@ -52,10 +52,8 @@ export default function BulkStockUpdate() {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Bulk stock update:', updateItems);
       // Here you would make the actual API call
     } catch (error) {
-      console.error('Error updating stock:', error);
     } finally {
       setIsSubmitting(false);
     }

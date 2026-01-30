@@ -80,12 +80,8 @@ export default function Sponsors() {
                     fill
                     className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300"
                     onError={(e) => {
-                      console.log('Image failed to load:', sponsor.logo);
                       e.currentTarget.style.border = `2px solid var(--md-error)`;
                       e.currentTarget.style.backgroundColor = 'var(--md-error-container)';
-                    }}
-                    onLoad={() => {
-                      console.log('Image loaded successfully:', sponsor.logo);
                     }}
                   />
                 </div>
@@ -116,12 +112,8 @@ export default function Sponsors() {
                       fill
                       className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300"
                       onError={(e) => {
-                        console.log('Image failed to load:', sponsor.logo);
                         e.currentTarget.style.border = `2px solid var(--md-error)`;
                         e.currentTarget.style.backgroundColor = 'var(--md-error-container)';
-                      }}
-                      onLoad={() => {
-                        console.log('Image loaded successfully:', sponsor.logo);
                       }}
                     />
                   </div>
@@ -150,12 +142,8 @@ export default function Sponsors() {
                       fill
                       className="object-contain filter grayscale-0 group-hover:grayscale transition-all duration-300"
                       onError={(e) => {
-                        console.log('Image failed to load:', sponsor.logo);
                         e.currentTarget.style.border = `2px solid var(--md-error)`;
                         e.currentTarget.style.backgroundColor = 'var(--md-error-container)';
-                      }}
-                      onLoad={() => {
-                        console.log('Image loaded successfully:', sponsor.logo);
                       }}
                     />
                   </div>

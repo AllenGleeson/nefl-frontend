@@ -182,14 +182,6 @@ export default function EditFixtureForm({
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      console.log('Fixture updated:', {
-        ...formData,
-        homeScore: formData.homeScore ? parseInt(formData.homeScore) : undefined,
-        awayScore: formData.awayScore ? parseInt(formData.awayScore) : undefined,
-        homeGoals,
-        awayGoals
-      });
-
       // Reset form
       setFormData({
         homeTeam: '',
@@ -204,8 +196,7 @@ export default function EditFixtureForm({
       });
 
       onSuccess();
-    } catch (error) {
-      console.error('Error updating fixture:', error);
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

@@ -161,7 +161,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           })
         }
       } catch (error) {
-        console.error('Error loading cart from localStorage:', error)
       }
     }
   }, [])

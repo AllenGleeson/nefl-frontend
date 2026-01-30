@@ -33,8 +33,6 @@ export default function Login() {
 
     try {
       const result = await loginUser(email, password);
-      console.log("Login success:", result);
-      
       // Store user data in localStorage
       localStorage.setItem('nefl_user', JSON.stringify({
         email: email,

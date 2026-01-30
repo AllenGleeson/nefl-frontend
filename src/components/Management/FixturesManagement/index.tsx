@@ -72,17 +72,14 @@ export default function FixturesManagement() {
   };
 
   const handleFixtureAdded = () => {
-    console.log('Fixture added successfully!');
     handleCloseModal();
   };
 
   const handleFixtureUpdated = () => {
-    console.log('Fixture updated successfully!');
     handleCloseModal();
   };
 
   const handleScoreUpdated = () => {
-    console.log('Score updated successfully!');
     handleCloseModal();
   };
 
@@ -127,7 +124,6 @@ export default function FixturesManagement() {
         currentHomeScore={selectedFixture?.homeScore}
         currentAwayScore={selectedFixture?.awayScore}
         onScoreUpdate={(fixtureId, homeScore, awayScore, homeGoals, awayGoals) => {
-          console.log('Score updated:', { fixtureId, homeScore, awayScore, homeGoals, awayGoals });
           handleScoreUpdated();
         }}
       />

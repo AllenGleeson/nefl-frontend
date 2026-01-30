@@ -79,7 +79,6 @@ export default function Footer() {
                   className="object-contain filter grayscale-0 transition-all duration-300"
                   style={{ maxWidth: '100px', maxHeight: '50px' }}
                   onError={(e) => {
-                    console.log('Image failed to load:', sponsor.logo);
                     e.currentTarget.style.border = '1px solid red';
                     e.currentTarget.style.backgroundColor = '#ffebee';
                   }}

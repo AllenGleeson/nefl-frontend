@@ -72,7 +72,6 @@ export default function ScoreEntry({
       onScoreUpdate(fixtureId, homeScore, awayScore, homeGoals, awayGoals);
       onSuccess();
     } catch (error) {
-      console.error('Error updating score:', error);
     } finally {
       setIsSubmitting(false);
     }

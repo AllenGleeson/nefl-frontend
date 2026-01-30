@@ -177,7 +177,6 @@ export default function UsersList({ onAddUser, onEditUser, onViewUser }: Props) 
   };
 
   const handleBulkAction = (action: string) => {
-    console.log(`Bulk action: ${action} for users:`, selectedUsers);
     // Implement bulk actions here
     setSelectedUsers([]);
   };
@@ -192,14 +191,12 @@ export default function UsersList({ onAddUser, onEditUser, onViewUser }: Props) 
         break;
       case 'delete':
         if (window.confirm(`Are you sure you want to delete ${user.name}?`)) {
-          console.log('Delete user:', user.id);
+          // TODO: call delete user API
         }
         break;
       case 'toggle-status':
-        console.log('Toggle status for user:', user.id);
         break;
       case 'change-role':
-        console.log('Change role for user:', user.id);
         break;
     }
   };

@@ -55,10 +55,8 @@ export default function ShippingSettings() {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Saving shipping settings:', shippingZones);
       // Here you would make the actual API call to save shipping settings
     } catch (error) {
-      console.error('Error saving shipping settings:', error);
     } finally {
       setIsSubmitting(false);
     }

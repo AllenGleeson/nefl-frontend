@@ -68,7 +68,6 @@ export default function AddClubForm({ isOpen, onClose, onSuccess }: Props) {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      console.log('Adding club:', formData);
       // Here you would make the actual API call to save the club
       
       // Reset form and close modal on success
@@ -87,8 +86,7 @@ export default function AddClubForm({ isOpen, onClose, onSuccess }: Props) {
       
       onSuccess?.();
       onClose();
-    } catch (error) {
-      console.error('Error adding club:', error);
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

@@ -31,7 +31,6 @@ export default function OrdersManagementPage() {
 
   const handleFiltersChange = (newFilters: OrderFilters) => {
     setFilters(newFilters);
-    console.log('Filters changed:', newFilters);
   };
 
   return (

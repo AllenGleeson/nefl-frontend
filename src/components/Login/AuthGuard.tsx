@@ -55,7 +55,6 @@ export default function AuthGuard({
           }
         }
       } catch (error) {
-        console.error('Auth check failed:', error);
         router.push(redirectTo);
       } finally {
         setIsLoading(false);

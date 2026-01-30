@@ -20,7 +20,6 @@ export default function LeaguesManagement() {
 
   const handleLeagueAdded = () => {
     // Refresh the leagues list or handle success
-    console.log('League added successfully');
     setIsAddLeagueModalOpen(false);
   };
 
