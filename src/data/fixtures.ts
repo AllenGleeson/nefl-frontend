@@ -70,3 +70,11 @@ export function getMatchesByTeam(teamName: string): Match[] {
       match.away_team.toLowerCase().includes(teamName.toLowerCase())
     )
 }
+
+/** All match ids for static export (fixtures/[slug]) */
+export function getAllFixtureSlugs(): { slug: string }[] {
+  const matches = fixtures.flatMap(week =>
+    week.days.flatMap(day => day.matches)
+  )
+  return matches.map(m => ({ slug: String(m.id) }))
+}
