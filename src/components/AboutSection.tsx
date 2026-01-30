@@ -12,31 +12,19 @@ export default function AboutUs() {
           <div className="flex border-b border-[var(--md-outline-variant)]">
             <button
               onClick={() => setActiveTab('about')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
-                activeTab === 'about'
-                  ? 'text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]'
-                  : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
-              }`}
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${activeTab === "about" ? "text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]" : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"}`}
             >
               About Us
             </button>
             <button
               onClick={() => setActiveTab('league')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
-                activeTab === 'league'
-                  ? 'text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]'
-                  : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
-              }`}
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${activeTab === "league" ? "text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]" : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"}`}
             >
               Our League
             </button>
             <button
               onClick={() => setActiveTab('contact')}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
-                activeTab === 'contact'
-                  ? 'text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]'
-                  : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
-              }`}
+              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${activeTab === "contact" ? "text-[var(--md-primary)] border-b-2 border-[var(--md-primary)]" : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"}`}
             >
               Contact
             </button>
@@ -72,12 +60,12 @@ export default function AboutUs() {
                 <p>Navan, Co. Meath, C15 AK5V</p>
                 <p className="text-[var(--md-primary)] font-medium">087 285 6318</p>
                 <p>
-                  <a 
-                    href="mailto:info@nefl.ie" 
-                    className="inline-block bg-[var(--md-primary)] text-[var(--md-on-primary)] px-4 py-2 rounded-lg font-medium hover:bg-[var(--md-primary-fixed-dim)] transition-colors"
+                  <span 
+                    className="inline-block bg-[var(--md-primary)]/60 text-[var(--md-on-primary)] px-4 py-2 rounded-lg font-medium cursor-not-allowed opacity-60"
+                    aria-disabled="true"
                   >
                     info@nefl.ie
-                  </a>
+                  </span>
                 </p>
               </address>
             </div>
@@ -114,12 +102,12 @@ export default function AboutUs() {
               <p>Navan, Co. Meath, C15 AK5V</p>
               <p className="text-[var(--md-primary)] font-medium">087 285 6318</p>
               <p>
-                <a 
-                  href="mailto:info@nefl.ie" 
-                  className="inline-block bg-[var(--md-primary)] text-[var(--md-on-primary)] px-4 py-2 rounded-lg font-medium hover:bg-[var(--md-primary-fixed-dim)] transition-colors"
+                <span 
+                  className="inline-block bg-[var(--md-primary)]/60 text-[var(--md-on-primary)] px-4 py-2 rounded-lg font-medium cursor-not-allowed opacity-60"
+                  aria-disabled="true"
                 >
                   info@nefl.ie
-                </a>
+                </span>
               </p>
             </address>
           </div>

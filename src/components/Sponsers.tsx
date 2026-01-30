@@ -158,12 +158,12 @@ export default function Sponsors() {
           <p className="text-[var(--md-on-surface-variant)] mb-4">
             Interested in becoming a partner?
           </p>
-          <a
-            href="mailto:info@nefl.ie?subject=Partnership Inquiry"
-            className="inline-flex items-center px-6 py-3 bg-[var(--md-primary)] text-[var(--md-on-primary)] font-medium rounded-lg hover:bg-[var(--md-primary-fixed-dim)] transition-colors duration-200 shadow-sm hover:shadow-md"
+          <span
+            className="inline-flex items-center px-6 py-3 bg-[var(--md-primary)]/60 text-[var(--md-on-primary)] font-medium rounded-lg cursor-not-allowed opacity-60"
+            aria-disabled="true"
           >
             Get in Touch
-          </a>
+          </span>
         </div>
       </div>
     </section>
