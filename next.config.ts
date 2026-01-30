@@ -1,12 +1,17 @@
 import type { NextConfig } from "next";
 
+const basePath = process.env.BASE_PATH ?? "";
 const nextConfig: NextConfig = {
+  output: "export",
+  basePath: basePath || undefined,
+  assetPrefix: basePath ? `${basePath}/` : undefined,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'i0.wp.com',
-        pathname: '/nefl.ie/**',
+        protocol: "https",
+        hostname: "i0.wp.com",
+        pathname: "/nefl.ie/**",
       },
     ],
   },
