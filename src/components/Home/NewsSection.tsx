@@ -48,7 +48,7 @@ export default function NewsSection() {
             <Link href={`/news/${featuredStory.slug}`} className="block overflow-hidden cursor-pointer">
               <div className="relative h-64 sm:h-80 md:h-96 lg:h-[28rem] overflow-hidden">
                 <Image
-                  src={featuredStory.image}
+                  src={assetUrl(featuredStory.image)}
                   alt={featuredStory.title}
                   fill
                   className="object-cover"
