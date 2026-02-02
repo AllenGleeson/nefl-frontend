@@ -1,6 +1,17 @@
 "use client"
 import { LeagueTables, TeamRow } from "@/types/league"
 import Link from "next/link"
+import Image from "next/image"
+import { clubs } from "@/data/club"
+import { assetUrl } from "@/utils/assetUrl"
+
+const logoByClubName = (() => {
+  const map: Record<string, string> = {}
+  clubs.forEach((c) => {
+    map[c.name] = c.logo
+  })
+  return map
+})()
 
 type Props = {
   leagueTables: LeagueTables
@@ -72,7 +83,24 @@ export default function LeagueTable({ leagueTables, showMore = true, selectedGen
                       {team.position}
                     </td>
                     <td className="px-1.5 sm:px-6 py-2 sm:py-5 text-xs sm:text-sm font-medium text-[var(--md-on-surface)] truncate max-w-[120px] sm:max-w-none">
-                      {team.name}
+                      <span className="inline-flex items-center gap-2 min-w-0">
+                        {logoByClubName[team.name] ? (
+                          <span className="overflow-hidden sm:h-8 sm:w-8">
+                            <Image
+                              src={assetUrl(logoByClubName[team.name])}
+                              alt=""
+                              width={32}
+                              height={32}
+                              className="object-contain w-full h-full"
+                            />
+                          </span>
+                        ) : (
+                          <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded bg-[var(--md-outline-variant)]/30 flex items-center justify-center text-[10px] font-bold text-[var(--md-on-surface-variant)]">
+                            {team.position}
+                          </span>
+                        )}
+                        <span className="truncate">{team.name}</span>
+                      </span>
                     </td>
                     <td className="px-1 sm:px-6 py-2 sm:py-5 text-xs sm:text-sm text-[var(--md-on-surface-variant)] text-center font-medium">
                       {team.played}

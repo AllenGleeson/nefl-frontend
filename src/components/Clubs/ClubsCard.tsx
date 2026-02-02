@@ -9,9 +9,11 @@ interface ClubsCardProps {
   isSelected?: boolean;
   shouldHide?: boolean;
   onCardClick: (slug: string) => void;
+  /** League position (1-based) when a specific league is selected; hidden when "All leagues". */
+  leagueRank?: number | null;
 }
 
-export default function ClubsCard({ club, isSelected = false, shouldHide = false, onCardClick }: ClubsCardProps) {
+export default function ClubsCard({ club, isSelected = false, shouldHide = false, onCardClick, leagueRank = null }: ClubsCardProps) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault()
     onCardClick(club.slug)
@@ -27,6 +29,15 @@ export default function ClubsCard({ club, isSelected = false, shouldHide = false
             : 'block'
         }`}
     >
+      {/* League rank badge - bottom left, only when a league is selected */}
+      {leagueRank != null && !isSelected && (
+        <span
+          className="absolute bottom-2 left-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm font-bold text-gray-900 shadow-md"
+          aria-label={`League position ${leagueRank}`}
+        >
+          {leagueRank}
+        </span>
+      )}
       <div className={`flex flex-col items-center justify-center transition-all duration-1000 ${isSelected
           ? 'w-full h-full p-12'
           : 'p-3'

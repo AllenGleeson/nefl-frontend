@@ -3,37 +3,72 @@
 import { useState, useMemo, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { clubs } from "@/data/club";
-import ClubsHeader from "./ClubsHeader";
-import ClubsCard from "./ClubsCard";
-import { assetUrl } from "@/utils/assetUrl";
+import { clubs } from "@/data/club"
+import { localLeagueTablesData } from "@/data/localLeagueTables"
+import ClubsHeader, { ALL_LEAGUES_VALUE } from "./ClubsHeader"
+import ClubsCard from "./ClubsCard"
+import { assetUrl } from "@/utils/assetUrl"
+
+const leagueOptions = Object.keys(localLeagueTablesData).sort()
 
 export default function Clubs() {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
+  const [selectedLeague, setSelectedLeague] = useState(ALL_LEAGUES_VALUE)
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedClubSlug, setSelectedClubSlug] = useState<string | null>(null)
   const [showLargeImage, setShowLargeImage] = useState(false)
   const clubsPerPage = 12
   const showPaginationThreshold = clubsPerPage
 
-  // Filter clubs based on search query
+  // Filter by search, then by league; when a league is selected sort by table position
   const filteredClubs = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return clubs
+    let list = clubs
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      list = list.filter(club =>
+        club.name.toLowerCase().includes(query) ||
+        club.leagues.some(league => league.toLowerCase().includes(query)) ||
+        club.bio.toLowerCase().includes(query)
+      )
     }
-    const query = searchQuery.toLowerCase()
-    return clubs.filter(club =>
-      club.name.toLowerCase().includes(query) ||
-      club.leagues.some(league => league.toLowerCase().includes(query)) ||
-      club.bio.toLowerCase().includes(query)
-    )
-  }, [searchQuery])
+    if (selectedLeague === ALL_LEAGUES_VALUE) {
+      return list
+    }
+    list = list.filter(club => club.leagues.includes(selectedLeague))
+    const table = localLeagueTablesData[selectedLeague]
+    if (!table) return list
+    // Sort by league position (clubs in table first in order, then clubs not in table)
+    const positionByTeamName: Record<string, number> = {}
+    table.forEach((row) => {
+      positionByTeamName[row.name] = row.position
+    })
+    return [...list].sort((a, b) => {
+      const posA = positionByTeamName[a.name] ?? 9999
+      const posB = positionByTeamName[b.name] ?? 9999
+      return posA - posB
+    })
+  }, [searchQuery, selectedLeague])
 
-  // Reset to page 1 when search changes
+  // Get league rank for a club when a specific league is selected (from table position)
+  const getLeagueRank = useMemo(() => {
+    if (selectedLeague === ALL_LEAGUES_VALUE) return () => null as number | null
+    const table = localLeagueTablesData[selectedLeague]
+    if (!table) return () => null as number | null
+    const positionByTeamName: Record<string, number> = {}
+    table.forEach((row) => {
+      positionByTeamName[row.name] = row.position
+    })
+    return (clubName: string): number | null => {
+      const pos = positionByTeamName[clubName]
+      return pos != null ? pos : null
+    }
+  }, [selectedLeague])
+
+  // Reset to page 1 when search or league changes
   useEffect(() => {
     setCurrentPage(1)
-  }, [searchQuery])
+  }, [searchQuery, selectedLeague])
 
   // Pagination logic
   const totalPages = Math.ceil(filteredClubs.length / clubsPerPage)
@@ -89,7 +124,13 @@ export default function Clubs() {
 
       {/* Content */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 py-12">
-        <ClubsHeader setSearch={setSearchQuery} showSearch={true} />
+        <ClubsHeader
+          setSearch={setSearchQuery}
+          showSearch={true}
+          selectedLeague={selectedLeague}
+          setSelectedLeague={setSelectedLeague}
+          leagueOptions={leagueOptions}
+        />
 
         {filteredClubs.length === 0 ? (
           <div className="text-center py-12">
@@ -108,6 +149,7 @@ export default function Clubs() {
                     isSelected={false}
                     onCardClick={handleCardClick}
                     shouldHide={false}
+                    leagueRank={getLeagueRank(club.name)}
                   />
                 ))}
               </div>
