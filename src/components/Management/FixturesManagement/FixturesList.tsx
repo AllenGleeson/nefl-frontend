@@ -2,24 +2,28 @@
 
 // src/components/Management/FixturesManagement/FixturesList.tsx
 import { useState, useMemo } from 'react';
-import Image from 'next/image';
 import ScoreEntry from './ScoreEntry';
 import EditFixtureForm from './EditFixtureForm';
-import { assetUrl } from '@/utils/assetUrl';
+import BulkScoreDialog from './BulkScoreDialog';
+import { adminUsers, canDelete, currentUser, roleBadge, roleLabels } from '@/data/adminUsers';
 
-interface Fixture {
-  id: string;
-  homeTeam: string;
-  awayTeam: string;
-  date: string;
-  time: string;
-  venue: string;
-  league: string;
-  status: 'scheduled' | 'live' | 'completed' | 'postponed';
-  homeScore?: number;
-  awayScore?: number;
-  logo: string;
+/** Display name for a username (falls back to the username) */
+/** "Added by" with the same role badge used on the Users and Activity pages */
+function AddedBy({ username }: { username: string }) {
+  const u = adminUsers.find((x) => x.username === username);
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      · Added by <span className="font-semibold text-[var(--md-on-surface)]">{u?.name ?? username}</span>
+      {u && <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${roleBadge[u.role]}`}>{roleLabels[u.role]}</span>}
+    </span>
+  );
 }
+import { fixtureStatus, fixtureStatusLabel, type AdminFixture } from './types';
+import { buttonStyles } from "@/components/ui/Button";
+import { CalendarX2, ClipboardPen, Eye, EyeOff, MapPin, Pencil, Plus, Trash2 } from "lucide-react";
+import { ConfirmDialog, Notice, RevertButton, RowCheckbox, SelectionBar, selectableRow, selectOnRowClick, useNotice, useSelection, useUndoable, type PendingConfirm } from "../Selection";
+
+type Fixture = AdminFixture;
 
 interface FixturesListProps {
   filters?: {
@@ -28,61 +32,55 @@ interface FixturesListProps {
     team: string;
     dateRange: string;
   };
-  onAddFixture?: () => void;
-  onEditFixture?: (fixture: Fixture) => void;
   onScoreEntry?: (fixture: Fixture) => void;
 }
 
-export default function FixturesList({ filters, onAddFixture, onEditFixture, onScoreEntry }: FixturesListProps) {
-  const [fixtures, setFixtures] = useState<Fixture[]>([
+export default function FixturesList({ filters, onScoreEntry }: FixturesListProps) {
+  const history = useUndoable<Fixture[]>([
     // Division 1 Fixtures
     {
       id: '1',
       homeTeam: 'Walshestown FC',
       awayTeam: 'Athboy Celtic',
       date: '2024-01-15',
-      time: '15:00',
       venue: 'Walshestown Park',
       league: 'Division 1',
-      status: 'scheduled',
-      logo: assetUrl('/images/Ardee-Celtic.webp')
+      published: false,
+      createdBy: 'lisa.anderson',
     },
     {
       id: '2',
       homeTeam: 'Dublin United',
       awayTeam: 'Cork City',
       date: '2024-01-14',
-      time: '17:30',
       venue: 'Dublin Sports Ground',
       league: 'Division 1',
-      status: 'completed',
+      published: true,
+      createdBy: 'sarah.johnson',
       homeScore: 2,
       awayScore: 1,
-      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '3',
       homeTeam: 'Athboy Celtic',
       awayTeam: 'Walshestown FC',
       date: '2024-01-12',
-      time: '14:00',
       venue: 'Athboy Sports Complex',
       league: 'Division 1',
-      status: 'completed',
+      published: true,
+      createdBy: 'mike.wilson',
       homeScore: 0,
       awayScore: 3,
-      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '4',
       homeTeam: 'Cork City',
       awayTeam: 'Dublin United',
       date: '2024-01-20',
-      time: '16:00',
       venue: 'Turner\'s Cross',
       league: 'Division 1',
-      status: 'scheduled',
-      logo: assetUrl('/images/Ardee-Celtic.webp')
+      published: true,
+      createdBy: 'john.smith',
     },
     
     // Division 2 Fixtures
@@ -91,37 +89,34 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       homeTeam: 'Galway United',
       awayTeam: 'Limerick FC',
       date: '2024-01-13',
-      time: '12:30',
       venue: 'Eamonn Deacy Park',
       league: 'Division 2',
-      status: 'live',
+      published: true,
+      createdBy: 'lisa.anderson',
       homeScore: 1,
       awayScore: 0,
-      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '6',
       homeTeam: 'Limerick FC',
       awayTeam: 'Galway United',
       date: '2024-01-10',
-      time: '15:30',
       venue: 'Markets Field',
       league: 'Division 2',
-      status: 'completed',
+      published: true,
+      createdBy: 'sarah.johnson',
       homeScore: 2,
       awayScore: 2,
-      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '7',
       homeTeam: 'Waterford FC',
       awayTeam: 'Sligo Rovers',
       date: '2024-01-18',
-      time: '19:45',
       venue: 'Waterford Regional Sports Centre',
       league: 'Division 2',
-      status: 'scheduled',
-      logo: assetUrl('/images/Ardee-Celtic.webp')
+      published: true,
+      createdBy: 'mike.wilson',
     },
     
     // Premier League Fixtures
@@ -130,35 +125,32 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       homeTeam: 'Shamrock Rovers',
       awayTeam: 'Bohemians',
       date: '2024-01-16',
-      time: '19:45',
       venue: 'Tallaght Stadium',
       league: 'Premier League',
-      status: 'scheduled',
-      logo: assetUrl('/images/Ardee-Celtic.webp')
+      published: true,
+      createdBy: 'john.smith',
     },
     {
       id: '9',
       homeTeam: 'St. Patrick\'s Athletic',
       awayTeam: 'Shamrock Rovers',
       date: '2024-01-11',
-      time: '19:45',
       venue: 'Richmond Park',
       league: 'Premier League',
-      status: 'completed',
+      published: true,
+      createdBy: 'lisa.anderson',
       homeScore: 1,
       awayScore: 2,
-      logo: assetUrl('/images/Ardee-Celtic.webp')
     },
     {
       id: '10',
       homeTeam: 'Bohemians',
       awayTeam: 'St. Patrick\'s Athletic',
       date: '2024-01-09',
-      time: '19:45',
       venue: 'Dalymount Park',
       league: 'Premier League',
-      status: 'postponed',
-      logo: assetUrl('/images/Ardee-Celtic.webp')
+      published: true,
+      createdBy: 'sarah.johnson',
     },
     
     // More Division 1
@@ -167,31 +159,31 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
       homeTeam: 'Walshestown FC',
       awayTeam: 'Cork City',
       date: '2024-01-22',
-      time: '15:00',
       venue: 'Walshestown Park',
       league: 'Division 1',
-      status: 'scheduled',
-      logo: assetUrl('/images/Ardee-Celtic.webp')
+      published: true,
+      createdBy: 'mike.wilson',
     },
     {
       id: '12',
       homeTeam: 'Dublin United',
       awayTeam: 'Athboy Celtic',
       date: '2024-01-21',
-      time: '14:30',
       venue: 'Dublin Sports Ground',
       league: 'Division 1',
-      status: 'live',
+      published: true,
+      createdBy: 'john.smith',
       homeScore: 1,
       awayScore: 1,
-      logo: assetUrl('/images/Ardee-Celtic.webp')
     }
   ]);
+  const fixtures = history.value;
 
   const [showScoreEntry, setShowScoreEntry] = useState<string | null>(null);
   const [selectedFixture, setSelectedFixture] = useState<Fixture | null>(null);
   const [showEditFixture, setShowEditFixture] = useState(false);
   const [editingFixture, setEditingFixture] = useState<Fixture | null>(null);
+  const [addingFixture, setAddingFixture] = useState(false);
 
   // Filter fixtures based on applied filters
   const filteredFixtures = useMemo(() => {
@@ -199,7 +191,7 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
 
     return fixtures.filter(fixture => {
       // Status filter
-      if (filters.status !== 'all' && fixture.status !== filters.status) {
+      if (filters.status !== 'all' && fixtureStatus(fixture) !== filters.status) {
         return false;
       }
 
@@ -246,22 +238,67 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
     });
   }, [fixtures, filters]);
 
+  // Selection and bulk actions
+  const selection = useSelection(filteredFixtures.map((f) => f.id));
+  const mayDelete = canDelete(currentUser.role);
+  const chosen = fixtures.filter((f) => selection.isSelected(f.id));
+  const [pending, setPending] = useState<PendingConfirm | null>(null);
+  const [notice, setNotice] = useNotice();
+
+  const revert = () => {
+    const undone = history.undo();
+    if (undone) setNotice(`Reverted: ${undone.replace(/\.$/, "")}.`);
+  };
+  const matchName = (f: Fixture) => `${f.homeTeam} v ${f.awayTeam}`;
+  const canPublish = chosen.filter((f) => !f.published);
+  const canScore = chosen; // scheduled and completed matches
+  const [scoring, setScoring] = useState<Fixture[] | null>(null);
+
+  const saveScores = (scores: { id: string; homeScore: number; awayScore: number }[]) => {
+    const byId = new Map(scores.map((x) => [x.id, x]));
+    const label = scores.length === 1 ? "Score saved." : `${scores.length} scores saved.`;
+    history.change((list) => list.map((f) => (byId.has(f.id) ? { ...f, homeScore: byId.get(f.id)!.homeScore, awayScore: byId.get(f.id)!.awayScore } : f)), label);
+    setNotice(label);
+    setScoring(null);
+  };
+  const canUnpublish = chosen.filter((f) => f.published);
+
+  const setPublished = (items: Fixture[], published: boolean) => {
+    const ids = new Set(items.map((f) => f.id));
+    const what = items.length === 1 ? matchName(items[0]) : `${items.length} fixtures`;
+    const label = published ? `${what} published.` : `${what} moved to drafts.`;
+    history.change((list) => list.map((f) => (ids.has(f.id) ? { ...f, published } : f)), label);
+    setNotice(label);
+  };
+
+  const askDelete = (items: Fixture[]) =>
+    setPending({
+      title: items.length === 1 ? "Delete fixture?" : `Delete ${items.length} fixtures?`,
+      message: "They'll be removed from the fixtures and results pages. This can't be undone.",
+      names: items.map(matchName),
+      confirmLabel: "Delete",
+      danger: true,
+      onConfirm: () => {
+        const ids = items.map((f) => f.id);
+        const label = items.length === 1 ? "Fixture deleted." : `${items.length} fixtures deleted.`;
+        history.change((list) => list.filter((f) => !ids.includes(f.id)), label);
+        selection.remove(ids);
+        setNotice(label);
+      },
+    });
+
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'scheduled': return 'bg-blue-100 text-blue-800';
-      case 'live': return 'bg-green-100 text-green-800';
-      case 'completed': return 'bg-gray-100 text-gray-800';
-      case 'postponed': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'scheduled': return 'bg-[var(--md-primary-container)]/60 text-[var(--md-on-primary-container)]';
+      case 'completed': return 'bg-[var(--md-surface-container)] text-[var(--md-on-surface)]';
+      default: return 'bg-[var(--md-surface-container)] text-[var(--md-on-surface)]';
     }
   };
 
   const handleScoreUpdate = (fixtureId: string, homeScore: number, awayScore: number) => {
-    setFixtures(prev => prev.map(fixture => 
-      fixture.id === fixtureId 
-        ? { ...fixture, homeScore, awayScore, status: 'completed' as const }
-        : fixture
-    ));
+    const label = "Score saved.";
+    history.change((prev) => prev.map((fixture) => (fixture.id === fixtureId ? { ...fixture, homeScore, awayScore } : fixture)), label);
+    setNotice(label);
     setShowScoreEntry(null);
     setSelectedFixture(null);
   };
@@ -276,12 +313,8 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
   };
 
   const handleEditFixture = (fixture: Fixture) => {
-    if (onEditFixture) {
-      onEditFixture(fixture);
-    } else {
-      setEditingFixture(fixture);
-      setShowEditFixture(true);
-    }
+    setEditingFixture(fixture);
+    setShowEditFixture(true);
   };
 
   const handleCancelScoreEntry = () => {
@@ -294,111 +327,128 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
     setEditingFixture(null);
   };
 
-  const handleFixtureUpdated = () => {
+  const handleFixtureUpdated = (updated: Fixture) => {
+    const label = `Saved changes to ${matchName(updated)}.`;
+    history.change((list) => list.map((f) => (f.id === updated.id ? updated : f)), label);
+    setNotice(label);
     setShowEditFixture(false);
     setEditingFixture(null);
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md">
-      <div className="p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
-          <h2 className="text-lg sm:text-xl font-bold">Upcoming & Recent Fixtures</h2>
-          <div className="flex items-center gap-3">
-            <span className="text-xs sm:text-sm text-gray-500">
-              Showing {filteredFixtures.length} of {fixtures.length} fixtures
-            </span>
-            {onAddFixture && (
-              <button 
-                onClick={onAddFixture}
-                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm flex items-center"
-              >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                Add Fixture
-              </button>
-            )}
-          </div>
+    <section>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-xl font-bold text-[var(--md-on-surface)]">Fixtures</h2>
+          <p className="text-sm text-[var(--md-on-surface-variant)]">
+            Showing {filteredFixtures.length} of {fixtures.length} fixtures
+          </p>
         </div>
-        <div className="space-y-3 sm:space-y-4">
-          {filteredFixtures.length === 0 ? (
-            <div className="text-center py-6 sm:py-8 text-gray-500">
-              <p className="text-base sm:text-lg font-medium">No fixtures found</p>
-              <p className="text-xs sm:text-sm">Try adjusting your filters to see more results</p>
-            </div>
-          ) : (
-            filteredFixtures.map((fixture) => (
-            <div key={fixture.id} className="border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow">
-              <div className="flex flex-col space-y-3 sm:space-y-0">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between sm:justify-center space-x-2 sm:space-x-4">
-                    <div className="text-center min-w-0 flex-1 flex flex-col items-center">
-                      <Image 
-                        src={assetUrl(fixture.logo)} 
-                        alt={`${fixture.homeTeam} logo`}
-                        width={40}
-                        height={40}
-                        className="w-8 h-8 sm:w-10 sm:h-10 object-contain mb-1"
-                      />
-                      <p className="text-sm sm:text-base font-semibold truncate">{fixture.homeTeam}</p>
-                      {fixture.homeScore !== undefined && (
-                        <p className="text-lg sm:text-2xl font-bold text-blue-600">{fixture.homeScore}</p>
-                      )}
-                    </div>
-                    <div className="text-center flex-shrink-0">
-                      <p className="text-xs sm:text-sm text-gray-500">vs</p>
-                      <p className="text-xs text-gray-600 hidden sm:block">{fixture.date} {fixture.time}</p>
-                    </div>
-                    <div className="text-center min-w-0 flex-1 flex flex-col items-center">
-                      <Image 
-                        src={assetUrl(fixture.logo)} 
-                        alt={`${fixture.awayTeam} logo`}
-                        width={40}
-                        height={40}
-                        className="w-8 h-8 sm:w-10 sm:h-10 object-contain mb-1"
-                      />
-                      <p className="text-sm sm:text-base font-semibold truncate">{fixture.awayTeam}</p>
-                      {fixture.awayScore !== undefined && (
-                        <p className="text-lg sm:text-2xl font-bold text-blue-600">{fixture.awayScore}</p>
-                      )}
-                    </div>
+        <div className="flex flex-wrap gap-2">
+          <RevertButton canUndo={history.canUndo} lastLabel={history.lastLabel} onRevert={revert} />
+          <button type="button" onClick={() => setAddingFixture(true)} className={buttonStyles({ size: "sm" })}>
+            <Plus className="w-4 h-4" aria-hidden />
+            Add fixture
+          </button>
+        </div>
+      </div>
+
+      <Notice text={notice} onUndo={history.canUndo && !notice.startsWith("Reverted") ? revert : undefined} />
+
+      {filteredFixtures.length === 0 ? (
+        <div className="text-center py-16 rounded-2xl border border-dashed border-[var(--md-outline-variant)]">
+          <CalendarX2 className="mx-auto w-12 h-12 text-[var(--md-on-surface-variant)]/60" aria-hidden />
+          <p className="mt-4 text-lg font-semibold text-[var(--md-on-surface)]">No fixtures found</p>
+          <p className="text-sm text-[var(--md-on-surface-variant)]">Try adjusting your filters to see more results</p>
+        </div>
+      ) : (
+        <>
+          <SelectionBar
+            total={filteredFixtures.length}
+            noun="fixtures"
+            selection={selection}
+            items={[
+              { label: "Enter or edit scores", icon: <ClipboardPen className="w-4 h-4" aria-hidden />, count: canScore.length, onSelect: () => setScoring(canScore) },
+              { label: "Publish", divider: true, icon: <Eye className="w-4 h-4" aria-hidden />, count: canPublish.length, onSelect: () => setPublished(canPublish, true) },
+              { label: "Unpublish", icon: <EyeOff className="w-4 h-4" aria-hidden />, count: canUnpublish.length, onSelect: () => setPublished(canUnpublish, false) },
+              ...(mayDelete ? [{ label: "Delete", icon: <Trash2 className="w-4 h-4" aria-hidden />, count: chosen.length, danger: true, divider: true, onSelect: () => askDelete(chosen) }] : []),
+            ]}
+          />
+
+          <ul className="rounded-2xl border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] shadow-sm divide-y divide-[var(--md-outline-variant)]">
+            {filteredFixtures.map((fixture) => {
+              const isSel = selection.isSelected(fixture.id);
+              const played = fixture.homeScore !== undefined && fixture.awayScore !== undefined;
+              return (
+                <li
+                  key={fixture.id}
+                  onClick={selectOnRowClick(() => selection.toggle(fixture.id))}
+                  className={`flex flex-wrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-3 first:rounded-t-2xl last:rounded-b-2xl ${selectableRow(isSel)}`}
+                >
+                  <RowCheckbox checked={isSel} onChange={() => selection.toggle(fixture.id)} label={matchName(fixture)} />
+
+                  <div className="w-24 shrink-0 text-xs text-[var(--md-on-surface-variant)]">
+                    <p className="font-semibold text-[var(--md-on-surface)]">
+                      {new Date(`${fixture.date}T12:00:00`).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" })}
+                    </p>
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600 mt-2">
-                    <p className="truncate">📍 {fixture.venue}</p>
-                    <div className="flex justify-between items-center">
-                      <p className="text-xs text-gray-500">{fixture.league}</p>
-                      <p className="text-xs text-gray-500 sm:hidden">{fixture.date} {fixture.time}</p>
-                    </div>
+
+                  <div className="min-w-0 flex-1 basis-60">
+                    <p className="flex flex-wrap items-center gap-x-2 font-semibold text-[var(--md-on-surface)]">
+                      <span className="truncate">{fixture.homeTeam}</span>
+                      {played ? (
+                        <span className="rounded-md bg-[var(--md-primary)] px-2 py-0.5 text-sm font-bold tabular-nums text-[var(--md-on-primary)]">
+                          {fixture.homeScore}–{fixture.awayScore}
+                        </span>
+                      ) : (
+                        <span className="text-sm font-medium text-[var(--md-on-surface-variant)]">v</span>
+                      )}
+                      <span className="truncate">{fixture.awayTeam}</span>
+                    </p>
+                    <p className="mt-0.5 flex flex-wrap items-center gap-x-2 text-xs text-[var(--md-on-surface-variant)]">
+                      <span className="font-semibold text-[var(--md-primary)]">{fixture.league}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <MapPin className="w-3 h-3" aria-hidden />
+                        {fixture.venue}
+                      </span>
+                      <AddedBy username={fixture.createdBy} />
+                    </p>
                   </div>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(fixture.status)}`}>
-                      {fixture.status.charAt(0).toUpperCase() + fixture.status.slice(1)}
+
+                  <span className="flex items-center gap-1.5">
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${getStatusColor(fixtureStatus(fixture))}`}>
+                      {fixtureStatusLabel[fixtureStatus(fixture)]}
                     </span>
-                    {(fixture.status === 'scheduled' || fixture.status === 'live') && (
-                      <button 
-                        onClick={() => handleScoreEntry(fixture)}
-                        className="text-green-600 hover:text-green-800 text-xs sm:text-sm font-medium"
-                      >
-                        Enter Score
+                    {!fixture.published && (
+                      <span className="rounded-full border border-dashed border-[var(--md-outline)] px-2.5 py-0.5 text-xs font-semibold text-[var(--md-on-surface-variant)]" title="Not shown on the public site">
+                        Draft
+                      </span>
+                    )}
+                  </span>
+
+                  <div className="ml-auto flex items-center gap-1">
+                    {fixtureStatus(fixture) === "scheduled" && (
+                      <button type="button" onClick={() => handleScoreEntry(fixture)} className={buttonStyles({ variant: "tonal", size: "sm" })}>
+                        Enter score
+                      </button>
+                    )}
+                    <button type="button" onClick={() => handleEditFixture(fixture)} className={buttonStyles({ variant: "ghost", size: "icon-sm" })} aria-label={`Edit ${matchName(fixture)}`} title="Edit">
+                      <Pencil className="w-4 h-4" aria-hidden />
+                    </button>
+                    {mayDelete && (
+                      <button type="button" onClick={() => askDelete([fixture])} className={buttonStyles({ variant: "danger-ghost", size: "icon-sm" })} aria-label={`Delete ${matchName(fixture)}`} title="Delete">
+                        <Trash2 className="w-4 h-4" aria-hidden />
                       </button>
                     )}
                   </div>
-                  <button 
-                    onClick={() => handleEditFixture(fixture)}
-                    className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm self-start sm:self-auto"
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
-            </div>
-            ))
-          )}
-        </div>
-      </div>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
+
+      <ConfirmDialog pending={pending} onClose={() => setPending(null)} />
 
       {/* Score Entry Modal */}
       {showScoreEntry && selectedFixture && (
@@ -417,13 +467,22 @@ export default function FixturesList({ filters, onAddFixture, onEditFixture, onS
 
       {/* Edit Fixture Modal */}
       {showEditFixture && editingFixture && (
+        <EditFixtureForm key={editingFixture.id} onClose={handleCloseEditFixture} onSave={handleFixtureUpdated} fixture={editingFixture} />
+      )}
+
+      {scoring && <BulkScoreDialog fixtures={scoring} onClose={() => setScoring(null)} onSave={saveScores} />}
+
+      {addingFixture && (
         <EditFixtureForm
-          isOpen={true}
-          onClose={handleCloseEditFixture}
-          onSuccess={handleFixtureUpdated}
-          fixture={editingFixture}
+          onClose={() => setAddingFixture(false)}
+          onSave={(created) => {
+            const label = `${created.homeTeam} v ${created.awayTeam} added${created.published ? "" : " as a draft"}.`;
+            history.change((list) => [created, ...list], label);
+            setNotice(label);
+            setAddingFixture(false);
+          }}
         />
       )}
-    </div>
+    </section>
   );
 }

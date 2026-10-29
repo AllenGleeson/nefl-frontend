@@ -2,9 +2,15 @@
 
 // src/components/Management/ClubsManagement/ClubsList.tsx
 import { useState, useMemo } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import { clubs as siteClubs } from '@/data/club';
+import { canDelete } from '@/data/adminUsers';
+import { assetUrl } from '@/utils/assetUrl';
+import { CircleCheck, CirclePause, Pencil, Plus, Trash2 } from 'lucide-react';
+import ClubForm, { type ClubFormValues } from './ClubForm';
+import { ConfirmDialog, Notice, RowCheckbox, SelectionBar, selectableRow, selectOnRowClick, useNotice, useSelection, type PendingConfirm } from '../Selection';
 import ClubsManagementControls from './ClubsManagementControls';
+import { buttonStyles } from "@/components/ui/Button";
 
 interface Club {
   id: string;
@@ -13,118 +19,52 @@ interface Club {
   leagues: string[];
   founded: number;
   stadium: string;
-  manager: string;
-  players: number;
+  website?: string;
+  email?: string;
+  /** Formation template id, e.g. "4-4-2" */
+  formation?: string;
   status: 'active' | 'inactive';
 }
 
 interface User {
   id: string;
-  role: 'admin' | 'manager' | 'editor';
+  role: 'admin' | 'editor';
 }
 
+// Real clubs from the site data (id is the club slug)
+const initialClubs: Club[] = siteClubs.map((c) => ({
+  id: c.slug,
+  name: c.name,
+  logo: c.logo,
+  leagues: c.leagues,
+  founded: c.founded,
+  stadium: c.grounds?.name ?? c.ground,
+  website: c.website,
+  email: c.contacts?.find((x) => x.email)?.email,
+  formation: c.formation?.name,
+  status: 'active',
+}));
+
 type Props = {
-  onAddClub?: () => void
   currentUser?: User
 }
 
-export default function ClubsList({ onAddClub, currentUser }: Props) {
+export default function ClubsList({ currentUser }: Props) {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
-  const [clubs] = useState<Club[]>([
-    {
-      id: '1',
-      name: 'Walshestown FC',
-      logo: '/images/Ardee-Celtic.webp',
-      leagues: ['Division 1', 'Youth League'],
-      founded: 1985,
-      stadium: 'Walshestown Park',
-      manager: 'John Smith',
-      players: 11,
-      status: 'active'
-    },
-    {
-      id: '2',
-      name: 'Athboy Celtic',
-      logo: '/images/Ardee-Celtic.webp',
-      leagues: ['Division 1'],
-      founded: 1992,
-      stadium: 'Athboy Sports Complex',
-      manager: 'Mike O\'Brien',
-      players: 11,
-      status: 'active'
-    },
-    {
-      id: '3',
-      name: 'Dublin United',
-      logo: '/images/Ardee-Celtic.webp',
-      leagues: ['Division 1', 'Premier League', 'Championship'],
-      founded: 1990,
-      stadium: 'Dublin Sports Ground',
-      manager: 'Pat Murphy',
-      players: 12,
-      status: 'active'
-    },
-    {
-      id: '4',
-      name: 'Cork City FC',
-      logo: '/images/Ardee-Celtic.webp',
-      leagues: ['Premier League', 'Championship'],
-      founded: 1984,
-      stadium: 'Turner\'s Cross',
-      manager: 'Sarah O\'Connor',
-      players: 15,
-      status: 'active'
-    },
-    {
-      id: '5',
-      name: 'Galway United',
-      logo: '/images/Ardee-Celtic.webp',
-      leagues: ['Division 1', 'Youth League'],
-      founded: 1977,
-      stadium: 'Eamonn Deacy Park',
-      manager: 'David Walsh',
-      players: 13,
-      status: 'active'
-    },
-    {
-      id: '6',
-      name: 'Limerick FC',
-      logo: '/images/Ardee-Celtic.webp',
-      leagues: ['Championship', 'League One'],
-      founded: 1983,
-      stadium: 'Markets Field',
-      manager: '',
-      players: 10,
-      status: 'inactive'
-    },
-    {
-      id: '7',
-      name: 'Waterford FC',
-      logo: '/images/Ardee-Celtic.webp',
-      leagues: ['Premier League', 'Division 1'],
-      founded: 1930,
-      stadium: 'Waterford Regional Sports Centre',
-      manager: 'Emma Kelly',
-      players: 14,
-      status: 'active'
-    }
-  ]);
+  const [clubs, setClubs] = useState<Club[]>(initialClubs);
 
   const getStatusColor = (status: string) => {
     return status === 'active' 
-      ? 'bg-green-100 text-green-800' 
-      : 'bg-red-100 text-red-800';
+      ? 'bg-emerald-100 text-emerald-800'
+      : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]';
   };
 
-  const canEdit = () => {
-    return currentUser?.role === 'admin';
-  };
-
-  const canManage = () => {
-    return currentUser?.role === 'admin' || currentUser?.role === 'manager';
-  };
+  // Admins and editors can do everything on this page
+  const canEdit = () => currentUser?.role === 'admin' || currentUser?.role === 'editor';
+  const canManage = canEdit;
+  const mayDelete = currentUser ? canDelete(currentUser.role) : false;
 
   // Filter clubs based on search query and status
   const filteredClubs = useMemo(() => {
@@ -144,6 +84,48 @@ export default function ClubsList({ onAddClub, currentUser }: Props) {
   const showControls = clubs.length > 3;
   const effectiveViewMode = clubs.length <= 3 ? 'grid' : viewMode;
 
+  // Selection and bulk actions
+  const selection = useSelection(filteredClubs.map((c) => c.id));
+  const chosen = clubs.filter((c) => selection.isSelected(c.id));
+  const [pending, setPending] = useState<PendingConfirm | null>(null);
+  const [notice, setNotice] = useNotice();
+  const [editing, setEditing] = useState<Club | null | undefined>(undefined); // undefined = closed, null = new
+
+  const saveClub = (values: ClubFormValues) => {
+    if (editing) {
+      setClubs((list) => list.map((c) => (c.id === editing.id ? { ...c, ...values } : c)));
+      setNotice(`Saved changes to ${values.name}.`);
+    } else {
+      const id = values.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      // League membership is managed on the Leagues page
+      setClubs((list) => [...list, { id, logo: '/images/nefl-logo.webp', status: 'active', leagues: [], ...values }]);
+      setNotice(`${values.name} added.`);
+    }
+    setEditing(undefined);
+  };
+  const withStatusNot = (st: Club['status']) => chosen.filter((c) => c.status !== st);
+
+  const setStatusFor = (items: Club[], next: Club['status']) => {
+    const ids = new Set(items.map((c) => c.id));
+    setClubs((list) => list.map((c) => (ids.has(c.id) ? { ...c, status: next } : c)));
+    setNotice(`${items.length === 1 ? items[0].name : `${items.length} clubs`} marked ${next}.`);
+  };
+
+  const askDelete = (items: Club[]) =>
+    setPending({
+      title: items.length === 1 ? 'Delete club?' : `Delete ${items.length} clubs?`,
+      message: 'They will be removed from the clubs page and league listings. This cannot be undone.',
+      names: items.map((c) => c.name),
+      confirmLabel: 'Delete',
+      danger: true,
+      onConfirm: () => {
+        const ids = items.map((c) => c.id);
+        setClubs((list) => list.filter((c) => !ids.includes(c.id)));
+        selection.remove(ids);
+        setNotice(items.length === 1 ? `${items[0].name} deleted.` : `${items.length} clubs deleted.`);
+      },
+    });
+
   return (
     <div>
       {/* Search and View Controls */}
@@ -157,153 +139,136 @@ export default function ClubsList({ onAddClub, currentUser }: Props) {
         showControls={showControls}
       />
 
-      <div className="bg-white rounded-lg shadow-md">
-        <div className="p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-4">
-          <h2 className="text-lg sm:text-xl font-bold">Registered Clubs</h2>
-          <div className="flex flex-row gap-2 flex-wrap">
-            {onAddClub && (
-              <button 
-                onClick={onAddClub}
-                className="bg-green-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base flex items-center"
-              >
-                Add Club
-              </button>
-            )}
-            <button className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base">
-              Export Data
-            </button>
-            <button className="bg-gray-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base">
-              Import Clubs
-            </button>
-          </div>
-        </div>
-        
-        <div className={effectiveViewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' : 'space-y-3 sm:space-y-4'}>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="text-xl font-bold text-[var(--md-on-surface)]">Registered clubs</h2>
+        {canEdit() && (
+          <button type="button" onClick={() => setEditing(null)} className={buttonStyles({ size: 'sm' })}>
+            <Plus className="w-4 h-4" aria-hidden />
+            Add club
+          </button>
+        )}
+      </div>
+
+      <Notice text={notice} />
+
+      {canManage() && filteredClubs.length > 0 && (
+        <SelectionBar
+          total={filteredClubs.length}
+          noun="clubs"
+          selection={selection}
+          items={[
+            { label: 'Mark active', icon: <CircleCheck className="w-4 h-4" aria-hidden />, count: withStatusNot('active').length, onSelect: () => setStatusFor(withStatusNot('active'), 'active') },
+            { label: 'Mark inactive', icon: <CirclePause className="w-4 h-4" aria-hidden />, count: withStatusNot('inactive').length, onSelect: () => setStatusFor(withStatusNot('inactive'), 'inactive') },
+            ...(mayDelete
+              ? [{ label: 'Delete', icon: <Trash2 className="w-4 h-4" aria-hidden />, count: chosen.length, danger: true, divider: true, onSelect: () => askDelete(chosen) }]
+              : []),
+          ]}
+        />
+      )}
+
+      {filteredClubs.length === 0 ? (
+        <p className="py-12 text-center rounded-2xl border border-dashed border-[var(--md-outline-variant)] text-[var(--md-on-surface-variant)]">No clubs found.</p>
+      ) : effectiveViewMode === 'grid' ? (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredClubs.map((club) => {
-            if (effectiveViewMode === 'grid') {
-              return (
-                <div key={club.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="text-center mb-4">
-                    <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-3 overflow-hidden">
-                      <Image
-                        src={club.logo}
-                        alt={`${club.name} logo`}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h3 className="text-lg font-semibold mb-1">{club.name}</h3>
-                    <p className="text-sm text-gray-600 mb-2">
-                      {club.leagues.length} league{club.leagues.length === 1 ? '' : 's'}
-                    </p>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(club.status)}`}>
-                      {club.status.charAt(0).toUpperCase() + club.status.slice(1)}
-                    </span>
-                  </div>
-                  <div className="space-y-2 text-sm mb-4">
-                    <div>
-                      <span className="text-gray-500">Ground: </span>
-                      <span className="font-medium">{club.stadium}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Manager: </span>
-                      <span className="font-medium">{club.manager || 'No Manager'}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Players: </span>
-                      <span className="font-medium">{club.players}</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    {canManage() && (
-                      <Link 
-                        href={`/management/clubs/${club.id}`}
-                        className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-sm font-medium hover:bg-blue-700 transition-colors text-center"
-                      >
-                        Manage
-                      </Link>
-                    )}
-                    {canEdit() && (
-                      <button className="flex-1 bg-gray-600 text-white px-3 py-2 rounded text-sm font-medium hover:bg-gray-700 transition-colors">
-                        Edit
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            }
-
-            // List view (default)
+            const isSel = selection.isSelected(club.id);
             return (
-              <div key={club.id} className="border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow">
-                <div className="flex flex-col lg:flex-row lg:items-center space-y-3 lg:space-y-0 lg:space-x-4">
-                  <div className="flex items-center space-x-3 sm:space-x-4 flex-1">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                        <Image
-                          src={club.logo}
-                          alt={`${club.name} logo`}
-                          width={64}
-                          height={64}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                        <div className="min-w-0">
-                          <h3 className="text-base sm:text-lg font-semibold truncate">{club.name}</h3>
-                          <p className="text-xs sm:text-sm text-gray-600 truncate">
-                            {club.leagues.length} league{club.leagues.length === 1 ? '' : 's'} • Founded {club.founded}
-                          </p>
-                        </div>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium self-start sm:self-auto ${getStatusColor(club.status)}`}>
-                          {club.status.charAt(0).toUpperCase() + club.status.slice(1)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm flex-1">
-                    <div>
-                      <p className="text-gray-500">Ground</p>
-                      <p className="font-medium truncate">{club.stadium}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500">Manager</p>
-                      <p className="font-medium truncate">{club.manager || 'No Manager'}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500">Players</p>
-                      <p className="font-medium">{club.players}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 items-center justify-end lg:justify-start">
-                    {canManage() && (
-                      <Link 
-                        href={`/management/clubs/${club.id}`}
-                        className="bg-blue-600 text-white px-3 py-1 rounded text-xs sm:text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
-                      >
-                        Manage
-                      </Link>
-                    )}
-                    {canEdit() && (
-                      <button className="bg-gray-600 text-white px-3 py-1 rounded text-xs sm:text-sm font-medium hover:bg-gray-700 transition-colors flex items-center justify-center">
-                        Edit
+              <li
+                key={club.id}
+                onClick={canManage() ? selectOnRowClick(() => selection.toggle(club.id)) : undefined}
+                className={`relative flex flex-col rounded-2xl border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] p-4 shadow-sm ${canManage() ? selectableRow(isSel) : ''}`}
+              >
+                {canManage() && <RowCheckbox checked={isSel} onChange={() => selection.toggle(club.id)} label={club.name} className="absolute top-4 left-4" />}
+                <div className="text-center">
+                  <span className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-[var(--md-outline-variant)]">
+                    <Image src={assetUrl(club.logo)} alt="" width={48} height={48} className="h-12 w-12 object-contain" />
+                  </span>
+                  <h3 className="font-semibold text-[var(--md-on-surface)]">{club.name}</h3>
+                  <p className="mt-1 text-xs text-[var(--md-on-surface-variant)]">
+                    {club.leagues.length} league{club.leagues.length === 1 ? '' : 's'} · Est. {club.founded}
+                  </p>
+                  <span className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${getStatusColor(club.status)}`}>
+                    {club.status.charAt(0).toUpperCase() + club.status.slice(1)}
+                  </span>
+                </div>
+                <dl className="mt-3 space-y-1 text-sm">
+                  <div className="flex gap-1"><dt className="text-[var(--md-on-surface-variant)]">Ground:</dt><dd className="font-medium truncate">{club.stadium}</dd></div>
+                  <div className="flex gap-1"><dt className="text-[var(--md-on-surface-variant)]">Formation:</dt><dd className="font-medium">{club.formation || 'Not set'}</dd></div>
+                </dl>
+                {canManage() && (
+                  <div className="mt-4 flex gap-2">
+                    <button type="button" onClick={() => setEditing(club)} className={buttonStyles({ variant: 'outline', size: 'sm', className: 'flex-1' })}>
+                      <Pencil className="w-4 h-4" aria-hidden />
+                      Edit
+                    </button>
+                    {mayDelete && (
+                      <button type="button" onClick={() => askDelete([club])} className={buttonStyles({ variant: 'danger-ghost', size: 'icon-sm' })} aria-label={`Delete ${club.name}`} title="Delete">
+                        <Trash2 className="w-4 h-4" aria-hidden />
                       </button>
                     )}
                   </div>
-                </div>
-              </div>
+                )}
+              </li>
             );
           })}
-        </div>
-      </div>
-    </div>
+        </ul>
+      ) : (
+        <ul className="rounded-2xl border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] shadow-sm divide-y divide-[var(--md-outline-variant)]">
+          {filteredClubs.map((club) => {
+            const isSel = selection.isSelected(club.id);
+            return (
+              <li
+                key={club.id}
+                onClick={canManage() ? selectOnRowClick(() => selection.toggle(club.id)) : undefined}
+                className={`flex flex-wrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-3 first:rounded-t-2xl last:rounded-b-2xl ${canManage() ? selectableRow(isSel) : ''}`}
+              >
+                {canManage() && <RowCheckbox checked={isSel} onChange={() => selection.toggle(club.id)} label={club.name} />}
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-[var(--md-outline-variant)]">
+                  <Image src={assetUrl(club.logo)} alt="" width={32} height={32} className="h-8 w-8 object-contain" />
+                </span>
+                <div className="min-w-0 flex-1 basis-48">
+                  <p className="font-semibold text-[var(--md-on-surface)] truncate">{club.name}</p>
+                  <p className="text-xs text-[var(--md-on-surface-variant)] truncate">
+                    {club.leagues.length} league{club.leagues.length === 1 ? '' : 's'} · Est. {club.founded}
+                  </p>
+                </div>
+                <div className="hidden md:block w-56 text-sm">
+                  <p className="truncate text-[var(--md-on-surface)]">{club.stadium}</p>
+                  <p className="truncate text-xs text-[var(--md-on-surface-variant)]">Formation: {club.formation || 'Not set'}</p>
+                </div>
+                <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${getStatusColor(club.status)}`}>
+                  {club.status.charAt(0).toUpperCase() + club.status.slice(1)}
+                </span>
+                {canManage() && (
+                  <div className="ml-auto flex items-center gap-1">
+                    <button type="button" onClick={() => setEditing(club)} className={buttonStyles({ variant: 'outline', size: 'sm' })}>
+                      <Pencil className="w-4 h-4" aria-hidden />
+                      Edit
+                      <span className="sr-only"> {club.name}</span>
+                    </button>
+                    {mayDelete && (
+                      <button type="button" onClick={() => askDelete([club])} className={buttonStyles({ variant: 'danger-ghost', size: 'icon-sm' })} aria-label={`Delete ${club.name}`} title="Delete">
+                        <Trash2 className="w-4 h-4" aria-hidden />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      <ConfirmDialog pending={pending} onClose={() => setPending(null)} />
+
+      {editing !== undefined && (
+        <ClubForm
+          key={editing?.id ?? 'new'}
+          initial={editing ?? undefined}
+          onClose={() => setEditing(undefined)}
+          onSave={saveClub}
+        />
+      )}
     </div>
   );
 }

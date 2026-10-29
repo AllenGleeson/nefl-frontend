@@ -3,6 +3,7 @@ import Link from "next/link";
 import { clubs } from "@/data/club"; // fixed typo: was club
 import ClubDetails from "@/components/Clubs/ClubDetails";
 import { assetUrl } from "@/utils/assetUrl";
+import { buttonStyles } from "@/components/ui/Button";
 
 interface ClubPageProps {
   params: Promise<{
@@ -57,7 +58,7 @@ export default async function ClubPage({ params }: ClubPageProps) {
       <div className="relative z-10 max-w-6xl mx-auto px-4">
         <Link
           href="/clubs"
-          className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-xl bg-blue-100 border border-blue-300 text-blue-900 hover:bg-blue-200 transition-shadow shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className={buttonStyles({variant: "tonal", size: "sm", className: "mb-6"})}
         >
           ← Back to Clubs
         </Link>

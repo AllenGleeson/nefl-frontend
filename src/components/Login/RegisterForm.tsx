@@ -3,6 +3,7 @@
 // src/components/Login/RegisterForm.tsx
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { buttonStyles } from "@/components/ui/Button";
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -86,7 +87,7 @@ export default function RegisterForm() {
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+            className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
             placeholder="First name"
             autoComplete="given-name"
           />
@@ -102,7 +103,7 @@ export default function RegisterForm() {
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+            className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
             placeholder="Last name"
             autoComplete="family-name"
           />
@@ -120,7 +121,7 @@ export default function RegisterForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
           placeholder="Enter your email"
           autoComplete="email"
         />
@@ -135,7 +136,7 @@ export default function RegisterForm() {
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
         >
           <option value="viewer">Viewer (Read-only access)</option>
           <option value="editor">Editor (Content management)</option>
@@ -154,7 +155,7 @@ export default function RegisterForm() {
           value={formData.password}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
           placeholder="Create a password"
           autoComplete="new-password"
         />
@@ -171,7 +172,7 @@ export default function RegisterForm() {
           value={formData.confirmPassword}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
           placeholder="Confirm your password"
           autoComplete="new-password"
         />
@@ -184,15 +185,15 @@ export default function RegisterForm() {
           name="agreeToTerms"
           checked={formData.agreeToTerms}
           onChange={handleChange}
-          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
+          className="h-4 w-4 text-[var(--md-primary)] focus:ring-[var(--md-primary)] border-gray-300 rounded mt-1"
         />
         <label htmlFor="agreeToTerms" className="ml-2 block text-sm text-gray-700 leading-relaxed">
           I agree to the{' '}
-          <a href="/terms" className="text-blue-600 hover:text-blue-700 underline">
+          <a href="/terms" className="text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] underline">
             Terms and Conditions
           </a>{' '}
           and{' '}
-          <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline">
+          <a href="/privacy" className="text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] underline">
             Privacy Policy
           </a>
         </label>
@@ -201,7 +202,7 @@ export default function RegisterForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-blue-600 text-white py-3 sm:py-4 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-base font-medium"
+        className={buttonStyles({size: "lg", fullWidth: true})}
       >
         {isLoading ? (
           <div className="flex items-center justify-center">

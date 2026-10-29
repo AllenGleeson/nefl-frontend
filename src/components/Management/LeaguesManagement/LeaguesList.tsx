@@ -1,124 +1,145 @@
 "use client";
 
 // src/components/Management/LeaguesManagement/LeaguesList.tsx
-import { useState } from 'react';
+import { useState } from "react";
+import Link from "next/link";
+import { CircleCheck, CirclePause, Flag, Plus, Table2, Trash2 } from "lucide-react";
+import { leagueTablesDataLong } from "@/data/leagueTablesDataLong";
+import { shortLeagueName } from "@/utils/leagueNames";
+import { buttonStyles } from "@/components/ui/Button";
+import { canDelete, currentUser } from "@/data/adminUsers";
+import { ConfirmDialog, Notice, RowCheckbox, SelectionBar, selectableRow, selectOnRowClick, useNotice, useSelection, type PendingConfirm } from "../Selection";
 
-interface League {
+type Status = "active" | "inactive" | "completed";
+
+type League = {
   id: string;
   name: string;
+  section: "Men" | "Women";
   season: string;
   teams: number;
-  matches: number;
-  status: 'active' | 'inactive' | 'completed';
-  startDate: string;
-  endDate: string;
-}
+  status: Status;
+};
+
+const statusLabel: Record<Status, string> = { active: "Active", inactive: "Inactive", completed: "Completed" };
+const statusBadge: Record<Status, string> = {
+  active: "bg-emerald-100 text-emerald-800",
+  inactive: "bg-amber-100 text-amber-800",
+  completed: "bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]",
+};
+
+// Real leagues from the league tables, in division order
+const initialLeagues: League[] = (["Men", "Women"] as const).flatMap((section) =>
+  Object.entries(leagueTablesDataLong[section]).map(([name, table]) => ({
+    id: name,
+    name,
+    section,
+    season: "2025/26",
+    teams: table.length,
+    status: "active" as Status,
+  }))
+);
 
 type Props = {
   onAddLeague?: () => void;
-}
+};
 
 export default function LeaguesList({ onAddLeague }: Props) {
-  const [leagues] = useState<League[]>([
-    {
-      id: '1',
-      name: 'Premier League',
-      season: '2023-24',
-      teams: 20,
-      matches: 380,
-      status: 'active',
-      startDate: '2023-08-12',
-      endDate: '2024-05-19'
-    },
-    {
-      id: '2',
-      name: 'Championship',
-      season: '2023-24',
-      teams: 24,
-      matches: 552,
-      status: 'active',
-      startDate: '2023-08-05',
-      endDate: '2024-05-04'
-    },
-    {
-      id: '3',
-      name: 'League One',
-      season: '2023-24',
-      teams: 24,
-      matches: 552,
-      status: 'active',
-      startDate: '2023-08-05',
-      endDate: '2024-05-04'
-    }
-  ]);
+  const [leagues, setLeagues] = useState<League[]>(initialLeagues);
+  const [pending, setPending] = useState<PendingConfirm | null>(null);
+  const [notice, setNotice] = useNotice();
+  const selection = useSelection(leagues.map((l) => l.id));
+  const mayDelete = canDelete(currentUser.role);
+  const chosen = leagues.filter((l) => selection.isSelected(l.id));
+  const notIn = (s: Status) => chosen.filter((l) => l.status !== s);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'bg-green-100 text-green-800';
-      case 'inactive': return 'bg-yellow-100 text-yellow-800';
-      case 'completed': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
+  const setStatusFor = (items: League[], next: Status) => {
+    const ids = new Set(items.map((l) => l.id));
+    setLeagues((list) => list.map((l) => (ids.has(l.id) ? { ...l, status: next } : l)));
+    const what = items.length === 1 ? shortLeagueName(items[0].name) : `${items.length} leagues`;
+    setNotice(`${what} marked ${statusLabel[next].toLowerCase()}.`);
   };
 
+  const askDelete = (items: League[]) =>
+    setPending({
+      title: items.length === 1 ? "Delete league?" : `Delete ${items.length} leagues?`,
+      message: "Their tables and fixtures will no longer appear on the site. This can't be undone.",
+      names: items.map((l) => shortLeagueName(l.name)),
+      confirmLabel: "Delete",
+      danger: true,
+      onConfirm: () => {
+        const ids = items.map((l) => l.id);
+        setLeagues((list) => list.filter((l) => !ids.includes(l.id)));
+        selection.remove(ids);
+        setNotice(items.length === 1 ? "League deleted." : `${items.length} leagues deleted.`);
+      },
+    });
+
   return (
-    <div className="bg-white rounded-lg shadow-md mb-6">
-      <div className="p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-          <h2 className="text-lg sm:text-xl font-bold">League Competitions</h2>
-          <button 
-            onClick={onAddLeague}
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm sm:text-base w-full sm:w-auto"
-          >
-            Create New League
+    <section>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="text-xl font-bold text-[var(--md-on-surface)]">Leagues</h2>
+        {onAddLeague && (
+          <button type="button" onClick={onAddLeague} className={buttonStyles({ size: "sm" })}>
+            <Plus className="w-4 h-4" aria-hidden />
+            New league
           </button>
-        </div>
-        
-        <div className="space-y-4">
-          {leagues.map((league) => (
-            <div key={league.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                    <div className="flex-shrink-0">
-                      <h3 className="text-lg font-semibold">{league.name}</h3>
-                      <p className="text-sm text-gray-600">Season {league.season}</p>
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
-                      <div>
-                        <p className="text-gray-500">Teams</p>
-                        <p className="font-medium">{league.teams}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Matches</p>
-                        <p className="font-medium">{league.matches}</p>
-                      </div>
-                      <div className="col-span-2 sm:col-span-1">
-                        <p className="text-gray-500">Duration</p>
-                        <p className="font-medium text-xs sm:text-sm break-words">{league.startDate} - {league.endDate}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 lg:gap-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium w-fit ${getStatusColor(league.status)}`}>
-                    {league.status.charAt(0).toUpperCase() + league.status.slice(1)}
-                  </span>
-                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-1">
-                    <button className="text-purple-600 hover:text-purple-800 text-sm text-left sm:text-center">
-                      Edit
-                    </button>
-                    <button className="text-blue-600 hover:text-blue-800 text-sm text-left sm:text-center">
-                      View Table
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        )}
       </div>
-    </div>
+
+      <Notice text={notice} />
+
+      <SelectionBar
+        total={leagues.length}
+        noun="leagues"
+        selection={selection}
+        items={[
+          { label: "Mark active", icon: <CircleCheck className="w-4 h-4" aria-hidden />, count: notIn("active").length, onSelect: () => setStatusFor(notIn("active"), "active") },
+          { label: "Mark inactive", icon: <CirclePause className="w-4 h-4" aria-hidden />, count: notIn("inactive").length, onSelect: () => setStatusFor(notIn("inactive"), "inactive") },
+          { label: "Mark completed", icon: <Flag className="w-4 h-4" aria-hidden />, count: notIn("completed").length, onSelect: () => setStatusFor(notIn("completed"), "completed") },
+          ...(mayDelete ? [{ label: "Delete", icon: <Trash2 className="w-4 h-4" aria-hidden />, count: chosen.length, danger: true, divider: true, onSelect: () => askDelete(chosen) }] : []),
+        ]}
+      />
+
+      <ul className="rounded-2xl border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] shadow-sm divide-y divide-[var(--md-outline-variant)]">
+        {leagues.map((l) => {
+          const isSel = selection.isSelected(l.id);
+          const sponsor = l.name.replace(shortLeagueName(l.name), "").trim();
+          return (
+            <li
+              key={l.id}
+              onClick={selectOnRowClick(() => selection.toggle(l.id))}
+              className={`flex flex-wrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-3 first:rounded-t-2xl last:rounded-b-2xl ${selectableRow(isSel)}`}
+            >
+              <RowCheckbox checked={isSel} onChange={() => selection.toggle(l.id)} label={l.name} />
+              <div className="min-w-0 flex-1 basis-56">
+                <p className="font-semibold text-[var(--md-on-surface)]">
+                  {shortLeagueName(l.name)}
+                  <span className="ml-2 text-xs font-medium text-[var(--md-on-surface-variant)]">{l.section === "Men" ? "Men's" : "Women's"}</span>
+                </p>
+                {sponsor && <p className="text-xs text-[var(--md-on-surface-variant)]">{sponsor}</p>}
+              </div>
+              <div className="flex items-center gap-3 text-sm text-[var(--md-on-surface-variant)]">
+                <span>{l.teams} teams</span>
+                <span>· {l.season}</span>
+                <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusBadge[l.status]}`}>{statusLabel[l.status]}</span>
+              </div>
+              <div className="ml-auto flex items-center gap-1">
+                <Link href="/leagues" className={buttonStyles({ variant: "ghost", size: "icon-sm" })} aria-label={`View ${shortLeagueName(l.name)} table`} title="View table">
+                  <Table2 className="w-4 h-4" aria-hidden />
+                </Link>
+                {mayDelete && (
+                  <button type="button" onClick={() => askDelete([l])} className={buttonStyles({ variant: "danger-ghost", size: "icon-sm" })} aria-label={`Delete ${shortLeagueName(l.name)}`} title="Delete">
+                    <Trash2 className="w-4 h-4" aria-hidden />
+                  </button>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      <ConfirmDialog pending={pending} onClose={() => setPending(null)} />
+    </section>
   );
 }

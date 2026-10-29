@@ -3,13 +3,15 @@
 import { useState, useMemo, useEffect } from "react"
 import { newsPosts } from "@/data/newsPosts"
 import NewsCard from "./NewsCard"
+import { buttonStyles } from "@/components/ui/Button";
+import { ANY_DATE, inDateRange, type DateRange } from "@/components/ui/DateRangePicker";
 
 const POSTS_PER_PAGE = 6
 
 type Props = {
   search?: string
   category?: string
-  dateRange?: string
+  dateRange?: DateRange
   sortBy?: string
   viewMode?: 'grid' | 'list'
 }
@@ -17,7 +19,7 @@ type Props = {
 export default function NewsListWithPagination({ 
   search = "", 
   category = "All",
-  dateRange = "All",
+  dateRange = ANY_DATE,
   sortBy = "newest",
   viewMode = "grid"
 }: Props) {
@@ -38,28 +40,8 @@ export default function NewsListWithPagination({
     }
     
     // Apply date range filter
-    if (dateRange !== "All") {
-      const now = new Date()
-      const cutoffDate = new Date()
-      
-      switch (dateRange) {
-        case "7days":
-          cutoffDate.setDate(now.getDate() - 7)
-          break
-        case "30days":
-          cutoffDate.setDate(now.getDate() - 30)
-          break
-        case "90days":
-          cutoffDate.setDate(now.getDate() - 90)
-          break
-      }
-      
-      posts = posts.filter(post => {
-        const postDate = new Date(post.date)
-        return postDate >= cutoffDate
-      })
-    }
-    
+    posts = posts.filter(post => inDateRange(post.date, dateRange))
+
     // Apply search filter
     if (search.trim()) {
       const searchLower = search.toLowerCase()
@@ -135,7 +117,7 @@ export default function NewsListWithPagination({
               <button
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
-                className="px-3 sm:px-4 py-2 border border-[var(--md-outline-variant)] rounded-lg text-xs sm:text-sm font-medium text-[var(--md-on-surface)] bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-high)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className={buttonStyles({variant: "outline", size: "sm"})}
               >
                 <span className="hidden sm:inline">Previous</span>
                 <span className="sm:hidden">Prev</span>
@@ -146,11 +128,8 @@ export default function NewsListWithPagination({
                   <button
                     key={page}
                     onClick={() => goToPage(page)}
-                    className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-lg transition-colors ${
-                      currentPage === page
-                        ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-sm'
-                        : 'text-[var(--md-on-surface)] bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)] hover:bg-[var(--md-surface-container-high)]'
-                    }`}
+                    aria-current={currentPage === page ? "page" : undefined}
+                    className={buttonStyles({ variant: currentPage === page ? "primary" : "outline", size: "icon-sm" })}
                   >
                     {page}
                   </button>
@@ -160,7 +139,7 @@ export default function NewsListWithPagination({
               <button
                 onClick={goToNextPage}
                 disabled={currentPage === totalPages}
-                className="px-3 sm:px-4 py-2 border border-[var(--md-outline-variant)] rounded-lg text-xs sm:text-sm font-medium text-[var(--md-on-surface)] bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-high)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className={buttonStyles({variant: "outline", size: "sm"})}
               >
                 Next
               </button>

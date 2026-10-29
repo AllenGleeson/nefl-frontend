@@ -44,7 +44,7 @@ export default function NewsSection() {
 
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Featured Story - Left Side */}
-          <div className="lg:sticky lg:top-8 lg:self-start">
+          <div className="lg:sticky lg:top-24 lg:self-start">
             <Link href={`/news/${featuredStory.slug}`} className="block overflow-hidden cursor-pointer">
               <div className="relative h-64 sm:h-80 md:h-96 lg:h-[28rem] overflow-hidden">
                 <Image

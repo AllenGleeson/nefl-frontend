@@ -3,6 +3,7 @@
 // src/components/Login/ForgotPasswordForm.tsx
 import { useState } from 'react';
 import Link from 'next/link';
+import { buttonStyles } from "@/components/ui/Button";
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState('');
@@ -43,13 +44,13 @@ export default function ForgotPasswordForm() {
         <div className="space-y-3 sm:space-y-4">
           <button
             onClick={() => setIsSubmitted(false)}
-            className="w-full bg-blue-600 text-white py-3 sm:py-4 px-4 rounded-lg hover:bg-blue-700 transition-colors text-base font-medium"
+            className={buttonStyles({size: "lg", fullWidth: true})}
           >
             Send another email
           </button>
           <Link
             href="/login"
-            className="block w-full text-center text-blue-600 hover:text-blue-700 py-2 text-sm sm:text-base"
+            className="block w-full text-center text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] py-2 text-sm sm:text-base"
           >
             Back to login
           </Link>
@@ -76,7 +77,7 @@ export default function ForgotPasswordForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+          className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
           placeholder="Enter your email address"
           autoComplete="email"
         />
@@ -85,7 +86,7 @@ export default function ForgotPasswordForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-blue-600 text-white py-3 sm:py-4 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-base font-medium"
+        className={buttonStyles({size: "lg", fullWidth: true})}
       >
         {isLoading ? (
           <div className="flex items-center justify-center">
@@ -98,7 +99,7 @@ export default function ForgotPasswordForm() {
       </button>
 
       <div className="text-center">
-        <Link href="/login" className="text-blue-600 hover:text-blue-700 text-sm sm:text-base">
+        <Link href="/login" className="text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] text-sm sm:text-base">
           ← Back to login
         </Link>
       </div>

@@ -25,7 +25,7 @@ export default function NewsManagement() {
   return (
     <div className="news-management">
       <NewsManagementHeader />
-      <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <NewsStats />
         <div className="mt-6 sm:mt-8">
           <NewsList onAddNews={handleAddNews} />

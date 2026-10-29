@@ -1,6 +1,6 @@
 "use client";
 
-// src/components/Fixture/Pitch.tsx
+// src/components/Clubs/ClubDetails/Pitch.tsx
 import { ReactNode } from 'react';
 
 interface PitchProps {

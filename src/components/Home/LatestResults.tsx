@@ -3,7 +3,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
+import { MdMan, MdWoman } from "react-icons/md";
 import { getLeagueLogo } from "@/utils/leagueLogos";
+import LeagueSelect from "../Leagues/LeagueSelect";
+import IconToggle from "@/components/ui/IconToggle";
 import { getClubLogo } from "@/utils/clubLogos";
 import { assetUrl } from "@/utils/assetUrl";
 
@@ -322,14 +325,14 @@ export default function LatestResults() {
     <section className="latest-results py-8 sm:py-12 md:py-16 ">
       <div className="container mx-auto px-4 max-w-screen-2xl">
         {/* Header Section */}
-        <div className="mb-8 sm:mb-10 md:mb-12">
+        <div className="mb-4 sm:mb-6">
           {/* Header with Title and Link */}
           <div className="flex flex-row justify-between items-center gap-2 mb-6 sm:mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--md-on-surface)]">
               Latest Results
             </h2>
             <Link 
-              href="/fixtures"
+              href="/fixtures#results"
               className="text-[var(--md-primary)] hover:text-[var(--md-primary)]/80 transition-colors duration-200 flex items-center gap-1 text-sm sm:text-base"
             >
               VIEW ALL RESULTS
@@ -341,107 +344,22 @@ export default function LatestResults() {
             Stay updated with the latest match results from your favorite leagues
           </p>
 
-          {/* Category Slider */}
-          <div className="mb-6 sm:mb-8">
-            <div className="flex items-center justify-center">
-              <div className="relative bg-[var(--md-surface-container)] rounded-full p-1 w-56 sm:w-64 lg:w-72 h-10 sm:h-12 shadow-sm">
-                {/* Slider Background */}
-                <div 
-                  className={`absolute top-1 bottom-1 bg-[var(--md-primary)] rounded-full transition-all duration-300 shadow-md ${
-                    selectedCategory === "mens" 
-                      ? "left-1 w-[108px] sm:w-[124px] lg:w-[140px]" 
-                      : "left-[116px] sm:left-[132px] lg:left-[148px] w-[108px] sm:w-[124px] lg:w-[140px]"
-                  }`}
-                />
-                <button
-                  onClick={() => handleCategoryChange("mens")}
-                  className={`absolute top-1 bottom-1 left-1 rounded-full font-semibold flex items-center justify-center transition-all duration-300 z-10 cursor-pointer px-3 sm:px-4 w-[108px] sm:w-[124px] lg:w-[140px] ${
-                    selectedCategory === "mens"
-                      ? "text-[var(--md-on-primary)]"
-                      : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"
-                  }`}
-                >
-                  <span className="text-xs sm:text-sm lg:text-base whitespace-nowrap">Men</span>
-                </button>
-                <button
-                  onClick={() => handleCategoryChange("womens")}
-                  className={`absolute top-1 bottom-1 left-[116px] sm:left-[132px] lg:left-[148px] right-1 rounded-full font-semibold flex items-center justify-center transition-all duration-300 z-10 cursor-pointer px-3 sm:px-4 ${
-                    selectedCategory === "womens"
-                      ? "text-[var(--md-on-primary)]"
-                      : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"
-                  }`}
-                >
-                  <span className="text-xs sm:text-sm lg:text-base whitespace-nowrap">Women</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          {/* Mobile: Dropdown Selector */}
-          <div className="sm:hidden mb-6 sm:mb-0 relative">
-            <select
+          {/* Controls: league dropdown and men/women toggle */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-3 sm:gap-4">
+            <LeagueSelect
+              leagues={leagueNames}
               value={selectedLeague}
-              onChange={(e) => setSelectedLeague(e.target.value)}
-              className="w-full px-4 py-3 pr-12 text-base font-medium bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-xl shadow-sm text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 appearance-none cursor-pointer"
-            >
-              {leagueNames.map((leagueName) => (
-                <option 
-                  key={leagueName} 
-                  value={leagueName}
-                  className="bg-[var(--md-primary)] text-[var(--md-on-primary)]"
-                >
-                  {leagueName}
-                </option>
-              ))}
-            </select>
-            {/* Dropdown Arrow */}
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-              <svg 
-                width="16" 
-                height="16" 
-                viewBox="0 0 16 16" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-[var(--md-on-primary)]"
-              >
-                <path 
-                  d="M8 11L3 6h10z" 
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* Desktop: League Selector Buttons */}
-          <div className="hidden sm:flex flex-wrap justify-center gap-2 sm:gap-3">
-            {leagueNames.map((leagueName) => {
-              const leagueData = (leagues as unknown as Record<string, { logo: string; matches: Match[] }>)[leagueName];
-              if (!leagueData) return null;
-              return (
-                <button
-                  key={leagueName}
-                  onClick={() => setSelectedLeague(leagueName)}
-                  className={`px-4 py-2.5 text-sm font-medium transition-all duration-200 rounded-xl shadow-sm ${
-                    selectedLeague === leagueName
-                      ? 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-md'
-                      : 'bg-[var(--md-surface-variant)] border border-[var(--md-outline-variant)] text-[var(--md-on-surface-variant)] hover:border-[var(--md-primary)] hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-[var(--md-primary)]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/50 rounded-full flex items-center justify-center">
-                      <Image 
-                        src={assetUrl(leagueData.logo)} 
-                        alt={`${leagueName} Logo`} 
-                        width={20}
-                        height={20}
-                        className="w-3 h-3 sm:w-5 sm:h-5 object-contain"
-                      />
-                    </div>
-                    <span>{leagueName}</span>
-                  </div>
-                </button>
-              );
-            })}
+              onChange={setSelectedLeague}
+            />
+            <IconToggle<Category>
+              ariaLabel="Men's or women's results"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              options={[
+                { value: "mens", label: "Men's results", icon: <MdMan className="w-6 h-6 sm:w-7 sm:h-7" /> },
+                { value: "womens", label: "Women's results", icon: <MdWoman className="w-6 h-6 sm:w-7 sm:h-7" /> },
+              ]}
+            />
           </div>
         </div>
 

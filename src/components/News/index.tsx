@@ -3,14 +3,14 @@
 import { useState, useMemo } from "react"
 import NewsListWithPagination from "./NewsListWithPagination"
 import NewsHeader from "./NewsHeader"
-import StoreHighlights from "../Home/StoreHighlights"
 import { newsPosts } from "@/data/newsPosts"
 import HeroCarousel from "../Home/HeroCarousel"
+import { ANY_DATE, type DateRange } from "@/components/ui/DateRangePicker"
 
 export default function NewsIndex() {
   const [searchQuery, setSearchQuery] = useState("")
   const [category, setCategory] = useState("All")
-  const [dateRange, setDateRange] = useState("All")
+  const [dateRange, setDateRange] = useState<DateRange>(ANY_DATE)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [sortBy, setSortBy] = useState("newest")
 
@@ -41,7 +41,6 @@ export default function NewsIndex() {
         />
       </div>
       <HeroCarousel />
-      <StoreHighlights />
     </div>
   );
 }

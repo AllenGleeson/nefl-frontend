@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { buttonStyles } from "@/components/ui/Button";
 
 interface User {
   email: string;
@@ -39,7 +40,7 @@ export default function UserProfile() {
     return (
       <Link
         href="/login"
-        className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+        className={buttonStyles({variant: "glass", size: "sm"})}
       >
         Sign In
       </Link>

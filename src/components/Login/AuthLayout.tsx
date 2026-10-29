@@ -64,14 +64,14 @@ export default function AuthLayout({ children, title, subtitle, showRegisterLink
               {showRegisterLink ? (
                 <p className="text-gray-600 text-sm sm:text-base">
                   Don&apos;t have an account?{' '}
-                  <Link href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
+                  <Link href="/register" className="text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] font-medium">
                     Sign up here
                   </Link>
                 </p>
               ) : (
                 <p className="text-gray-600 text-sm sm:text-base">
                   Already have an account?{' '}
-                  <Link href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+                  <Link href="/login" className="text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] font-medium">
                     Sign in here
                   </Link>
                 </p>

@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { assetUrl } from "@/utils/assetUrl";
+import { Mail } from "lucide-react";
+import { buttonStyles } from "@/components/ui/Button";
 
 const sponsors = [
   {
@@ -158,12 +160,13 @@ export default function Sponsors() {
           <p className="text-[var(--md-on-surface-variant)] mb-4">
             Interested in becoming a partner?
           </p>
-          <span
-            className="inline-flex items-center px-6 py-3 bg-[var(--md-primary)]/60 text-[var(--md-on-primary)] font-medium rounded-lg cursor-not-allowed opacity-60"
-            aria-disabled="true"
+          <a
+            href="mailto:info@nefl.ie?subject=Partnership%20enquiry"
+            className={buttonStyles({ size: "lg" })}
           >
+            <Mail className="w-5 h-5" aria-hidden />
             Get in Touch
-          </span>
+          </a>
         </div>
       </div>
     </section>

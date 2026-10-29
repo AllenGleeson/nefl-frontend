@@ -3,6 +3,7 @@
 // src/components/Management/LeaguesManagement/AddLeagueForm.tsx
 import { useState } from 'react';
 import Modal from '../../Modal';
+import { buttonStyles } from "@/components/ui/Button";
 
 type Props = {
   isOpen: boolean;
@@ -65,10 +66,10 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Create New League" size="lg">
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+      <div className="bg-[var(--md-surface-container-lowest)] rounded-2xl shadow-sm border border-[var(--md-outline-variant)] p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
               League Name
             </label>
             <input
@@ -77,14 +78,14 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
               value={formData.name}
               onChange={handleChange}
               placeholder="Enter league name"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm"
+              className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
               required
               disabled={isSubmitting}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
               Season
             </label>
             <input
@@ -93,14 +94,14 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
               value={formData.season}
               onChange={handleChange}
               placeholder="e.g., 2024-25"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm"
+              className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
               required
               disabled={isSubmitting}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
               Number of Teams
             </label>
             <input
@@ -111,14 +112,14 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
               placeholder="e.g., 20"
               min="2"
               max="50"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm"
+              className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
               required
               disabled={isSubmitting}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
               Start Date
             </label>
             <input
@@ -126,14 +127,14 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
               name="startDate"
               value={formData.startDate}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm"
+              className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
               required
               disabled={isSubmitting}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
               End Date
             </label>
             <input
@@ -141,14 +142,14 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
               name="endDate"
               value={formData.endDate}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm"
+              className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
               required
               disabled={isSubmitting}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
               Description
             </label>
             <textarea
@@ -157,23 +158,23 @@ export default function AddLeagueForm({ isOpen, onClose, onSuccess }: Props) {
               onChange={handleChange}
               placeholder="Enter league description"
               rows={3}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm"
+              className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
             />
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200 bg-white -mx-6 px-6 py-4 rounded-lg">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] -mx-6 px-6 py-4 rounded-lg">
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors shadow-sm"
+              className={buttonStyles({ variant: "outline", size: "sm", className: "flex-1" })}
               disabled={isSubmitting}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className={buttonStyles({ size: "sm", className: "flex-1" })}
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Creating...' : 'Create League'}

@@ -7,12 +7,6 @@ export type Fixture = {
   result?: string; // "3-2", "0-0", or undefined if upcoming
 };
 
-export type Player = {
-  name: string;
-  position: string;
-  number: number;
-};
-
 export type Club = {
   name: string;
   slug: string;
@@ -22,8 +16,10 @@ export type Club = {
   ground: string;
   bio: string;
   website?: string;
+  facebook?: string;
+  instagram?: string;
+  twitter?: string;
 
-  squad?: Player[];
 
   fixtures?: Fixture[];
 
@@ -38,8 +34,10 @@ export type Club = {
     year: number;
     type: 'league' | 'cup' | 'trophy' | 'award';
     competition: string;
-    position?: 'winner' | 'runner-up' | 'semi-finalist' | 'quarter-finalist';
+    position?: 'winner' | 'runner-up' | 'third-place' | 'semi-finalist' | 'quarter-finalist';
     description?: string;
+    /** For individual awards: the person/recipient name. */
+    recipient?: string;
   }>;
 
   formation?: {
@@ -51,9 +49,29 @@ export type Club = {
       position: string;
       x: number;
       y: number;
-      playerId?: string;
-      playerName?: string;
     }>;
+  };
+
+  /** Club contacts: manager, secretary, etc. */
+  contacts?: Array<{
+    name: string;
+    role: string;
+    phone?: string;
+    email?: string;
+  }>;
+
+  /** Kit image URLs (e.g. home, away). */
+  kit?: {
+    home?: string;
+    away?: string;
+    [key: string]: string | undefined;
+  };
+
+  /** Ground image and Google Maps link. Name uses club.ground if not set. */
+  grounds?: {
+    name?: string;
+    image?: string;
+    mapsUrl?: string;
   };
 };
 
@@ -67,21 +85,9 @@ export const clubs: Club[] = [
     ground: "Parkvilla Stadium",
     bio: "League leaders with a strong attacking style and excellent defensive record. Consistently competing at the top of the Premier Division.",
     website: "https://example.com",
-    squad: [
-      { name: "John Smith", position: "GK", number: 1 },
-      { name: "David Kelly", position: "GK", number: 13 },
-      { name: "Michael O'Connor", position: "DF", number: 5 },
-      { name: "Shane McCabe", position: "DF", number: 2 },
-      { name: "Brian Duffy", position: "DF", number: 3 },
-      { name: "Eoin O'Reilly", position: "DF", number: 15 },
-      { name: "Patrick Byrne", position: "MF", number: 8 },
-      { name: "Conor Lynch", position: "MF", number: 6 },
-      { name: "Kevin Nolan", position: "MF", number: 11 },
-      { name: "Ryan McKenna", position: "MF", number: 18 },
-      { name: "Sean Murphy", position: "FW", number: 10 },
-      { name: "Ciaran McManus", position: "FW", number: 9 },
-      { name: "Liam Donnelly", position: "FW", number: 17 },
-    ],
+    facebook: "https://facebook.com/parkvillafc",
+    instagram: "https://instagram.com/parkvillafc",
+    twitter: "https://x.com/parkvillafc",
     fixtures: [
       { date: "15/08/2025", opponent: "Duleek AFC", result: "2 - 1" },
       { date: "22/08/2025", opponent: "Duleek AFC" },
@@ -126,18 +132,32 @@ export const clubs: Club[] = [
       name: "4-4-2",
       description: "Classic balanced formation with two strikers",
       positions: [
-        { id: "gk", position: "GK", x: 50, y: 5, playerId: "john-smith", playerName: "John Smith" },
-        { id: "lb", position: "LB", x: 20, y: 25, playerId: "shane-mccabe", playerName: "Shane McCabe" },
-        { id: "cb1", position: "CB", x: 35, y: 25, playerId: "michael-oconnor", playerName: "Michael O'Connor" },
-        { id: "cb2", position: "CB", x: 65, y: 25, playerId: "brian-duffy", playerName: "Brian Duffy" },
-        { id: "rb", position: "RB", x: 80, y: 25, playerId: "eoin-oreilly", playerName: "Eoin O'Reilly" },
-        { id: "lm", position: "LM", x: 20, y: 45, playerId: "kevin-nolan", playerName: "Kevin Nolan" },
-        { id: "cm1", position: "CM", x: 40, y: 45, playerId: "patrick-byrne", playerName: "Patrick Byrne" },
-        { id: "cm2", position: "CM", x: 60, y: 45, playerId: "conor-lynch", playerName: "Conor Lynch" },
-        { id: "rm", position: "RM", x: 80, y: 45, playerId: "ryan-mckenna", playerName: "Ryan McKenna" },
-        { id: "st1", position: "ST", x: 40, y: 75, playerId: "sean-murphy", playerName: "Sean Murphy" },
-        { id: "st2", position: "ST", x: 60, y: 75, playerId: "ciaran-mcmanus", playerName: "Ciaran McManus" }
+        { id: "gk", position: "GK", x: 50, y: 5 },
+        { id: "lb", position: "LB", x: 20, y: 25 },
+        { id: "cb1", position: "CB", x: 35, y: 25 },
+        { id: "cb2", position: "CB", x: 65, y: 25 },
+        { id: "rb", position: "RB", x: 80, y: 25 },
+        { id: "lm", position: "LM", x: 20, y: 45 },
+        { id: "cm1", position: "CM", x: 40, y: 45 },
+        { id: "cm2", position: "CM", x: 60, y: 45 },
+        { id: "rm", position: "RM", x: 80, y: 45 },
+        { id: "st1", position: "ST", x: 40, y: 75 },
+        { id: "st2", position: "ST", x: 60, y: 75 }
       ]
+    },
+    contacts: [
+      { name: "Tom Murphy", role: "Manager", phone: "087 123 4567", email: "manager@parkvillafc.ie" },
+      { name: "Mary Byrne", role: "Secretary", phone: "086 234 5678", email: "secretary@parkvillafc.ie" },
+      { name: "John Doyle", role: "Treasurer", email: "treasurer@parkvillafc.ie" },
+    ],
+    kit: {
+      home: "/images/clublogos/parkvilla-fc-crest.webp",
+      away: "/images/clublogos/parkvilla-fc-crest.webp",
+    },
+    grounds: {
+      name: "Parkvilla Stadium",
+      image: "/images/clubspage.webp",
+      mapsUrl: "https://www.google.com/maps/search/Parkvilla+Stadium",
     },
   },
   {
@@ -149,20 +169,9 @@ export const clubs: Club[] = [
     ground: "Duleek Sports Ground",
     bio: "Strong Premier Division side with excellent defensive record and consistent performances. Always challenging for league honors.",
     website: "https://example.com/duleek-afc",
-    squad: [
-      { name: "Brian Murphy", position: "GK", number: 1 },
-      { name: "Sean O'Connor", position: "GK", number: 16 },
-      { name: "Kevin Brady", position: "DF", number: 2 },
-      { name: "Martin Kelly", position: "DF", number: 3 },
-      { name: "Tony Walsh", position: "DF", number: 4 },
-      { name: "Derek O'Neill", position: "DF", number: 5 },
-      { name: "Paul Murphy", position: "MF", number: 6 },
-      { name: "Johnny Lynch", position: "MF", number: 7 },
-      { name: "Gary Smith", position: "MF", number: 8 },
-      { name: "Chris Ward", position: "MF", number: 10 },
-      { name: "Alan Byrne", position: "FW", number: 9 },
-      { name: "Robbie Kelly", position: "FW", number: 11 },
-    ],
+    facebook: "https://facebook.com/duleekafc",
+    instagram: "https://instagram.com/duleekafc",
+    twitter: "https://x.com/duleekafc",
     fixtures: [
       { date: "15/08/2025", opponent: "Parkvilla FC", result: "1 - 2" },
       { date: "22/08/2025", opponent: "Parkvilla FC" },
@@ -186,20 +195,9 @@ export const clubs: Club[] = [
     ground: "Rock Park",
     bio: "Established Premier Division side with loyal support and a rich tradition of success. Known for consistent performances.",
     website: "https://example.com/rock-celtic-fc",
-    squad: [
-      { name: "David Murphy", position: "GK", number: 1 },
-      { name: "Sean Kelly", position: "GK", number: 12 },
-      { name: "Mark O'Brien", position: "DF", number: 2 },
-      { name: "Paul Matthews", position: "DF", number: 3 },
-      { name: "Stephen Lynch", position: "DF", number: 4 },
-      { name: "Danny Ward", position: "DF", number: 5 },
-      { name: "Chris Murphy", position: "MF", number: 6 },
-      { name: "Gary Byrne", position: "MF", number: 7 },
-      { name: "Alan Smith", position: "MF", number: 8 },
-      { name: "Robbie O'Connor", position: "MF", number: 10 },
-      { name: "Johnny Kelly", position: "FW", number: 9 },
-      { name: "Derek Murphy", position: "FW", number: 11 },
-    ],
+    facebook: "https://facebook.com/rockcelticfc",
+    instagram: "https://instagram.com/rockcelticfc",
+    twitter: "https://x.com/rockcelticfc",
     fixtures: [
       { date: "15/08/2025", opponent: "Kentstown Rovers FC", result: "3 - 0" },
       { date: "30/08/2025", opponent: "Parkvilla FC" },
@@ -244,17 +242,17 @@ export const clubs: Club[] = [
       name: "3-5-2",
       description: "Unconventional formation with wing-backs",
       positions: [
-        { id: "gk", position: "GK", x: 50, y: 5, playerId: "david-murphy", playerName: "David Murphy" },
-        { id: "cb1", position: "CB", x: 30, y: 25, playerId: "mark-obrien", playerName: "Mark O'Brien" },
-        { id: "cb2", position: "CB", x: 50, y: 25, playerId: "paul-matthews", playerName: "Paul Matthews" },
-        { id: "cb3", position: "CB", x: 70, y: 25, playerId: "stephen-lynch", playerName: "Stephen Lynch" },
-        { id: "lwb", position: "LWB", x: 15, y: 45, playerId: "danny-ward", playerName: "Danny Ward" },
-        { id: "cdm", position: "CDM", x: 50, y: 40, playerId: "chris-murphy", playerName: "Chris Murphy" },
-        { id: "rwb", position: "RWB", x: 85, y: 45, playerId: "gary-byrne", playerName: "Gary Byrne" },
-        { id: "cm1", position: "CM", x: 35, y: 60, playerId: "alan-smith", playerName: "Alan Smith" },
-        { id: "cm2", position: "CM", x: 65, y: 60, playerId: "robbie-oconnor", playerName: "Robbie O'Connor" },
-        { id: "st1", position: "ST", x: 40, y: 80, playerId: "johnny-kelly", playerName: "Johnny Kelly" },
-        { id: "st2", position: "ST", x: 60, y: 80, playerId: "derek-murphy", playerName: "Derek Murphy" }
+        { id: "gk", position: "GK", x: 50, y: 5 },
+        { id: "cb1", position: "CB", x: 30, y: 25 },
+        { id: "cb2", position: "CB", x: 50, y: 25 },
+        { id: "cb3", position: "CB", x: 70, y: 25 },
+        { id: "lwb", position: "LWB", x: 15, y: 45 },
+        { id: "cdm", position: "CDM", x: 50, y: 40 },
+        { id: "rwb", position: "RWB", x: 85, y: 45 },
+        { id: "cm1", position: "CM", x: 35, y: 60 },
+        { id: "cm2", position: "CM", x: 65, y: 60 },
+        { id: "st1", position: "ST", x: 40, y: 80 },
+        { id: "st2", position: "ST", x: 60, y: 80 }
       ]
     },
   },
@@ -267,6 +265,8 @@ export const clubs: Club[] = [
     ground: "Quay Park",
     bio: "Competitive Premier Division side with a strong attacking style. Known for exciting football and passionate local support.",
     website: "https://example.com/quay-celtic-fc",
+    facebook: "https://facebook.com/quaycelticfc",
+    instagram: "https://instagram.com/quaycelticfc",
     fixtures: [
       { date: "16/08/2025", opponent: "Bellurgan United", result: "2 - 0" },
       { date: "19/09/2025", opponent: "Glenmuir FC" },
@@ -286,6 +286,8 @@ export const clubs: Club[] = [
     ground: "Bellurgan Park",
     bio: "Established Premier Division club with a proud history and strong community presence. Known for developing local talent.",
     website: "https://example.com/bellurgan-united",
+    facebook: "https://facebook.com/bellurganunited",
+    twitter: "https://x.com/bellurganunited",
     fixtures: [
       { date: "16/08/2025", opponent: "Quay Celtic FC", result: "0 - 2" },
       { date: "30/08/2025", opponent: "Quay Celtic FC" },
@@ -306,20 +308,8 @@ export const clubs: Club[] = [
     ground: "Johnstown Park",
     bio: "Division 1 leaders with an impressive record. Strong attacking team with excellent goal difference and consistent performances.",
     website: "https://example.com/johnstown-fc",
-    squad: [
-      { name: "Michael Reilly", position: "GK", number: 1 },
-      { name: "Tommy Walsh", position: "GK", number: 13 },
-      { name: "Brian Kelly", position: "DF", number: 2 },
-      { name: "Paul Lynch", position: "DF", number: 3 },
-      { name: "Stephen Murphy", position: "DF", number: 4 },
-      { name: "Danny O'Connor", position: "DF", number: 5 },
-      { name: "Chris Byrne", position: "MF", number: 6 },
-      { name: "Gary Smith", position: "MF", number: 7 },
-      { name: "Alan Ward", position: "MF", number: 8 },
-      { name: "Robbie Kelly", position: "MF", number: 10 },
-      { name: "Johnny Murphy", position: "FW", number: 9 },
-      { name: "Derek Lynch", position: "FW", number: 11 },
-    ],
+    instagram: "https://instagram.com/johnstownfc",
+    twitter: "https://x.com/johnstownfc",
     fixtures: [
       { date: "16/08/2025", opponent: "Trim Celtic AFC", result: "1 - 1" },
       { date: "23/08/2025", opponent: "Ardee Celtic FC" },
@@ -347,20 +337,6 @@ export const clubs: Club[] = [
     ground: "Townspark, Ardee",
     bio: "A historic club known for nurturing young talent in County Louth with a strong emphasis on youth development. Currently competing strongly in Division 1.",
     website: "https://example.com/ardee-celtic",
-    squad: [
-      { name: "Tommy Murphy", position: "GK", number: 1 },
-      { name: "James O'Brien", position: "GK", number: 12 },
-      { name: "Mark Reilly", position: "DF", number: 2 },
-      { name: "Paul Matthews", position: "DF", number: 4 },
-      { name: "Stephen Kelly", position: "DF", number: 5 },
-      { name: "Danny Lynch", position: "DF", number: 6 },
-      { name: "Chris Byrne", position: "MF", number: 7 },
-      { name: "Robbie Walsh", position: "MF", number: 8 },
-      { name: "Gary O'Hanlon", position: "MF", number: 10 },
-      { name: "Alan Smith", position: "MF", number: 14 },
-      { name: "Derek Murphy", position: "FW", number: 9 },
-      { name: "Johnny Ward", position: "FW", number: 11 },
-    ],
     fixtures: [
       { date: "17/08/2025", opponent: "Torro United FC", result: "0 - 2" },
       { date: "23/08/2025", opponent: "Johnstown FC" },
@@ -405,17 +381,17 @@ export const clubs: Club[] = [
       name: "4-3-3",
       description: "Attacking formation with wingers",
       positions: [
-        { id: "gk", position: "GK", x: 50, y: 5, playerId: "tommy-murphy", playerName: "Tommy Murphy" },
-        { id: "lb", position: "LB", x: 20, y: 25, playerId: "mark-reilly", playerName: "Mark Reilly" },
-        { id: "cb1", position: "CB", x: 35, y: 25, playerId: "paul-matthews", playerName: "Paul Matthews" },
-        { id: "cb2", position: "CB", x: 65, y: 25, playerId: "stephen-kelly", playerName: "Stephen Kelly" },
-        { id: "rb", position: "RB", x: 80, y: 25, playerId: "danny-lynch", playerName: "Danny Lynch" },
-        { id: "cdm", position: "CDM", x: 50, y: 40, playerId: "chris-byrne", playerName: "Chris Byrne" },
-        { id: "cm1", position: "CM", x: 35, y: 55, playerId: "robbie-walsh", playerName: "Robbie Walsh" },
-        { id: "cm2", position: "CM", x: 65, y: 55, playerId: "gary-ohanlon", playerName: "Gary O'Hanlon" },
-        { id: "lw", position: "LW", x: 20, y: 75, playerId: "alan-smith", playerName: "Alan Smith" },
-        { id: "st", position: "ST", x: 50, y: 75, playerId: "derek-murphy", playerName: "Derek Murphy" },
-        { id: "rw", position: "RW", x: 80, y: 75, playerId: "johnny-ward", playerName: "Johnny Ward" }
+        { id: "gk", position: "GK", x: 50, y: 5 },
+        { id: "lb", position: "LB", x: 20, y: 25 },
+        { id: "cb1", position: "CB", x: 35, y: 25 },
+        { id: "cb2", position: "CB", x: 65, y: 25 },
+        { id: "rb", position: "RB", x: 80, y: 25 },
+        { id: "cdm", position: "CDM", x: 50, y: 40 },
+        { id: "cm1", position: "CM", x: 35, y: 55 },
+        { id: "cm2", position: "CM", x: 65, y: 55 },
+        { id: "lw", position: "LW", x: 20, y: 75 },
+        { id: "st", position: "ST", x: 50, y: 75 },
+        { id: "rw", position: "RW", x: 80, y: 75 }
       ]
     },
   },
@@ -468,20 +444,6 @@ export const clubs: Club[] = [
     ground: "O'Rourke Park, Kingscourt",
     bio: "Cavan's representative club, blending tradition and ambition with a focus on developing local talent. Competing in Division 1.",
     website: "https://example.com/kingscourt-harps-afc",
-    squad: [
-      { name: "Michael Murphy", position: "GK", number: 1 },
-      { name: "Tommy Kelly", position: "GK", number: 13 },
-      { name: "Mark Lynch", position: "DF", number: 2 },
-      { name: "Paul O'Brien", position: "DF", number: 3 },
-      { name: "Stephen Ward", position: "DF", number: 4 },
-      { name: "Danny Murphy", position: "DF", number: 5 },
-      { name: "Chris Smith", position: "MF", number: 6 },
-      { name: "Gary Byrne", position: "MF", number: 7 },
-      { name: "Alan Kelly", position: "MF", number: 8 },
-      { name: "Robbie Lynch", position: "MF", number: 10 },
-      { name: "Johnny O'Connor", position: "FW", number: 9 },
-      { name: "Derek Murphy", position: "FW", number: 11 },
-    ],
     fixtures: [
       { date: "17/08/2025", opponent: "Robinstown FC", result: "1 - 3" },
       { date: "20/09/2025", opponent: "Athboy Celtic FC" },
@@ -508,20 +470,6 @@ export const clubs: Club[] = [
     ground: "The Green, Athboy",
     bio: "Passionate local side known for grit and hard-fought victories with strong community backing. Competing in Division 1.",
     website: "https://example.com/athboy-celtic-fc",
-    squad: [
-      { name: "Brian Murphy", position: "GK", number: 1 },
-      { name: "Sean Kelly", position: "GK", number: 15 },
-      { name: "Mark O'Brien", position: "DF", number: 2 },
-      { name: "Paul Ward", position: "DF", number: 3 },
-      { name: "Stephen Lynch", position: "DF", number: 4 },
-      { name: "Danny Smith", position: "DF", number: 5 },
-      { name: "Chris Murphy", position: "MF", number: 6 },
-      { name: "Gary Byrne", position: "MF", number: 7 },
-      { name: "Alan O'Connor", position: "MF", number: 8 },
-      { name: "Robbie Kelly", position: "MF", number: 10 },
-      { name: "Johnny Murphy", position: "FW", number: 9 },
-      { name: "Derek Lynch", position: "FW", number: 11 },
-    ],
     fixtures: [
       { date: "16/08/2025", opponent: "Walshestown FC", result: "4 - 2" },
       { date: "23/08/2025", opponent: "Robinstown FC" },
@@ -568,20 +516,6 @@ export const clubs: Club[] = [
     ground: "Tully Park, Trim",
     bio: "Youth development and grassroots football are at the heart of the club, with a focus on community engagement. Competing in both Premier Division and Division 1.",
     website: "https://example.com/trim-celtic",
-    squad: [
-      { name: "Tommy O'Brien", position: "GK", number: 1 },
-      { name: "James Murphy", position: "GK", number: 14 },
-      { name: "Mark Kelly", position: "DF", number: 2 },
-      { name: "Paul Lynch", position: "DF", number: 3 },
-      { name: "Stephen Ward", position: "DF", number: 4 },
-      { name: "Danny Smith", position: "DF", number: 5 },
-      { name: "Chris Byrne", position: "MF", number: 6 },
-      { name: "Gary O'Connor", position: "MF", number: 7 },
-      { name: "Alan Murphy", position: "MF", number: 8 },
-      { name: "Robbie Kelly", position: "MF", number: 10 },
-      { name: "Johnny Lynch", position: "FW", number: 9 },
-      { name: "Derek Ward", position: "FW", number: 11 },
-    ],
     fixtures: [
       { date: "16/08/2025", opponent: "Johnstown FC", result: "1 - 1" },
       { date: "24/08/2025", opponent: "Carrick Rovers AFC" },
@@ -644,20 +578,6 @@ export const clubs: Club[] = [
     ground: "Carrick Sports Grounds",
     bio: "One of the fastest-growing clubs in Monaghan with strong youth academies and ambitious plans for the future. Competing in the Premier Division.",
     website: "https://example.com/carrick-rovers-afc",
-    squad: [
-      { name: "David Murphy", position: "GK", number: 1 },
-      { name: "Sean Kelly", position: "GK", number: 12 },
-      { name: "Mark O'Brien", position: "DF", number: 2 },
-      { name: "Paul Lynch", position: "DF", number: 3 },
-      { name: "Stephen Ward", position: "DF", number: 4 },
-      { name: "Danny Smith", position: "DF", number: 5 },
-      { name: "Chris Murphy", position: "MF", number: 6 },
-      { name: "Gary Byrne", position: "MF", number: 7 },
-      { name: "Alan O'Connor", position: "MF", number: 8 },
-      { name: "Robbie Kelly", position: "MF", number: 10 },
-      { name: "Johnny Lynch", position: "FW", number: 9 },
-      { name: "Derek Ward", position: "FW", number: 11 },
-    ],
     fixtures: [
       { date: "24/08/2025", opponent: "Trim Celtic AFC" },
       { date: "26/09/2025", opponent: "Parkvilla FC", result: "1 - 3" },
@@ -754,21 +674,6 @@ export const clubs: Club[] = [
     ground: "Gortakeegan Grounds",
     bio: "A proud Monaghan side with deep community roots and competitive spirit. Competing in Division 3.",
     website: "https://example.com",
-    squad: [
-      { name: "John Smith", position: "GK", number: 1 },
-      { name: "David Kelly", position: "GK", number: 13 },
-      { name: "Michael O'Connor", position: "DF", number: 5 },
-      { name: "Shane McCabe", position: "DF", number: 2 },
-      { name: "Brian Duffy", position: "DF", number: 3 },
-      { name: "Eoin O'Reilly", position: "DF", number: 15 },
-      { name: "Patrick Byrne", position: "MF", number: 8 },
-      { name: "Conor Lynch", position: "MF", number: 6 },
-      { name: "Kevin Nolan", position: "MF", number: 11 },
-      { name: "Ryan McKenna", position: "MF", number: 18 },
-      { name: "Sean Murphy", position: "FW", number: 10 },
-      { name: "Ciaran McManus", position: "FW", number: 9 },
-      { name: "Liam Donnelly", position: "FW", number: 17 },
-    ],
     fixtures: [
       { date: "28/09/2025", opponent: "Monaghan United FC", result: "1 - 2" },
       { date: "26/10/2025", opponent: "Rossin Rovers" },
@@ -810,17 +715,17 @@ export const clubs: Club[] = [
       name: "4-4-2",
       description: "Classic balanced formation with two strikers",
       positions: [
-        { id: "gk", position: "GK", x: 50, y: 5, playerId: "john-smith", playerName: "John Smith" },
-        { id: "lb", position: "LB", x: 20, y: 25, playerId: "shane-mccabe", playerName: "Shane McCabe" },
-        { id: "cb1", position: "CB", x: 35, y: 25, playerId: "michael-oconnor", playerName: "Michael O'Connor" },
-        { id: "cb2", position: "CB", x: 65, y: 25, playerId: "brian-duffy", playerName: "Brian Duffy" },
-        { id: "rb", position: "RB", x: 80, y: 25, playerId: "eoin-oreilly", playerName: "Eoin O'Reilly" },
-        { id: "lm", position: "LM", x: 20, y: 45, playerId: "kevin-nolan", playerName: "Kevin Nolan" },
-        { id: "cm1", position: "CM", x: 40, y: 45, playerId: "patrick-byrne", playerName: "Patrick Byrne" },
-        { id: "cm2", position: "CM", x: 60, y: 45, playerId: "conor-lynch", playerName: "Conor Lynch" },
-        { id: "rm", position: "RM", x: 80, y: 45, playerId: "ryan-mckenna", playerName: "Ryan McKenna" },
-        { id: "st1", position: "ST", x: 40, y: 75, playerId: "sean-murphy", playerName: "Sean Murphy" },
-        { id: "st2", position: "ST", x: 60, y: 75, playerId: "ciaran-mcmanus", playerName: "Ciaran McManus" }
+        { id: "gk", position: "GK", x: 50, y: 5 },
+        { id: "lb", position: "LB", x: 20, y: 25 },
+        { id: "cb1", position: "CB", x: 35, y: 25 },
+        { id: "cb2", position: "CB", x: 65, y: 25 },
+        { id: "rb", position: "RB", x: 80, y: 25 },
+        { id: "lm", position: "LM", x: 20, y: 45 },
+        { id: "cm1", position: "CM", x: 40, y: 45 },
+        { id: "cm2", position: "CM", x: 60, y: 45 },
+        { id: "rm", position: "RM", x: 80, y: 45 },
+        { id: "st1", position: "ST", x: 40, y: 75 },
+        { id: "st2", position: "ST", x: 60, y: 75 }
       ]
     },
   },

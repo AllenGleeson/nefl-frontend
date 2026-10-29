@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { getClubRankings, localLeagueTablesData } from "@/data/localLeagueTables";
 import { fixturesMatrixData } from "@/data/fixturesMatrix";
 import { LeagueFixtures, FixtureResult } from "@/data/fixturesMatrix";
 import Image from "next/image";
+import { getClubSlug } from "@/utils/clubSlug";
 import "@/styles/fixtures-matrix.css";
+import { CalendarDays, ListOrdered } from "lucide-react";
+import IconToggle from "@/components/ui/IconToggle";
+import LeagueSelect from "@/components/Leagues/LeagueSelect";
 
 type ViewMode = 'table' | 'fixtures';
 
@@ -108,102 +113,25 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
         <div>
           {/* Header */}
           <div className="pt-0 sm:pt-6">
-            <div className="container mx-auto px-4">
-              <div className="text-center pt-4 sm:pt-0 mb-6 sm:mb-8">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--md-primary-container)] mb-2 sm:mb-3" style={{ color: '#8BD0EF' }}>
-                  League Rankings
-                </h1>
-                <p className="text-sm sm:text-base lg:text-lg text-[var(--md-on-surface-variant)] max-w-2xl mx-auto px-4">
-                  View {clubName}&apos;s standings and fixtures across different leagues
-                </p>
-              </div>
-
-              {/* Controls */}
-              <div className="max-w-7xl mx-auto">
-                {/* View Mode Toggle Slider */}
-                <div className="flex justify-center mb-6 sm:mb-8">
-                  <div className="relative bg-[var(--md-surface-container)] rounded-full p-1 w-36 sm:w-44 lg:w-48 h-10 sm:h-12 shadow-sm">
-                    <div
-                      className={`absolute top-1 bottom-1 rounded-full transition-all duration-300 shadow-md ${viewMode === 'table' ? "left-1 w-16 sm:w-20 lg:w-22" : "left-18 sm:left-22 lg:left-24 w-16 sm:w-20 lg:w-22"
-                        }`}
-                      style={{ backgroundColor: '#BDE9FF' }}
-                    />
-                    <button
-                      onClick={() => setViewMode('table')}
-                      className={`absolute top-1 bottom-1 w-16 sm:w-20 lg:w-22 rounded-full font-semibold flex items-center justify-center gap-1 transition-all duration-300 z-10 cursor-pointer ${viewMode === 'table'
-                        ? ""
-                        : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"
-                        }`}
-                      style={viewMode === 'table' ? { color: '#004D64', left: '4px' } : { left: '4px' }}
-                    >
-                      <span className="text-xs sm:text-sm lg:text-base">Table</span>
-                    </button>
-                    <button
-                      onClick={() => setViewMode('fixtures')}
-                      className={`absolute top-1 bottom-1 w-16 sm:w-20 lg:w-22 rounded-full font-semibold flex items-center justify-center gap-1 transition-all duration-300 z-10 cursor-pointer ${viewMode === 'fixtures'
-                        ? ""
-                        : "text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]"
-                        }`}
-                      style={viewMode === 'fixtures' ? { color: '#004D64', left: '74px' } : { left: '74px' }}
-                    >
-                      <span className="text-xs sm:text-sm lg:text-base">Matrix</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* League Selection Buttons */}
-                <div className="hidden sm:flex flex-wrap justify-center gap-2 sm:gap-3 mb-4">
-                {rankings.map(({ league }) => (
-          <button
-            key={league}
-            onClick={() => setActiveTab(league)}
-                      className={`px-3 sm:px-4 lg:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl flex items-center gap-2 sm:gap-3 transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md cursor-pointer ${activeTab === league
-                        ? "shadow-lg"
-                        : "bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)]"
-                        }`}
-                      style={activeTab === league ? { backgroundColor: '#BDE9FF', color: '#004D64' } : {}}
-                    >
-                      <span className="font-medium text-xs sm:text-sm lg:text-base">{league}</span>
-          </button>
-        ))}
-      </div>
-
-                {/* Mobile: Dropdown Selector */}
-                <div className="sm:hidden mb-6 sm:mb-0 relative">
-                  <select
-                    value={activeTab || ''}
-                    onChange={(e) => setActiveTab(e.target.value)}
-                    className="w-full px-4 py-3 pr-12 text-base font-medium border rounded-xl shadow-sm focus:outline-none focus:ring-2 transition-all duration-200 appearance-none cursor-pointer"
-                    style={{ backgroundColor: '#BDE9FF', borderColor: '#BDE9FF', color: '#004D64', '--tw-ring-color': '#8BD0EF' } as React.CSSProperties}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#8BD0EF';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = '#BDE9FF';
-                    }}
-                    onMouseEnter={(e) => {
-                      if (document.activeElement !== e.currentTarget) {
-                        e.currentTarget.style.backgroundColor = '#8BD0EF';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (document.activeElement !== e.currentTarget) {
-                        e.currentTarget.style.backgroundColor = '#BDE9FF';
-                      }
-                    }}
-                  >
-                    {rankings.map(({ league }) => (
-                      <option key={league} value={league}>
-                        {league}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: '#004D64' }}>
-                      <path d="M8 11L3 6h10z" fill="currentColor" />
-                    </svg>
-              </div>
-            </div>
+            <div className="px-2 sm:px-8 lg:px-10">
+              {/* Controls: league dropdown, then table/fixtures toggle */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-3 sm:gap-4 mb-4">
+                {activeTab && (
+                  <LeagueSelect
+                    leagues={rankings.map(({ league }) => league)}
+                    value={activeTab}
+                    onChange={setActiveTab}
+                  />
+                )}
+                <IconToggle<ViewMode>
+                  ariaLabel="Table or fixtures view"
+                  value={viewMode}
+                  onChange={setViewMode}
+                  options={[
+                    { value: 'table', label: 'League table', icon: <ListOrdered className="w-5 h-5" /> },
+                    { value: 'fixtures', label: 'Fixtures', icon: <CalendarDays className="w-5 h-5" /> },
+                  ]}
+                />
               </div>
               </div>
             </div>
@@ -212,9 +140,9 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
           <div className="px-2 sm:px-8 lg:px-10 pb-4 sm:pb-8 lg:pb-10 pt-0">
             {viewMode === 'table' ? (
               <section className="league-table pt-0 pb-4 sm:pb-6 lg:pb-8 relative overflow-hidden">
-                <div className="container mx-auto px-2 relative z-10">
+                <div className="relative z-10">
                   {/* League Table */}
-                  <div className="max-w-6xl mx-auto bg-[var(--md-surface-container-lowest)] overflow-hidden">
+                  <div className="bg-[var(--md-surface-container-lowest)] overflow-hidden">
                     <div className="overflow-x-auto">
                       <table className="w-full min-w-0 sm:min-w-[600px]">
                         <thead style={{ backgroundColor: '#BDE9FF' }}>
@@ -258,7 +186,13 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
                               </td>
                               <td className={`px-1.5 sm:px-6 py-2 sm:py-5 text-xs sm:text-sm font-medium text-[var(--md-on-surface)] truncate max-w-[120px] sm:max-w-none ${team.name === clubName ? 'font-bold' : ''
                                 }`}>
-                                {team.name}
+                                {getClubSlug(team.name) ? (
+                                  <Link href={`/clubs/${getClubSlug(team.name)}`} className="hover:underline" style={{ color: 'inherit' }}>
+                                    {team.name}
+                                  </Link>
+                                ) : (
+                                  team.name
+                                )}
                               </td>
                               <td className="px-1 sm:px-6 py-2 sm:py-5 text-xs sm:text-sm text-[var(--md-on-surface-variant)] text-center font-medium">
                                 {team.played}
@@ -322,9 +256,15 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
                                               className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
                                             />
               </div>
-                                          <span className="text-xs font-medium text-[var(--md-on-surface-variant)] max-w-16 sm:max-w-20 text-center leading-tight break-words">
-                                            {opponentTeam.name}
-                                          </span>
+                                          {getClubSlug(opponentTeam.name) ? (
+                                            <Link href={`/clubs/${getClubSlug(opponentTeam.name)}`} className="text-xs font-medium text-[var(--md-on-surface-variant)] max-w-16 sm:max-w-20 text-center leading-tight break-words hover:underline block">
+                                              {opponentTeam.name}
+                                            </Link>
+                                          ) : (
+                                            <span className="text-xs font-medium text-[var(--md-on-surface-variant)] max-w-16 sm:max-w-20 text-center leading-tight break-words">
+                                              {opponentTeam.name}
+                                            </span>
+                                          )}
               </div>
                                       </th>
                                     );
@@ -346,9 +286,15 @@ export default function ClubRankings({ clubName }: ClubRankingsProps) {
                                             className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
                                           />
                                         </div>
-                                        <span className="font-medium text-[var(--md-on-surface-variant)] text-xs sm:text-sm">
-                                          {homeTeam.name}
-                              </span>
+                                        {getClubSlug(homeTeam.name) ? (
+                                          <Link href={`/clubs/${getClubSlug(homeTeam.name)}`} className="font-medium text-[var(--md-on-surface-variant)] text-xs sm:text-sm hover:underline">
+                                            {homeTeam.name}
+                                          </Link>
+                                        ) : (
+                                          <span className="font-medium text-[var(--md-on-surface-variant)] text-xs sm:text-sm">
+                                            {homeTeam.name}
+                                          </span>
+                                        )}
                                       </div>
                             </td>
 

@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { buttonStyles } from "@/components/ui/Button";
 
 interface Winner {
   year: string;
@@ -67,7 +68,7 @@ interface CategoryProps {
 function Category({ data, showRunnerUp = false }: CategoryProps) {
   return (
     <div className="mb-6 sm:mb-8">
-      <div className="max-w-6xl bg-[var(--md-surface-container-lowest)] overflow-hidden">
+      <div className="bg-[var(--md-surface-container-lowest)] rounded-2xl border border-[var(--md-outline-variant)] shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-0 sm:min-w-[600px]">
             <thead className="bg-[var(--md-primary)]">
@@ -141,25 +142,19 @@ export default function RollOfHonourTab() {
 
   return (
     <div className="roll-of-honour-tab">
-      {/* Category Navigation */}
-      <div className="mb-4 sm:mb-6 relative inline-block w-full sm:w-auto">
-        <select
-          value={activeCategory}
-          onChange={(e) => setActiveCategory(e.target.value)}
-          className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 pr-10 sm:pr-12 text-xs sm:text-sm font-medium bg-[var(--md-primary)] text-[var(--md-on-primary)] border border-[var(--md-primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 appearance-none cursor-pointer relative"
-        >
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.label}
-            </option>
-          ))}
-        </select>
-        {/* Custom dropdown arrow */}
-        <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 pointer-events-none" style={{ zIndex: 50 }}>
-          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
-            <path d="M6 9l6 6 6-6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
+      {/* Category picker */}
+      <div role="group" aria-label="Roll of honour category" className="mb-6 flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            type="button"
+            onClick={() => setActiveCategory(category.id)}
+            aria-pressed={activeCategory === category.id}
+            className={buttonStyles({ variant: activeCategory === category.id ? "primary" : "outline", size: "sm" })}
+          >
+            {category.label}
+          </button>
+        ))}
       </div>
 
       {/* Active Category Content */}

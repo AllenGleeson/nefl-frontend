@@ -2,11 +2,15 @@
 
 import { useState } from "react"
 import NewsSearchBar from "./NewsSearchBar"
+import { buttonStyles } from "@/components/ui/Button";
+import { LayoutGrid, List, X } from "lucide-react"
+import IconToggle from "@/components/ui/IconToggle"
+import DateRangePicker, { ANY_DATE, isDateRangeSet, type DateRange } from "@/components/ui/DateRangePicker"
 
 type Props = {
     setSearch?: (q: string) => void
     setCategory?: (category: string) => void
-    setDateRange?: (range: string) => void
+    setDateRange?: (range: DateRange) => void
     setViewMode?: (mode: 'grid' | 'list') => void
     setSortBy?: (sort: string) => void
     showSearch?: boolean
@@ -23,9 +27,10 @@ export default function NewsHeader({
     categories = [],
 }: Props) {
     const [selectedCategory, setSelectedCategory] = useState("All")
-    const [selectedDateRange, setSelectedDateRange] = useState("All")
+    const [selectedDateRange, setSelectedDateRange] = useState<DateRange>(ANY_DATE)
     const [selectedViewMode, setSelectedViewMode] = useState<'grid' | 'list'>('grid')
     const [selectedSortBy, setSelectedSortBy] = useState("newest")
+    const hasActiveFilters = selectedCategory !== "All" || isDateRangeSet(selectedDateRange) || selectedSortBy !== "newest"
 
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value
@@ -33,8 +38,7 @@ export default function NewsHeader({
         setCategory?.(value)
     }
 
-    const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value
+    const handleDateRangeChange = (value: DateRange) => {
         setSelectedDateRange(value)
         setDateRange?.(value)
     }
@@ -64,29 +68,16 @@ export default function NewsHeader({
                     {/* Right side: View toggle and Sort */}
                     <div className="flex items-center gap-2 sm:gap-4">
                         {/* View Toggle */}
-                        <div className="hidden sm:flex bg-[var(--md-primary-container)] border border-[var(--md-outline-variant)] rounded-lg overflow-hidden shadow-sm">
-                            <button
-                                onClick={() => handleViewModeChange('grid')}
-                                className={`px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${selectedViewMode === 'grid' 
-                                    ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-md' 
-                                    : 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] hover:bg-[var(--md-primary-container-high)]'}`}
-                            >
-                                <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                </svg>
-                                <span className="hidden sm:inline">Grid</span>
-                            </button>
-                            <button
-                                onClick={() => handleViewModeChange('list')}
-                                className={`px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${selectedViewMode === 'list' 
-                                    ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-md' 
-                                    : 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] hover:bg-[var(--md-primary-container-high)]'}`}
-                            >
-                                <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                                </svg>
-                                <span className="hidden sm:inline">List</span>
-                            </button>
+                        <div className="hidden sm:block">
+                            <IconToggle<'grid' | 'list'>
+                                ariaLabel="News layout"
+                                value={selectedViewMode}
+                                onChange={handleViewModeChange}
+                                options={[
+                                    { value: 'grid', label: 'Grid view', icon: <LayoutGrid className="w-5 h-5" /> },
+                                    { value: 'list', label: 'List view', icon: <List className="w-5 h-5" /> },
+                                ]}
+                            />
                         </div>
 
                         {/* Sort Dropdown */}
@@ -94,7 +85,7 @@ export default function NewsHeader({
                             <select
                                 value={selectedSortBy}
                                 onChange={handleSortChange}
-                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
+                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-full px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-hover)] transition-all duration-200 cursor-pointer"
                             >
                                 <option value="newest" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Newest First</option>
                                 <option value="oldest" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Oldest First</option>
@@ -117,7 +108,7 @@ export default function NewsHeader({
                             <select
                                 value={selectedCategory}
                                 onChange={handleCategoryChange}
-                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
+                                className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-full px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-hover)] transition-all duration-200 cursor-pointer"
                             >
                                 <option value="All" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">All Categories</option>
                                 {categories.map((cat) => (
@@ -135,41 +126,27 @@ export default function NewsHeader({
                     )}
 
                     {/* Date Range Filter */}
-                    <div className="relative">
-                        <select
-                            value={selectedDateRange}
-                            onChange={handleDateRangeChange}
-                            className="appearance-none bg-[var(--md-primary)] border border-[var(--md-primary)] rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 pr-8 sm:pr-10 text-xs sm:text-sm font-medium text-[var(--md-on-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--md-primary-container)] focus:border-[var(--md-primary-container)] shadow-sm hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-200 cursor-pointer"
-                        >
-                            <option value="All" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">All Time</option>
-                            <option value="7days" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Last 7 Days</option>
-                            <option value="30days" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Last 30 Days</option>
-                            <option value="90days" className="text-[var(--md-on-primary)] bg-[var(--md-primary)]">Last 3 Months</option>
-                        </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
-                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-[var(--md-on-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
-                    </div>
+                    <DateRangePicker value={selectedDateRange} onChange={handleDateRangeChange} label="Published" />
 
-                    {/* Clear Filters Button */}
-                    <button
-                        onClick={() => {
-                            setSelectedCategory("All")
-                            setSelectedDateRange("All")
-                            setSelectedSortBy("newest")
-                            setCategory?.("All")
-                            setDateRange?.("All")
-                            setSortBy?.("newest")
-                        }}
-                        className="px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-[var(--md-on-error)] bg-[var(--md-error)] border border-[var(--md-error)] rounded-lg hover:bg-[var(--md-error-container)] hover:text-[var(--md-on-error-container)] shadow-sm transition-all duration-200 flex items-center gap-2 cursor-pointer"
-                    >
-                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        <span className="hidden sm:inline">Clear Filters</span>
-                    </button>
+                    {/* Reset button: only shown when a filter or sort differs from the default */}
+                    {hasActiveFilters && (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setSelectedCategory("All")
+                                setSelectedDateRange(ANY_DATE)
+                                setSelectedSortBy("newest")
+                                setCategory?.("All")
+                                setDateRange?.(ANY_DATE)
+                                setSortBy?.("newest")
+                            }}
+                            className={buttonStyles({variant: "outline", size: "sm"})}
+                        >
+                            <X className="w-4 h-4" aria-hidden />
+                            <span className="hidden sm:inline">Reset Filters</span>
+                            <span className="sm:hidden">Reset</span>
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

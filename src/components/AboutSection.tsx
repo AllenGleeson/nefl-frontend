@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Mail } from "lucide-react";
+import { buttonStyles } from "@/components/ui/Button";
 
 export default function AboutUs() {
   const [activeTab, setActiveTab] = useState<'about' | 'league' | 'contact'>('about');
@@ -60,12 +62,10 @@ export default function AboutUs() {
                 <p>Navan, Co. Meath, C15 AK5V</p>
                 <p className="text-[var(--md-primary)] font-medium">087 285 6318</p>
                 <p>
-                  <span 
-                    className="inline-block bg-[var(--md-primary)]/60 text-[var(--md-on-primary)] px-4 py-2 rounded-lg font-medium cursor-not-allowed opacity-60"
-                    aria-disabled="true"
-                  >
+                  <a href="mailto:info@nefl.ie" className={buttonStyles({ variant: "tonal", size: "sm" })}>
+                    <Mail className="w-4 h-4" aria-hidden />
                     info@nefl.ie
-                  </span>
+                  </a>
                 </p>
               </address>
             </div>
@@ -102,12 +102,10 @@ export default function AboutUs() {
               <p>Navan, Co. Meath, C15 AK5V</p>
               <p className="text-[var(--md-primary)] font-medium">087 285 6318</p>
               <p>
-                <span 
-                  className="inline-block bg-[var(--md-primary)]/60 text-[var(--md-on-primary)] px-4 py-2 rounded-lg font-medium cursor-not-allowed opacity-60"
-                  aria-disabled="true"
-                >
-                  info@nefl.ie
-                </span>
+                <a href="mailto:info@nefl.ie" className={buttonStyles({ variant: "tonal", size: "sm" })}>
+                    <Mail className="w-4 h-4" aria-hidden />
+                    info@nefl.ie
+                  </a>
               </p>
             </address>
           </div>

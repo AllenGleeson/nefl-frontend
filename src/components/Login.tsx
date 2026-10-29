@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { isApiError } from "../types/ApiError";
+import { buttonStyles } from "@/components/ui/Button";
 
 // Mock login function for demo - in production, this would call the actual API
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -85,7 +86,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="block w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                className="block w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
                 autoComplete="email"
               />
             </div>
@@ -100,7 +101,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="block w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                className="block w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] focus:border-transparent text-base"
                 autoComplete="current-password"
               />
             </div>
@@ -112,7 +113,7 @@ export default function Login() {
             <button 
               type="submit" 
               disabled={isLoading}
-              className="w-full px-4 py-3 sm:py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-base font-medium"
+              className={buttonStyles({size: "lg", fullWidth: true})}
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
@@ -128,7 +129,7 @@ export default function Login() {
           <div className="mt-6 sm:mt-8 text-center">
             <p className="text-sm text-gray-600">
               Don&apos;t have an account?{' '}
-              <Link href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
+              <Link href="/register" className="text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] font-medium">
                 Sign up here
               </Link>
             </p>

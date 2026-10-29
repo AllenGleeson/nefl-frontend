@@ -35,7 +35,7 @@ export default function RelatedArticles({ currentPostId, limit = 3 }: Props) {
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                <h3 className="font-semibold text-gray-900 group-hover:text-[var(--md-primary-hover)] transition-colors line-clamp-2">
                   {relatedPost.title}
                 </h3>
                 <p className="text-sm text-gray-600 mt-2 line-clamp-2">

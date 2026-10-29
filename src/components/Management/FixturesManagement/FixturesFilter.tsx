@@ -2,6 +2,7 @@
 
 // src/components/Management/FixturesManagement/FixturesFilter.tsx
 import { useState, useEffect } from 'react';
+import { buttonStyles } from "@/components/ui/Button";
 
 interface FixturesFilterProps {
   onFilterChange: (filters: {
@@ -44,35 +45,33 @@ export default function FixturesFilter({ onFilterChange }: FixturesFilterProps) 
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+    <div className="bg-[var(--md-surface-container-lowest)] rounded-2xl shadow-sm p-4 mb-6 border border-[var(--md-outline-variant)]">
       <div className="flex flex-wrap gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
             Status
           </label>
           <select
             name="status"
             value={filters.status}
             onChange={handleFilterChange}
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)]"
           >
             <option value="all">All Status</option>
             <option value="scheduled">Scheduled</option>
-            <option value="live">Live</option>
             <option value="completed">Completed</option>
-            <option value="postponed">Postponed</option>
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
             League
           </label>
           <select
             name="league"
             value={filters.league}
             onChange={handleFilterChange}
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)]"
           >
             <option value="all">All Leagues</option>
             <option value="Premier League">Premier League</option>
@@ -83,14 +82,14 @@ export default function FixturesFilter({ onFilterChange }: FixturesFilterProps) 
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
             Team
           </label>
           <select
             name="team"
             value={filters.team}
             onChange={handleFilterChange}
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)]"
           >
             <option value="all">All Teams</option>
             <option value="Shamrock Rovers">Shamrock Rovers</option>
@@ -106,14 +105,14 @@ export default function FixturesFilter({ onFilterChange }: FixturesFilterProps) 
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-1">
             Date Range
           </label>
           <select
             name="dateRange"
             value={filters.dateRange}
             onChange={handleFilterChange}
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)]"
           >
             <option value="all">All Dates</option>
             <option value="today">Today</option>
@@ -125,7 +124,7 @@ export default function FixturesFilter({ onFilterChange }: FixturesFilterProps) 
         <div className="flex items-end">
           <button 
             onClick={handleClearFilters}
-            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+            className={buttonStyles({ variant: "outline", size: "sm" })}
           >
             Clear Filters
           </button>

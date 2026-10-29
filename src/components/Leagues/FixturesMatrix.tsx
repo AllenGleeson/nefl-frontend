@@ -2,9 +2,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { LeagueFixtures, FixtureResult } from "@/data/fixturesMatrix";
 import "@/styles/fixtures-matrix.css";
 import { assetUrl } from "@/utils/assetUrl";
+import { getClubSlug } from "@/utils/clubSlug";
 
 type Props = {
   leagueFixtures: LeagueFixtures;
@@ -52,14 +54,26 @@ export default function FixturesMatrix({ leagueFixtures, maxRows }: Props) {
                     </th>
                     {displayTeams.map((team) => (
                       <th key={team.id} className="sp-event-matrix-label px-1.5 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider">
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src={assetUrl(team.logo)}
-                            alt={team.name}
-                            width={24}
-                            height={24}
-                            className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
-                          />
+                        <div className="flex flex-col items-center justify-center gap-1">
+                          {getClubSlug(team.name) ? (
+                            <Link href={`/clubs/${getClubSlug(team.name)}`} className="flex items-center justify-center hover:opacity-90">
+                              <Image
+                                src={assetUrl(team.logo)}
+                                alt={team.name}
+                                width={24}
+                                height={24}
+                                className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
+                              />
+                            </Link>
+                          ) : (
+                            <Image
+                              src={assetUrl(team.logo)}
+                              alt={team.name}
+                              width={24}
+                              height={24}
+                              className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
+                            />
+                          )}
                         </div>
                       </th>
                     ))}
@@ -72,17 +86,35 @@ export default function FixturesMatrix({ leagueFixtures, maxRows }: Props) {
                       <td className="sp-event-matrix-home-label bg-[var(--md-surface-variant)] px-2 sm:px-4 py-2 sm:py-3 border-b border-[var(--md-outline-variant)]">
                         <div className="flex items-center space-x-2 sm:space-x-3">
                           <div className="relative">
-                            <Image
-                              src={assetUrl(homeTeam.logo)}
-                              alt={homeTeam.name}
-                              width={24}
-                              height={24}
-                              className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
-                            />
+                            {getClubSlug(homeTeam.name) ? (
+                              <Link href={`/clubs/${getClubSlug(homeTeam.name)}`} className="block hover:opacity-90">
+                                <Image
+                                  src={assetUrl(homeTeam.logo)}
+                                  alt={homeTeam.name}
+                                  width={24}
+                                  height={24}
+                                  className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
+                                />
+                              </Link>
+                            ) : (
+                              <Image
+                                src={assetUrl(homeTeam.logo)}
+                                alt={homeTeam.name}
+                                width={24}
+                                height={24}
+                                className="rounded-full border border-[var(--md-outline-variant)] sm:w-8 sm:h-8 sm:border-2"
+                              />
+                            )}
                           </div>
-                          <span className="font-medium text-[var(--md-on-surface-variant)] text-xs sm:text-sm">
-                            {homeTeam.name}
-                          </span>
+                          {getClubSlug(homeTeam.name) ? (
+                            <Link href={`/clubs/${getClubSlug(homeTeam.name)}`} className="font-medium text-[var(--md-on-surface-variant)] text-xs sm:text-sm hover:underline">
+                              {homeTeam.name}
+                            </Link>
+                          ) : (
+                            <span className="font-medium text-[var(--md-on-surface-variant)] text-xs sm:text-sm">
+                              {homeTeam.name}
+                            </span>
+                          )}
                         </div>
                       </td>
 

@@ -8,6 +8,7 @@ import LeaguesHeader from "../Leagues/LeaguesHeader";
 import { leagueTablesDataLong } from "@/data/leagueTablesDataLong";
 import { fixturesMatrixData } from "@/data/fixturesMatrix";
 import { assetUrl } from "@/utils/assetUrl";
+import { buttonStyles } from "@/components/ui/Button";
 
 type ViewMode = 'table' | 'fixtures';
 type Gender = 'Men' | 'Women';
@@ -108,7 +109,7 @@ export default function LeaguesSection() {
               <div className="text-center mt-6 sm:mt-8">
                 <Link
                   href="/leagues"
-                  className="inline-flex items-center gap-2 bg-[var(--md-primary)] text-[var(--md-on-primary)] px-6 py-3 rounded-lg hover:bg-[var(--md-primary-fixed-dim)] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base font-medium"
+                  className={buttonStyles({size: "lg"})}
                 >
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />

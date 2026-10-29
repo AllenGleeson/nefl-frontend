@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/ui/BackToTop";
 import { assetUrl } from "@/utils/assetUrl";
 
 export const metadata: Metadata = {
@@ -22,13 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header>
+        <header className="sticky top-0 z-50">
           <Nav />
         </header>
         <main>
           {children}
         </main>
         <Footer />
+        <BackToTop />
       </body>
     </html>
   );

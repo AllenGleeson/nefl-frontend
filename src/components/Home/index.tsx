@@ -5,7 +5,6 @@ import HeroSection from "./HeroSection";
 import LatestResults from "./LatestResults";
 import LeaguesSection from "./LeaguesSection";
 import NewsSection from "./NewsSection";
-import StoreHighlights from "./StoreHighlights";
 import "@/styles/home.css";
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
       <LatestResults />
       <LeaguesSection />
       <NewsSection />
-      <StoreHighlights />
       <Sponsors />
       <AboutUs />
     </div>

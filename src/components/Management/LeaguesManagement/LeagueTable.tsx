@@ -26,28 +26,28 @@ export default function LeagueTable() {
   ]);
 
   return (
-    <div className="bg-white rounded-lg shadow-md">
+    <div className="bg-[var(--md-surface-container-lowest)] rounded-2xl shadow-sm border border-[var(--md-outline-variant)]">
       <div className="p-6">
         <h2 className="text-xl font-bold mb-4">Current League Table</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-2 font-medium text-gray-600">Pos</th>
-                <th className="text-left py-2 font-medium text-gray-600">Team</th>
-                <th className="text-center py-2 font-medium text-gray-600">P</th>
-                <th className="text-center py-2 font-medium text-gray-600">W</th>
-                <th className="text-center py-2 font-medium text-gray-600">D</th>
-                <th className="text-center py-2 font-medium text-gray-600">L</th>
-                <th className="text-center py-2 font-medium text-gray-600">GF</th>
-                <th className="text-center py-2 font-medium text-gray-600">GA</th>
-                <th className="text-center py-2 font-medium text-gray-600">GD</th>
-                <th className="text-center py-2 font-medium text-gray-600">Pts</th>
+              <tr className="border-b border-[var(--md-outline-variant)]">
+                <th className="text-left py-2 font-medium text-[var(--md-on-surface-variant)]">Pos</th>
+                <th className="text-left py-2 font-medium text-[var(--md-on-surface-variant)]">Team</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">P</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">W</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">D</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">L</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">GF</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">GA</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">GD</th>
+                <th className="text-center py-2 font-medium text-[var(--md-on-surface-variant)]">Pts</th>
               </tr>
             </thead>
             <tbody>
               {teams.map((team) => (
-                <tr key={team.position} className="border-b border-gray-100 hover:bg-gray-50">
+                <tr key={team.position} className="border-b border-[var(--md-outline-variant)] hover:bg-[var(--md-surface-container-low)]">
                   <td className="py-3 font-medium">{team.position}</td>
                   <td className="py-3 font-medium">{team.name}</td>
                   <td className="py-3 text-center">{team.played}</td>

@@ -3,6 +3,7 @@
 // src/components/Management/NewsManagement/AddNewsForm.tsx
 import { useState } from 'react';
 import Modal from '../../Modal';
+import { buttonStyles } from "@/components/ui/Button";
 
 type Props = {
   isOpen: boolean
@@ -68,11 +69,11 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Create News Article" size="xl">
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+      <div className="bg-[var(--md-surface-container-lowest)] rounded-2xl shadow-sm border border-[var(--md-outline-variant)] p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-2">
             Title *
           </label>
           <input
@@ -81,7 +82,7 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
             value={formData.title}
             onChange={handleChange}
             placeholder="Enter article title"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
             required
             disabled={isSubmitting}
           />
@@ -89,7 +90,7 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
 
         {/* Excerpt */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-2">
             Excerpt *
           </label>
           <textarea
@@ -98,7 +99,7 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
             onChange={handleChange}
             placeholder="Enter article excerpt (brief summary)"
             rows={3}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
             required
             disabled={isSubmitting}
           />
@@ -106,7 +107,7 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
 
         {/* Content */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-2">
             Content *
           </label>
           <textarea
@@ -115,7 +116,7 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
             onChange={handleChange}
             placeholder="Enter full article content"
             rows={8}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
             required
             disabled={isSubmitting}
           />
@@ -123,7 +124,7 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
 
         {/* Image URL */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-2">
             Featured Image URL
           </label>
           <input
@@ -132,14 +133,14 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
             value={formData.image}
             onChange={handleChange}
             placeholder="https://example.com/image.jpg"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
             disabled={isSubmitting}
           />
         </div>
 
         {/* Tags */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-2">
             Tags
           </label>
           <input
@@ -148,10 +149,10 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
             value={formData.tags}
             onChange={handleChange}
             placeholder="Enter tags separated by commas (e.g., Premier Division, Highlights, Video)"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
             disabled={isSubmitting}
           />
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-[var(--md-on-surface-variant)] mt-1">
             Separate multiple tags with commas
           </p>
         </div>
@@ -163,24 +164,24 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
             name="isFeatured"
             checked={formData.isFeatured}
             onChange={handleChange}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            className="h-4 w-4 text-[var(--md-primary)] focus:ring-[var(--md-primary)] border-[var(--md-outline-variant)] rounded"
             disabled={isSubmitting}
           />
-          <label className="ml-2 block text-sm text-gray-700">
+          <label className="ml-2 block text-sm text-[var(--md-on-surface-variant)]">
             Mark as Featured Article
           </label>
         </div>
 
         {/* Status */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--md-on-surface-variant)] mb-2">
             Status
           </label>
           <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            className="w-full border border-[var(--md-outline-variant)] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] shadow-sm"
             disabled={isSubmitting}
           >
             <option value="draft">Draft</option>
@@ -189,18 +190,18 @@ export default function AddNewsForm({ isOpen, onClose, onSuccess }: Props) {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200 bg-white -mx-6 px-6 py-4 rounded-lg">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] -mx-6 px-6 py-4 rounded-lg">
           <button
             type="button"
             onClick={handleClose}
-            className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors shadow-sm"
+            className={buttonStyles({ variant: "outline", size: "sm", className: "flex-1" })}
             disabled={isSubmitting}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className={buttonStyles({ size: "sm", className: "flex-1" })}
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Saving...' : 'Save Article'}

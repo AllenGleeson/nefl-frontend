@@ -1,10 +1,12 @@
 // src/components/Clubs/ClubDetails/index.tsx
 import { Club } from "@/data/club";
 import ClubAchievements from "./ClubAchievements";
+import ClubContacts from "./ClubContacts";
+import ClubGrounds from "./ClubGrounds";
 import ClubHeader from "./ClubHeader";
-import ClubHistory from "./ClubHistory";
+import ClubKit from "./ClubKit";
 import ClubRankings from "./ClubRankings";
-import ClubSquad from "./ClubSquad";
+import ClubFormation from "./ClubFormation";
 
 interface ClubDetailsProps {
   club: Club;
@@ -19,38 +21,28 @@ export default function ClubDetails({ club }: ClubDetailsProps) {
         founded={club.founded}
         ground={club.ground}
         bio={club.bio}
-        leagues={club.leagues}
         website={club.website}
+        facebook={club.facebook}
+        instagram={club.instagram}
+        twitter={club.twitter}
       />
       <ClubRankings clubName={club.name} />
-      {club.squad && club.squad.length > 0 && (
-        <ClubSquad
-          squad={club.squad}
-          formation={club.formation ? {
-            id: club.formation.id,
-            name: club.formation.name,
-            description: club.formation.description,
-            positions: club.formation.positions.map(pos => ({
-              id: pos.id,
-              position: pos.position,
-              x: pos.x,
-              y: pos.y,
-              playerId: pos.playerId,
-              playerName: pos.playerName
-            })),
-            isDefault: true,
-            createdAt: '',
-            updatedAt: ''
-          } : undefined}
-        />
-      )}
-      {club.history && (
-        <ClubHistory
-          history={club.history.narrative}
-        />
-      )}
+      {club.formation && <ClubFormation formation={club.formation} />}
       {club.achievements && club.achievements.length > 0 && (
         <ClubAchievements achievements={club.achievements} />
+      )}
+      {club.contacts && club.contacts.length > 0 && (
+        <ClubContacts contacts={club.contacts} />
+      )}
+      {club.kit && Object.values(club.kit).some(Boolean) && (
+        <ClubKit kit={club.kit} />
+      )}
+      {club.ground && (
+        <ClubGrounds
+          groundName={club.grounds?.name ?? club.ground}
+          image={club.grounds?.image}
+          mapsUrl={club.grounds?.mapsUrl}
+        />
       )}
     </div>
   );

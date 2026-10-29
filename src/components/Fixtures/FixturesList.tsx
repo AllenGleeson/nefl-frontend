@@ -1,248 +1,147 @@
 // components/Fixtures/FixturesList.tsx
 import Image from "next/image"
 import Link from "next/link"
-import { Calendar, ChevronDown, ChevronRight } from "lucide-react"
-import { useState } from "react"
-import { getLeagueNameForMatch } from "@/utils/matchLeagueMapper"
+import { CalendarX2, ChevronRight, MapPin } from "lucide-react"
+import type { Match } from "@/data/fixtures"
+import type { FixturesView, MatchDay } from "@/hooks/useFixturesFilter"
 import { assetUrl } from "@/utils/assetUrl"
+import { shortLeagueName } from "@/utils/leagueNames"
+import { buttonStyles } from "@/components/ui/Button"
 
-type Match = {
-  id: number
-  home_team: string
-  away_team: string
-  home_score?: number
-  away_score?: number
-  date: string // e.g. "2025-08-15"
-  time: string // e.g. "15:00"
-  status: "FT" | "Scheduled"
-  home_badge: string
-  away_badge: string
-  league: string
-  season?: string
-  competition?: string
-  venue?: string
-  referee?: string
+/** "2025-08-16" -> "Saturday 16 August 2025" */
+export function formatMatchDate(date: string) {
+  return new Date(`${date}T12:00:00`).toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })
 }
 
-type Matchweek = {
-  id: number
-  title: string // e.g. "Matchweek 1"
-  range: string // e.g. "Fri 15 Aug - Mon 18 Aug"
-  days: {
-    date: string
-    dayLabel: string // e.g. "Fri 15 Aug"
-    matches: Match[]
-  }[]
-}
-
-type Props = {
-  matchweeks: Matchweek[]
-  showLeague?: boolean
-}
-
-type CollapsibleDayProps = {
-  day: {
-    date: string
-    dayLabel: string
-    matches: Match[]
-  }
-}
-
-function CollapsibleDay({ day }: CollapsibleDayProps) {
-  const [isOpen, setIsOpen] = useState(false)
-
+function Team({ name, badge, align, bold }: { name: string; badge: string; align: "left" | "right"; bold: boolean }) {
   return (
-    <div className="mb-3 sm:mb-4">
-      {/* Day Header - Clickable */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-2 sm:p-3 bg-[var(--md-surface-container-low)] hover:bg-[var(--md-surface-container)] rounded-lg transition-colors duration-200"
+    <div className={`flex items-center gap-2 sm:gap-3 min-w-0 ${align === "right" ? "flex-row-reverse text-right" : ""}`}>
+      <span className="relative w-8 h-8 sm:w-10 sm:h-10 shrink-0">
+        <Image src={assetUrl(badge)} alt="" fill className="object-contain" sizes="40px" />
+      </span>
+      <span
+        className={`text-sm sm:text-base leading-tight line-clamp-2 ${
+          bold ? "font-bold text-[var(--md-on-surface)]" : "font-medium text-[var(--md-on-surface-variant)]"
+        }`}
       >
-        <div className="flex items-center gap-2 sm:gap-3">
-          <h3 className="text-sm sm:text-base font-semibold text-[var(--md-on-surface)]">
-            {day.dayLabel}
-          </h3>
-          <div className="text-xs text-[var(--md-on-surface-variant)]">
-            {day.matches.length} match{day.matches.length !== 1 ? 'es' : ''}
-          </div>
-        </div>
-        <div className="flex items-center">
-          {isOpen ? (
-            <ChevronDown className="w-4 h-4 text-[var(--md-on-surface-variant)]" />
-          ) : (
-            <ChevronRight className="w-4 h-4 text-[var(--md-on-surface-variant)]" />
-          )}
-        </div>
-      </button>
-
-      {/* Collapsible Content */}
-      {isOpen && (
-        <div className="mt-2 sm:mt-3 space-y-2 sm:space-y-3 animate-in slide-in-from-top-2 duration-200">
-          {day.matches.map((match) => {
-            // Generate abbreviations from team names
-            const getAbbr = (teamName: string) => {
-              const words = teamName.split(' ');
-              if (words.length > 1) {
-                return words.map(w => w[0]).join('').toUpperCase().slice(0, 3);
-              }
-              return teamName.slice(0, 3).toUpperCase();
-            };
-
-            return (
-              <Link
-                key={match.id}
-                href={`/fixtures/${match.id}`}
-                className="bg-[var(--md-surface-container-lowest)] shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-[var(--md-outline-variant)] overflow-hidden block cursor-pointer rounded-lg"
-              >
-                {/* Match Header - Competition Info */}
-                <div className="px-4 sm:px-6 py-3 border-b border-[var(--md-outline-variant)]">
-                  <p className="text-xs sm:text-sm font-semibold text-[var(--md-on-surface)] mb-1">
-                    {getLeagueNameForMatch(match.home_team, match.away_team, match.competition)}
-                  </p>
-                  <div className="flex items-center gap-2 text-xs text-[var(--md-on-surface-variant)]">
-                    {match.venue && (
-                      <>
-                        <span>{match.venue}</span>
-                        {match.referee && <span>·</span>}
-                      </>
-                    )}
-                    {match.referee && (
-                      <span>Ref: {match.referee}</span>
-                    )}
-                    {match.season && (
-                      <>
-                        {(match.venue || match.referee) && <span>·</span>}
-                        <span>{match.season.replace('-', '/')}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Match Body - Teams and Score */}
-                <div className="p-4 sm:p-6">
-                  {/* Teams Display */}
-                  <div className="flex items-center justify-between mb-4">
-                    {/* Home Team */}
-                    <div className="flex flex-col items-center flex-1">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
-                        <Image
-                          src={assetUrl(match.home_badge)}
-                          alt={match.home_team}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <abbr className="text-xs sm:text-sm font-medium text-[var(--md-on-surface)]" title={match.home_team}>
-                        {getAbbr(match.home_team)}
-                      </abbr>
-                    </div>
-                    
-                    {/* Score Display */}
-                    <div className="flex flex-col items-center mx-4 sm:mx-6">
-                      {match.status === "FT" ? (
-                        <div className="flex flex-row items-center gap-2">
-                          <div className="text-2xl sm:text-3xl font-bold text-[var(--md-on-surface)]">
-                            {match.home_score}
-                          </div>
-                          <span className="text-xl sm:text-2xl font-bold text-gray-500">-</span>
-                          <div className="text-2xl sm:text-3xl font-bold text-[var(--md-on-surface)]">
-                            {match.away_score}
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex items-center space-x-1 text-[var(--md-on-surface-variant)]">
-                          <Calendar className="w-4 h-4" />
-                          <span className="text-sm sm:text-base font-semibold">
-                            {match.date ? new Date(match.date).toLocaleDateString('en-GB', { 
-                              day: 'numeric', 
-                              month: 'short'
-                            }) : match.time}
-                          </span>
-                        </div>
-                      )}
-                      {/* Status Badge */}
-                      <div className={`mt-2 px-2 py-0.5 sm:py-1 rounded-full text-xs font-semibold ${
-                        match.status === "FT" 
-                          ? "bg-[var(--md-tertiary-container)] text-[var(--md-on-tertiary-container)]"
-                          : "bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]"
-                      }`}>
-                        {match.status === "FT" ? "FT" : "Scheduled"}
-                      </div>
-                    </div>
-                    
-                    {/* Away Team */}
-                    <div className="flex flex-col items-center flex-1">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 relative mb-2">
-                        <Image
-                          src={assetUrl(match.away_badge)}
-                          alt={match.away_team}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <abbr className="text-xs sm:text-sm font-medium text-[var(--md-on-surface)]" title={match.away_team}>
-                        {getAbbr(match.away_team)}
-                      </abbr>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      )}
+        {name}
+      </span>
     </div>
   )
 }
 
-export default function FixturesList({ matchweeks }: Props) {
-  if (matchweeks.length === 0) {
-    return (
-      <div className="text-center py-8 sm:py-16 px-4">
-        <div className="text-[var(--md-on-surface-variant)] mb-4 sm:mb-6">
-          <svg
-            className="mx-auto h-12 w-12 sm:h-16 sm:w-16"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1}
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            />
-          </svg>
+function MatchRow({ match }: { match: Match }) {
+  const played = match.status === "FT"
+  const homeWon = played && (match.home_score ?? 0) > (match.away_score ?? 0)
+  const awayWon = played && (match.away_score ?? 0) > (match.home_score ?? 0)
+
+  return (
+    <li>
+      <Link
+        href={`/fixtures/${match.id}`}
+        className="group block px-3 sm:px-5 py-3 sm:py-4 hover:bg-[var(--md-surface-container-low)] focus:outline-none focus-visible:bg-[var(--md-surface-container-low)] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--md-primary)] transition-colors"
+        aria-label={
+          played
+            ? `${match.home_team} ${match.home_score}, ${match.away_team} ${match.away_score}, full time`
+            : `${match.home_team} v ${match.away_team}`
+        }
+      >
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
+          <Team name={match.home_team} badge={match.home_badge} align="right" bold={!played || homeWon} />
+
+          <div className="flex flex-col items-center min-w-[64px] sm:min-w-[84px]">
+            {played ? (
+              <>
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--md-primary)] text-[var(--md-on-primary)] px-2.5 sm:px-3 py-1 text-base sm:text-lg font-bold tabular-nums">
+                  {match.home_score}
+                  <span className="opacity-60">–</span>
+                  {match.away_score}
+                </span>
+                <span className="mt-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
+                  Full time
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="rounded-lg border border-[var(--md-outline-variant)] px-3 py-1 text-sm font-bold text-[var(--md-on-surface-variant)]">
+                  v
+                </span>
+                <span className="mt-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[var(--md-primary)]">
+                  {match.time || "TBC"}
+                </span>
+              </>
+            )}
+          </div>
+
+          <Team name={match.away_team} badge={match.away_badge} align="left" bold={!played || awayWon} />
         </div>
-        <h3 className="text-lg sm:text-xl font-semibold text-[var(--md-on-surface)] mb-2 sm:mb-3">
-          No matches found
-        </h3>
-        <p className="text-sm sm:text-base text-[var(--md-on-surface-variant)]">
-          Try adjusting your filters to see more results.
+
+        <div className="mt-2 flex items-center justify-center gap-x-3 gap-y-1 flex-wrap text-xs text-[var(--md-on-surface-variant)]">
+          <span className="font-semibold text-[var(--md-primary)]">{shortLeagueName(match.league)}</span>
+          {match.venue && (
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="w-3 h-3" aria-hidden />
+              {match.venue}
+            </span>
+          )}
+          <ChevronRight className="w-4 h-4 hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden />
+        </div>
+      </Link>
+    </li>
+  )
+}
+
+type Props = {
+  days: MatchDay[]
+  view: FixturesView
+  hasActiveFilters: boolean
+  onReset: () => void
+}
+
+export default function FixturesList({ days, view, hasActiveFilters, onReset }: Props) {
+  if (days.length === 0) {
+    return (
+      <div className="text-center py-16 px-4 rounded-2xl border border-dashed border-[var(--md-outline-variant)]">
+        <CalendarX2 className="mx-auto w-12 h-12 text-[var(--md-on-surface-variant)]/60" aria-hidden />
+        <h2 className="mt-4 text-lg font-semibold text-[var(--md-on-surface)]">
+          No {view === "results" ? "results" : "upcoming matches"} found
+        </h2>
+        <p className="mt-1 text-sm text-[var(--md-on-surface-variant)]">
+          {hasActiveFilters ? "Try a different league or club." : "Check back soon."}
         </p>
+        {hasActiveFilters && (
+          <button type="button" onClick={onReset} className={buttonStyles({ variant: "outline", size: "sm", className: "mt-4" })}>
+            Reset filters
+          </button>
+        )}
       </div>
     )
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 sm:p-6">
-      {matchweeks.map((week) => (
-        <section key={week.id} className="sm:bg-[var(--md-surface)] sm:border sm:border-[var(--md-outline-variant)] sm:rounded-xl p-4 sm:p-6 sm:hover:shadow-lg transition-all duration-300">
-          {/* Matchweek Header */}
-          <div className="mb-4 sm:mb-6">
-            <div className="mb-2 sm:mb-3">
-              <h2 className="text-lg sm:text-xl font-bold text-[var(--md-on-surface)] mb-1 sm:mb-2">{week.title}</h2>
-              <div className="flex items-center text-xs sm:text-sm text-[var(--md-on-surface-variant)] mb-2 sm:mb-3">
-                <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
-                <span>{week.range}</span>
-              </div>
-            </div>
-            <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-[var(--md-primary)] to-[var(--md-primary-container)] rounded-full"></div>
-          </div>
-
-          {week.days.map((day, i) => (
-            <CollapsibleDay key={i} day={day} />
-          ))}
+    <div className="space-y-6">
+      {days.map((day) => (
+        <section
+          key={day.date}
+          aria-label={formatMatchDate(day.date)}
+          className="rounded-2xl border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] shadow-sm overflow-hidden"
+        >
+          <h2 className="flex items-center justify-between gap-3 px-3 sm:px-5 py-2.5 bg-[var(--md-surface-container)] text-sm sm:text-base font-bold text-[var(--md-on-surface)]">
+            <time dateTime={day.date}>{formatMatchDate(day.date)}</time>
+            <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">
+              {day.matches.length} match{day.matches.length === 1 ? "" : "es"}
+            </span>
+          </h2>
+          <ul className="divide-y divide-[var(--md-outline-variant)]">
+            {day.matches.map((m) => (
+              <MatchRow key={m.id} match={m} />
+            ))}
+          </ul>
         </section>
       ))}
     </div>

@@ -1,5 +1,6 @@
 // src/app/unauthorized/page.tsx
 import Link from 'next/link';
+import { buttonStyles } from "@/components/ui/Button";
 
 export default function UnauthorizedPage() {
   return (
@@ -17,13 +18,13 @@ export default function UnauthorizedPage() {
         <div className="space-y-3">
           <Link
             href="/"
-            className="block w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            className={buttonStyles({fullWidth: true})}
           >
             Go Home
           </Link>
           <Link
             href="/login"
-            className="block w-full text-blue-600 hover:text-blue-700 py-2"
+            className="block w-full text-[var(--md-primary)] hover:text-[var(--md-primary-hover)] py-2"
           >
             Sign in with different account
           </Link>

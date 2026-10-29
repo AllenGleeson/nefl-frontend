@@ -1,127 +1,96 @@
 "use client"
 
-import { useState, useMemo } from 'react'
-import { leagueTablesDataLong } from '@/data/leagueTablesDataLong'
-import { leagueMatchweeks } from '@/data/matchweeks'
+import { useEffect, useMemo, useState } from "react"
+import { leagueMatchweeks } from "@/data/matchweeks"
+import type { Match } from "@/data/fixtures"
+import { ANY_DATE, inDateRange, isDateRangeSet, type DateRange } from "@/components/ui/DateRangePicker"
 
-type FilterState = {
-  competition: string
-  season: string
-  matchweek: string
-  club: string
+export type FixturesView = "upcoming" | "results"
+
+export type FixturesSort = "newest" | "oldest"
+
+export type FixturesFilters = {
+  view: FixturesView
+  season: string // "all" or e.g. "2025-26"
+  league: string // "all" or a league name
+  club: string // free text, "" for any
+  dates: DateRange
+  sort: FixturesSort
+}
+
+export type MatchDay = { date: string; matches: Match[] }
+
+
+const isPlayed = (m: Match) => m.status === "FT"
+
+const allMatches = leagueMatchweeks.flatMap((w) => w.days.flatMap((d) => d.matches))
+
+/** Leagues that have at least one fixture, in the order they first appear */
+export const fixtureLeagues = Array.from(new Set(allMatches.map((m) => m.league as string)))
+
+/** Seasons in the fixtures, latest first (e.g. "2025-26") */
+export const fixtureSeasons = Array.from(new Set(allMatches.map((m) => m.season))).sort().reverse()
+
+/** Upcoming fixtures read soonest first; results read most recent first */
+export const defaultSort = (view: FixturesView): FixturesSort => (view === "results" ? "newest" : "oldest")
+
+export const DEFAULT_FILTERS: FixturesFilters = {
+  view: "upcoming",
+  season: fixtureSeasons[0] ?? "all",
+  league: "all",
+  club: "",
+  dates: ANY_DATE,
+  sort: defaultSort("upcoming"),
+}
+
+/** Every club that appears in the fixtures, A–Z */
+export const fixtureClubs = Array.from(new Set(allMatches.flatMap((m) => [m.home_team, m.away_team]))).sort()
+
+function matchesFilters(m: Match, f: FixturesFilters) {
+  if (f.season !== "all" && m.season !== f.season) return false
+  if (!inDateRange(m.date, f.dates)) return false
+  if (f.league !== "all" && m.league !== f.league) return false
+  const q = f.club.trim().toLowerCase()
+  if (q && !m.home_team.toLowerCase().includes(q) && !m.away_team.toLowerCase().includes(q)) return false
+  return true
 }
 
 export function useFixturesFilter() {
-  const [filters, setFilters] = useState<FilterState>({
-    competition: "all",
-    season: "2025-26",
-    matchweek: "all",
-    club: "all"
-  })
+  const [filters, setFilters] = useState<FixturesFilters>(DEFAULT_FILTERS)
 
-  const filteredMatchweeks = useMemo(() => {
-    // Start with league matchweeks (already excludes Cup and Shield)
-    let filtered = [...leagueMatchweeks]
+  // Allow linking straight to results with /fixtures#results
+  useEffect(() => {
+    if (window.location.hash === "#results") setFilters((f) => ({ ...f, view: "results", sort: defaultSort("results") }))
+  }, [])
 
-    // Filter by competition (league name from leagueTablesDataLong)
-    if (filters.competition !== "all") {
-      // Check if it's a league from leagueTablesDataLong
-      const isLeague = leagueTablesDataLong.Men[filters.competition] || leagueTablesDataLong.Women[filters.competition]
-      
-      if (isLeague) {
-        // Get teams from the selected league
-        const leagueTeams = isLeague.map(team => team.name.toLowerCase())
-        
-        // Filter fixtures by matching teams
-        filtered = filtered.map(week => ({
-          ...week,
-          days: week.days.map(day => ({
-            ...day,
-            matches: day.matches.filter(match => {
-              const homeTeam = match.home_team.toLowerCase()
-              const awayTeam = match.away_team.toLowerCase()
-              
-              // Match if either team is in the league
-              return leagueTeams.includes(homeTeam) || leagueTeams.includes(awayTeam)
-            })
-          })).filter(day => day.matches.length > 0)
-        })).filter(week => week.days.length > 0)
-      }
+  const { days, counts } = useMemo(() => {
+    const wantPlayed = filters.view === "results"
+    const counts = { upcoming: 0, results: 0 }
+    const byDate = new Map<string, Match[]>()
+
+    for (const m of allMatches) {
+      if (!matchesFilters(m, filters)) continue
+      counts[isPlayed(m) ? "results" : "upcoming"]++
+      if (isPlayed(m) !== wantPlayed) continue
+      byDate.set(m.date, [...(byDate.get(m.date) ?? []), m])
     }
 
-    // Filter by season
-    if (filters.season !== "all") {
-      filtered = filtered.map(week => ({
-        ...week,
-        days: week.days.map(day => ({
-          ...day,
-          matches: day.matches.filter(match => match.season === filters.season)
-        })).filter(day => day.matches.length > 0)
-      })).filter(week => week.days.length > 0)
-    }
-
-    // Filter by matchweek
-    if (filters.matchweek !== "all") {
-      const weekId = parseInt(filters.matchweek)
-      filtered = filtered.filter(week => week.id === weekId)
-    }
-
-    // Filter by club - this affects individual matches within weeks
-    if (filters.club !== "all") {
-      filtered = filtered.map(week => ({
-        ...week,
-        days: week.days.map(day => ({
-          ...day,
-          matches: day.matches.filter(match => {
-            const homeTeam = match.home_team.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-            const awayTeam = match.away_team.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-            const clubSlug = filters.club.toLowerCase()
-            
-            return homeTeam === clubSlug || awayTeam === clubSlug || 
-                   homeTeam.includes(clubSlug) || awayTeam.includes(clubSlug)
-          })
-        })).filter(day => day.matches.length > 0) // Remove days with no matches
-      })).filter(week => week.days.length > 0) // Remove weeks with no matches
-    }
-
-    return filtered
+    const dates = Array.from(byDate.keys()).sort()
+    if (filters.sort === "newest") dates.reverse()
+    const days: MatchDay[] = dates.map((date) => ({ date, matches: byDate.get(date)! }))
+    return { days, counts }
   }, [filters])
 
-  const handleFilterChange = (newFilters: FilterState) => {
-    setFilters(newFilters)
-  }
+  // Switching between Upcoming and Results also switches to that tab's natural order
+  const update = (patch: Partial<FixturesFilters>) =>
+    setFilters((f) => ({ ...f, ...patch, ...(patch.view && patch.view !== f.view ? { sort: defaultSort(patch.view) } : {}) }))
+  const reset = () => setFilters((f) => ({ ...DEFAULT_FILTERS, view: f.view, sort: defaultSort(f.view) }))
+  const hasActiveFilters =
+    filters.league !== "all" ||
+    filters.club.trim() !== "" ||
+    filters.season !== DEFAULT_FILTERS.season ||
+    isDateRangeSet(filters.dates) ||
+    filters.sort !== defaultSort(filters.view)
 
-  const handleReset = () => {
-    setFilters({
-      competition: "all",
-      season: "2025-26",
-      matchweek: "all",
-      club: "all"
-    })
-  }
-
-  const getFilterStats = () => {
-    // Count total matches from league matchweeks
-    const totalMatches = leagueMatchweeks.flatMap(week => 
-      week.days.flatMap(day => day.matches)
-    ).length
-
-    const filteredMatches = filteredMatchweeks.flatMap(week => 
-      week.days.flatMap(day => day.matches)
-    ).length
-
-    return {
-      total: totalMatches,
-      filtered: filteredMatches,
-      weeks: filteredMatchweeks.length
-    }
-  }
-
-  return {
-    filters,
-    filteredMatchweeks,
-    handleFilterChange,
-    handleReset,
-    getFilterStats
-  }
+  return { filters, update, reset, hasActiveFilters, days, counts }
 }

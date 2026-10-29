@@ -65,7 +65,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
             {newsPost.tags.map((tag, index) => (
               <span
                 key={index}
-                className="inline-flex items-center px-3 py-1.5 text-xs font-semibold bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] border border-[var(--md-primary-container)] hover:bg-[var(--md-primary-fixed-dim)] transition-colors"
+                className="inline-flex items-center px-3 py-1.5 text-xs font-semibold bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] border border-[var(--md-primary-container)] hover:bg-[var(--md-primary-hover)] transition-colors"
               >
                 <Tag className="w-3 h-3 mr-1.5" />
                 {tag}
