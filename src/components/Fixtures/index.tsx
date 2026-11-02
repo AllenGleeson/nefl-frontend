@@ -1,14 +1,45 @@
 "use client"
 
 // src/components/Fixtures/index.tsx
+import { useMemo, useRef, useState } from "react"
 import FixturesList from "./FixturesList"
 import FixturesFilter from "./FixturesFilter"
-import { useFixturesFilter } from "@/hooks/useFixturesFilter"
+import { useFixturesFilter, type MatchDay } from "@/hooks/useFixturesFilter"
 import { describeDateRange, isDateRangeSet } from "@/components/ui/DateRangePicker"
+import Pagination from "@/components/ui/Pagination"
+
+const PAGE_SIZE = 20
 
 export default function Fixtures() {
   const { filters, update, reset, hasActiveFilters, days, counts } = useFixturesFilter()
   const shown = counts[filters.view]
+
+  // Pagination by match, back to page 1 when filters change
+  const listTopRef = useRef<HTMLDivElement>(null)
+  const filterKey = JSON.stringify(filters)
+  const [pageState, setPageState] = useState({ key: filterKey, page: 1 })
+  const totalPages = Math.max(1, Math.ceil(shown / PAGE_SIZE))
+  const page = pageState.key === filterKey ? Math.min(pageState.page, totalPages) : 1
+  const firstIndex = (page - 1) * PAGE_SIZE
+
+  // Slice the matches for this page, then regroup them by day
+  const pageDays = useMemo(() => {
+    const out: MatchDay[] = []
+    let i = 0
+    for (const day of days) {
+      const start = Math.max(firstIndex - i, 0)
+      const end = Math.min(firstIndex + PAGE_SIZE - i, day.matches.length)
+      if (start < end) out.push({ date: day.date, matches: day.matches.slice(start, end) })
+      i += day.matches.length
+    }
+    return out
+  }, [days, firstIndex])
+  const pageCount = pageDays.reduce((n, d) => n + d.matches.length, 0)
+
+  const goToPage = (p: number) => {
+    setPageState({ key: filterKey, page: p })
+    listTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
 
   return (
     <div className="min-h-screen bg-[var(--md-surface)]">
@@ -32,7 +63,7 @@ export default function Fixtures() {
           onReset={reset}
         />
 
-        <p className="mt-4 mb-6 text-sm text-[var(--md-on-surface-variant)]" aria-live="polite">
+        <p ref={listTopRef} className="mt-4 mb-6 scroll-mt-24 text-sm text-[var(--md-on-surface-variant)]" aria-live="polite">
           Showing {shown} {filters.view === "results" ? "result" : "upcoming match"}
           {shown === 1 ? "" : filters.view === "results" ? "s" : "es"}
           {filters.season !== "all" ? ` from ${filters.season.replace("-", "/")}` : " from all seasons"}
@@ -40,7 +71,16 @@ export default function Fixtures() {
           {filters.sort === "newest" ? ", newest first" : ", oldest first"}
         </p>
 
-        <FixturesList days={days} view={filters.view} hasActiveFilters={hasActiveFilters} onReset={reset} />
+        <FixturesList days={pageDays} view={filters.view} hasActiveFilters={hasActiveFilters} onReset={reset} />
+
+        {totalPages > 1 && (
+          <div className="mt-8 flex flex-col items-center gap-3">
+            <Pagination page={page} totalPages={totalPages} onPageChange={goToPage} label="Fixture pages" />
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
+              Showing {firstIndex + 1}–{firstIndex + pageCount} of {shown}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )

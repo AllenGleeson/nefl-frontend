@@ -18,3 +18,11 @@ export function byDivision(a: string, b: string) {
   const ib = leaguesInDivisionOrder.indexOf(b);
   return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
 }
+
+const womensLeagues = new Set(Object.keys(leagueTablesDataLong.Women));
+
+/** Short name that also says when it's a women's league: "Women's Division 1", "Division 3" */
+export function leagueLabel(league: string) {
+  const short = shortLeagueName(league).replace(/^Womens\s+/i, "");
+  return womensLeagues.has(league) ? `Women's ${short}` : short;
+}

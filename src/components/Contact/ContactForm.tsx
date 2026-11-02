@@ -16,6 +16,9 @@ const topics = [
   "Website feedback",
 ];
 
+/** Picking this shows a box for the visitor to type their own subject */
+const OTHER = "Other";
+
 const fieldCls =
   "w-full rounded-xl border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] px-4 py-3 text-[var(--md-on-surface)] placeholder:text-[var(--md-on-surface-variant)]/70 hover:border-[var(--md-outline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-primary)]";
 
@@ -25,14 +28,17 @@ export default function ContactForm() {
   const [name, setName] = useState("");
   const [club, setClub] = useState("");
   const [topic, setTopic] = useState(topics[0]);
+  const [customTopic, setCustomTopic] = useState("");
   const [message, setMessage] = useState("");
+  const isOther = topic === OTHER;
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const body = [message.trim(), "", "—", `Name: ${name.trim()}`, club.trim() && `Club: ${club.trim()}`]
       .filter((line) => line !== "")
       .join("\n");
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(topic)}&body=${encodeURIComponent(body)}`;
+    const subject = isOther ? customTopic.trim() : topic;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -54,10 +60,27 @@ export default function ContactForm() {
             {topics.map((t) => (
               <option key={t}>{t}</option>
             ))}
+            <option>{OTHER}</option>
           </select>
           <ChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--md-on-surface-variant)]" aria-hidden />
         </span>
       </label>
+      {isOther && (
+        <label className="block sm:col-span-2">
+          <span className="mb-1.5 block text-sm font-semibold text-[var(--md-on-surface)]">Subject</span>
+          <input
+            required
+            // Blank or spaces-only doesn't count as a subject
+            pattern=".*\S.*"
+            title="Please enter a subject"
+            autoFocus
+            value={customTopic}
+            onChange={(e) => setCustomTopic(e.target.value)}
+            placeholder="Tell us what it's about"
+            className={fieldCls}
+          />
+        </label>
+      )}
       <label className="block sm:col-span-2">
         <span className="mb-1.5 block text-sm font-semibold text-[var(--md-on-surface)]">Message</span>
         <textarea required rows={5} value={message} onChange={(e) => setMessage(e.target.value)} className={`${fieldCls} resize-y`} />

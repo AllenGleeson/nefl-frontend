@@ -28,17 +28,6 @@ export type Club = {
     achievements?: string[];
   };
 
-  achievements?: Array<{
-    id: string;
-    title: string;
-    year: number;
-    type: 'league' | 'cup' | 'trophy' | 'award';
-    competition: string;
-    position?: 'winner' | 'runner-up' | 'third-place' | 'semi-finalist' | 'quarter-finalist';
-    description?: string;
-    /** For individual awards: the person/recipient name. */
-    recipient?: string;
-  }>;
 
   formation?: {
     id: string;
@@ -98,35 +87,6 @@ export const clubs: Club[] = [
     history: {
       narrative: "Founded in 1975, Parkvilla FC has established itself as a dominant force in the NEFL Premier Division. The club combines excellent youth development with a strong senior team, consistently challenging for league honors.",
     },
-    achievements: [
-      {
-        id: "prem-2024",
-        title: "Premier Division Champions",
-        year: 2024,
-        type: "league",
-        competition: "UHY Farrelly Dawe White Premier Division",
-        position: "winner",
-        description: "Won the Premier Division title with a strong season"
-      },
-      {
-        id: "prem-2021",
-        title: "Premier Division Champions",
-        year: 2021,
-        type: "league",
-        competition: "UHY Farrelly Dawe White Premier Division",
-        position: "winner",
-        description: "Secured the league title with consistent performances"
-      },
-      {
-        id: "fai-cup-2019",
-        title: "FAI Junior Cup Winners",
-        year: 2019,
-        type: "cup",
-        competition: "FAI Junior Cup",
-        position: "winner",
-        description: "Victorious in the national junior cup competition"
-      }
-    ],
     formation: {
       id: "4-4-2",
       name: "4-4-2",
@@ -208,35 +168,6 @@ export const clubs: Club[] = [
     history: {
       narrative: "One of the most successful clubs in the league, Rock Celtic FC was founded in 1962 and has consistently been at the top of Irish junior football. The club has produced numerous players who have gone on to play professionally.",
     },
-    achievements: [
-      {
-        id: "prem-2023",
-        title: "Premier Division Champions",
-        year: 2023,
-        type: "league",
-        competition: "UHY Farrelly Dawe White Premier Division",
-        position: "winner",
-        description: "Latest Premier Division title, maintaining their dominance"
-      },
-      {
-        id: "prem-2020",
-        title: "Premier Division Champions",
-        year: 2020,
-        type: "league",
-        competition: "UHY Farrelly Dawe White Premier Division",
-        position: "winner",
-        description: "Won the Premier Division in a shortened season"
-      },
-      {
-        id: "fai-cup-2019",
-        title: "FAI Junior Cup Winners",
-        year: 2019,
-        type: "cup",
-        competition: "FAI Junior Cup",
-        position: "winner",
-        description: "Victorious in the national junior cup competition"
-      }
-    ],
     formation: {
       id: "3-5-2",
       name: "3-5-2",
@@ -347,35 +278,6 @@ export const clubs: Club[] = [
     history: {
       narrative: "Established in 1975, Ardee Celtic has built a reputation for developing young players and maintaining strong community ties. The club has consistently competed at a high level while focusing on grassroots football development.",
     },
-      achievements: [
-      {
-        id: "div1-2019",
-        title: "Division 1 Champions",
-        year: 2019,
-        type: "league",
-        competition: "O Neills Sportswear Division 1",
-        position: "winner",
-        description: "Won the Division 1 title with an unbeaten season"
-      },
-      {
-        id: "div1-2015",
-        title: "Division 1 Champions",
-        year: 2015,
-        type: "league",
-        competition: "O Neills Sportswear Division 1",
-        position: "winner",
-        description: "First Division 1 title in club history"
-      },
-      {
-        id: "lsl-cup-2020",
-        title: "Leinster Senior League Cup Winners",
-        year: 2020,
-        type: "cup",
-        competition: "Leinster Senior League Cup",
-        position: "winner",
-        description: "Victorious in the prestigious Leinster Senior League Cup"
-      }
-    ],
     formation: {
       id: "4-3-3",
       name: "4-3-3",
@@ -681,35 +583,6 @@ export const clubs: Club[] = [
     history: {
       narrative: "Founded in 1967, Monaghan Town FC has a long tradition of community involvement and player development, with several alumni progressing to professional football in Ireland and abroad. The club continues to focus on grassroots growth while competing strongly at senior level.",
     },
-    achievements: [
-      {
-        id: "div3-2012",
-        title: "Division 3 Champions",
-        year: 2012,
-        type: "league",
-        competition: "Superior Racking & Shelving Division 3",
-        position: "winner",
-        description: "Won the Division 3 title with an impressive 15-point margin"
-      },
-      {
-        id: "div3-2005",
-        title: "Division 3 Champions",
-        year: 2005,
-        type: "league",
-        competition: "Superior Racking & Shelving Division 3",
-        position: "winner",
-        description: "Secured the league title with a dramatic final day victory"
-      },
-      {
-        id: "fai-cup-2010",
-        title: "FAI Junior Cup Winners",
-        year: 2010,
-        type: "cup",
-        competition: "FAI Junior Cup",
-        position: "winner",
-        description: "Victorious in the national junior cup competition"
-      }
-    ],
     formation: {
       id: "4-4-2",
       name: "4-4-2",

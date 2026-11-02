@@ -2,6 +2,7 @@ import { newsPosts } from "@/data/newsPosts"
 import Link from "next/link"
 import Image from "next/image"
 import { assetUrl } from "@/utils/assetUrl"
+import { formatNewsDate } from "@/utils/news"
 
 export default function FeaturedStories() {
   const featuredPosts = newsPosts.filter(post => post.isFeatured)
@@ -49,7 +50,7 @@ function FeaturedCard({ post }: Props) {
             ))}
           </div>
           <p className="text-xs text-[var(--md-on-surface-variant)] mt-2">
-            {new Date(post.date).toLocaleDateString()}
+            {formatNewsDate(post.date)}
           </p>
         </div>
       </article>

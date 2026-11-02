@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getAllNewsPosts, getNewsBySlug } from '@/utils/news'
+import { formatNewsDate, getAllNewsPosts, getNewsBySlug } from '@/utils/news'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Calendar, Tag } from 'lucide-react'
@@ -51,11 +51,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2 text-[var(--md-primary)]" />
               <time dateTime={newsPost.date}>
-              {new Date(newsPost.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
+              {formatNewsDate(newsPost.date, 'long')}
               </time>
             </div>
           </div>

@@ -76,3 +76,16 @@ export function searchNewsPosts(query: string): NewsPost[] {
   )
 }
 
+
+/**
+ * Format a news date ("2025-07-23") the same way on the server and in every browser,
+ * so pages don't hit hydration errors. "short" -> "23 Jul 2025", "long" -> "23 July 2025".
+ */
+export function formatNewsDate(date: string, style: 'short' | 'long' = 'short'): string {
+  return new Date(date).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: style,
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+}

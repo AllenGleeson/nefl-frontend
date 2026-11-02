@@ -10,11 +10,19 @@ type Props = {
   leagues: string[];
   value: string;
   onChange: (league: string) => void;
+  /** "primary" (default) is the filled brand colour; "tonal" is the deeper container blue, turning light blue on hover */
+  tone?: "primary" | "tonal";
+};
+
+const TONES = {
+  primary: "bg-[var(--md-primary)] text-[var(--md-on-primary)] hover:bg-[var(--md-primary-hover)]",
+  tonal:
+    "bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] hover:bg-[var(--md-primary)] hover:text-[var(--md-on-primary)]",
 };
 
 function LeagueLogo({ league }: { league: string }) {
   return (
-    <span className="w-8 h-8 shrink-0 bg-[var(--md-primary-container)] rounded-full flex items-center justify-center">
+    <span className="w-8 h-8 shrink-0 bg-[var(--md-primary-fixed)] rounded-full flex items-center justify-center">
       <Image
         src={assetUrl(getLeagueLogo(league))}
         alt=""
@@ -26,7 +34,7 @@ function LeagueLogo({ league }: { league: string }) {
   );
 }
 
-export default function LeagueSelect({ leagues, value, onChange }: Props) {
+export default function LeagueSelect({ leagues, value, onChange, tone = "primary" }: Props) {
   const [open, setOpen] = useState(false);
   const [highlighted, setHighlighted] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -93,7 +101,7 @@ export default function LeagueSelect({ leagues, value, onChange }: Props) {
         aria-expanded={open}
         aria-controls={listId}
         aria-label={`League: ${value}`}
-        className="w-full h-11 sm:h-12 pl-2 pr-3 flex items-center gap-3 bg-[var(--md-primary)] text-[var(--md-on-primary)] rounded-full shadow-sm hover:bg-[var(--md-primary-hover)] transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-primary)] focus-visible:ring-offset-2"
+        className={`w-full h-11 sm:h-12 pl-2 pr-3 flex items-center gap-3 ${TONES[tone]} rounded-full shadow-sm transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-primary)] focus-visible:ring-offset-2`}
       >
         <LeagueLogo league={value} />
         {/* Hidden copies of every name stack in one grid cell, so the button is as wide as the longest league */}

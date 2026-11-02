@@ -2,8 +2,20 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { clubs } from "@/data/club"; // fixed typo: was club
 import ClubDetails from "@/components/Clubs/ClubDetails";
-import { assetUrl } from "@/utils/assetUrl";
 import { buttonStyles } from "@/components/ui/Button";
+
+// Background layers, top to bottom. Colours are the theme's teal/blue (--md-primary family) at low opacity.
+const PITCH_AT_NIGHT = [
+  // Floodlight glow over the top of the page
+  "radial-gradient(70% 45% at 50% -5%, rgba(139, 208, 239, 0.28), transparent 70%)",
+  // Softer light spilling in from the sides
+  "radial-gradient(45% 35% at 100% 30%, rgba(18, 102, 130, 0.35), transparent 70%)",
+  "radial-gradient(45% 35% at 0% 70%, rgba(18, 102, 130, 0.28), transparent 70%)",
+  // Mowing stripes
+  "repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 96px, transparent 96px 192px)",
+  // Base: deep teal fading to near-black
+  "linear-gradient(180deg, #0a2a38 0%, #051821 45%, #030f15 100%)",
+].join(", ");
 
 interface ClubPageProps {
   params: Promise<{
@@ -24,43 +36,18 @@ export default async function ClubPage({ params }: ClubPageProps) {
   }
 
   return (
-    <div
-      className="px-4 py-8 relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${assetUrl("/images/clubspage.webp")})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundColor: 'rgba(0,0,0,0.35)',
-        backgroundBlendMode: 'multiply',
-      }}
-    >
-      {/* Decorative club logo, contained to this page section */}
+    <div className="relative isolate overflow-hidden py-6 sm:py-10">
+      {/* A floodlit pitch at night, drawn in CSS: glow from the lights, a faint centre circle and mowing stripes */}
+      <div aria-hidden className="absolute inset-0 -z-10" style={{ backgroundImage: PITCH_AT_NIGHT }} />
       <div
         aria-hidden
-        className="pointer-events-none absolute z-0 opacity-20"
-        style={{
-          top: '12vh',
-          left: '6vw',
-          backgroundImage: `url(${club.logo})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'left center',
-          backgroundSize: '40vw',
-          width: '55vw',
-          height: '55vw',
-          maxWidth: '900px',
-          maxHeight: '900px',
-          filter: 'grayscale(20%)',
-        }}
-      />
-
-      <div className="relative z-10 max-w-6xl mx-auto px-4">
+        className="absolute left-1/2 top-[-18rem] -z-10 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full border-2 border-white/[0.06]"
+      />      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <Link
           href="/clubs"
-          className={buttonStyles({variant: "tonal", size: "sm", className: "mb-6"})}
+          className={buttonStyles({ variant: "glass", size: "sm", className: "mb-4 sm:mb-6" })}
         >
-          ← Back to Clubs
+          ← All clubs
         </Link>
         <ClubDetails club={club} />
       </div>

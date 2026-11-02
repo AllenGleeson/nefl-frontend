@@ -45,7 +45,7 @@ const sponsors = [
 
 export default function Sponsors() {
   return (
-    <section className="sponsers bg-gradient-to-br from-[var(--md-surface-container-low)] to-[var(--md-surface-container)] py-8 sm:py-16">
+    <section className="sponsers bg-gradient-to-br from-[var(--md-surface-container-low)] to-[var(--md-surface-container)] py-8 sm:py-10 md:py-12">
       <div className="max-w-7xl mx-auto px-2">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-12">

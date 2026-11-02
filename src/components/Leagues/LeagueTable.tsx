@@ -1,19 +1,10 @@
 "use client"
 import { LeagueTables, TeamRow } from "@/types/league"
 import Link from "next/link"
-import Image from "next/image"
-import { clubs } from "@/data/club"
-import { assetUrl } from "@/utils/assetUrl"
 import { getClubSlug } from "@/utils/clubSlug"
 import { buttonStyles } from "@/components/ui/Button";
-
-const logoByClubName = (() => {
-  const map: Record<string, string> = {}
-  clubs.forEach((c) => {
-    map[c.name] = c.logo
-  })
-  return map
-})()
+import ClubCrest from "@/components/Clubs/ClubCrest"
+import { useRowLink } from "@/hooks/useRowLink"
 
 type Props = {
   leagueTables: LeagueTables
@@ -21,9 +12,11 @@ type Props = {
   selectedGender?: keyof LeagueTables
   selectedLeague?: string
   maxRows?: number
+  /** Drop the outer padding, for when the table sits inside a card */
+  flush?: boolean
 }
 
-export default function LeagueTable({ leagueTables, showMore = true, selectedGender = "Men", selectedLeague, maxRows }: Props) {
+export default function LeagueTable({ leagueTables, showMore = true, selectedGender = "Men", selectedLeague, maxRows, flush = false }: Props) {
   type Gender = keyof LeagueTables
   type LeagueKey<T extends Gender> = keyof typeof leagueTables[T]
 
@@ -38,9 +31,10 @@ export default function LeagueTable({ leagueTables, showMore = true, selectedGen
   
   // Limit table to maxRows if specified
   const table = maxRows ? fullTable.slice(0, maxRows) : fullTable
+  const rowLink = useRowLink()
 
   return (
-    <section className="league-table pt-0 pb-4 sm:py-6 lg:py-8 relative overflow-hidden">
+    <section className={`league-table relative overflow-hidden ${flush ? "" : "pt-0 pb-4 sm:py-6 lg:py-8"}`}>
       <div className="relative z-10">
         {/* League Table */}
         <div className="bg-[var(--md-surface-container-lowest)] overflow-hidden">
@@ -55,54 +49,44 @@ export default function LeagueTable({ leagueTables, showMore = true, selectedGen
                     Team
                   </th>
                   <th className="px-1 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider w-8 sm:w-auto">
-                    P
+                    <abbr title="Played" className="no-underline">P</abbr>
                   </th>
                   <th className="px-1 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider w-8 sm:w-auto">
-                    W
+                    <abbr title="Won" className="no-underline">W</abbr>
                   </th>
                   <th className="px-1 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider w-8 sm:w-auto">
-                    D
+                    <abbr title="Drawn" className="no-underline">D</abbr>
                   </th>
                   <th className="px-1 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider w-8 sm:w-auto">
-                    L
+                    <abbr title="Lost" className="no-underline">L</abbr>
                   </th>
                   <th className="px-1.5 sm:px-6 py-2 sm:py-4 text-center text-[10px] sm:text-xs font-bold text-[var(--md-on-primary)] uppercase tracking-wider w-12 sm:w-auto">
-                    Pts
+                    <abbr title="Points" className="no-underline">Pts</abbr>
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-[var(--md-surface-container-lowest)] divide-y divide-[var(--md-outline-variant)]">
-                {table.map((team, index) => (
-                  <tr 
-                    key={team.position} 
-                    className={`transition-all duration-200 ${
-                      index % 2 === 0 
-                        ? 'bg-[var(--md-surface-container-lowest)] hover:bg-[var(--md-surface-container-low)]' 
-                        : 'bg-[var(--md-surface-container-low)] hover:bg-[var(--md-surface-container)]'
-                    }`}
+                {table.map((team, index) => {
+                  const slug = getClubSlug(team.name)
+                  const href = slug ? `/clubs/${slug}` : null
+                  return (
+                  <tr
+                    key={team.position}
+                    {...rowLink(href)}
+                    className={`transition-colors duration-200 ${
+                      index % 2 === 0
+                        ? 'bg-[var(--md-surface-container-lowest)]'
+                        : 'bg-[var(--md-surface-container-low)]'
+                    } ${href ? 'cursor-pointer hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)]' : 'cursor-default'}`}
                   >
                     <td className="px-1.5 sm:px-6 py-2 sm:py-5 text-xs sm:text-sm font-semibold text-[var(--md-primary)]">
                       {team.position}
                     </td>
                     <td className="px-1.5 sm:px-6 py-2 sm:py-5 text-xs sm:text-sm font-medium text-[var(--md-on-surface)] truncate max-w-[120px] sm:max-w-none">
                       <span className="inline-flex items-center gap-2 min-w-0">
-                        {logoByClubName[team.name] ? (
-                          <span className="overflow-hidden sm:h-8 sm:w-8">
-                            <Image
-                              src={assetUrl(logoByClubName[team.name])}
-                              alt=""
-                              width={32}
-                              height={32}
-                              className="object-contain w-full h-full"
-                            />
-                          </span>
-                        ) : (
-                          <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded bg-[var(--md-outline-variant)]/30 flex items-center justify-center text-[10px] font-bold text-[var(--md-on-surface-variant)]">
-                            {team.position}
-                          </span>
-                        )}
-                        {getClubSlug(team.name) ? (
-                          <Link href={`/clubs/${getClubSlug(team.name)}`} className="truncate hover:underline text-[var(--md-primary)]">
+                        <ClubCrest name={team.name} />
+                        {href ? (
+                          <Link href={href} className="truncate text-[var(--md-primary)]">
                             {team.name}
                           </Link>
                         ) : (
@@ -126,7 +110,8 @@ export default function LeagueTable({ leagueTables, showMore = true, selectedGen
                       {team.points}
                     </td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
           </div>

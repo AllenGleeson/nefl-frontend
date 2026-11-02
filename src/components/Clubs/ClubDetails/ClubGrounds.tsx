@@ -1,8 +1,8 @@
-"use client";
-
 import Image from "next/image";
-import { FaLocationDot } from "react-icons/fa6";
+import { MapPin } from "lucide-react";
 import { assetUrl } from "@/utils/assetUrl";
+import { buttonStyles } from "@/components/ui/Button";
+import ClubSection from "./ClubSection";
 
 interface ClubGroundsProps {
   groundName: string;
@@ -10,46 +10,52 @@ interface ClubGroundsProps {
   mapsUrl?: string;
 }
 
-export default function ClubGrounds({
-  groundName,
-  image,
-  mapsUrl,
-}: ClubGroundsProps) {
+export default function ClubGrounds({ groundName, image, mapsUrl }: ClubGroundsProps) {
+  // "Ireland" keeps Google from matching a ground with the same name elsewhere
+  const query = encodeURIComponent(`${groundName}, Ireland`);
+  // Keyless Google Maps embed, so it works on the static site
+  const embedUrl = `https://www.google.com/maps?q=${query}&output=embed`;
+  // Use the club's own link if it has one, otherwise Google directions to the ground
+  const directions = mapsUrl ?? `https://www.google.com/maps/dir/?api=1&destination=${query}`;
+
   return (
-    <section className="mt-8">
-      <h2 className="text-2xl font-bold text-white mb-4">Grounds</h2>
-      <div className="rounded-lg border border-white/10 overflow-hidden bg-white/5">
-        <div className="flex flex-col sm:flex-row gap-4 p-4">
-          {image && (
-            <div className="relative w-full sm:w-64 h-48 flex-shrink-0 rounded-lg overflow-hidden bg-white/10">
-              <Image
-                src={assetUrl(image)}
-                alt={groundName}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, 256px"
-              />
-            </div>
-          )}
-          <div className="flex-1 flex flex-col justify-center gap-2">
-            <h3 className="text-lg font-semibold text-white">{groundName}</h3>
-            {mapsUrl && (
-              <a
-                href={mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors w-fit"
-                aria-label={`View ${groundName} on Google Maps`}
-              >
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 text-white">
-                  <FaLocationDot className="w-4 h-4" />
-                </span>
-                <span>View on Google Maps</span>
-              </a>
-            )}
-          </div>
-        </div>
+    <ClubSection title="Home ground">
+      <p className="flex items-start gap-2 font-semibold mb-3">
+        <MapPin className="w-5 h-5 mt-0.5 shrink-0 text-[var(--md-primary)]" aria-hidden />
+        {groundName}
+      </p>
+
+      <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)]">
+        <iframe
+          src={embedUrl}
+          title={`Map of ${groundName}`}
+          className="absolute inset-0 w-full h-full border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </div>
-    </section>
+
+      {image && (
+        <div className="relative w-full aspect-[16/9] mt-3 rounded-xl overflow-hidden bg-[var(--md-surface-container)]">
+          <Image src={assetUrl(image)} alt={groundName} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 360px" />
+        </div>
+      )}
+
+      <a
+        href={directions}
+        target="_blank"
+        rel="noopener noreferrer"
+        // Dark blue, turning light blue on hover (the hover tokens are swapped just for this button)
+        className={buttonStyles({
+          variant: "tonal",
+          size: "sm",
+          className:
+            "mt-4 [--md-primary-container-hover:var(--md-primary)] hover:[--md-on-primary-container:var(--md-on-primary)]",
+        })}
+      >
+        Get directions
+      </a>
+    </ClubSection>
   );
 }

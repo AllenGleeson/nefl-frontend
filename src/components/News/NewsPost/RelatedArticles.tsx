@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { getRelatedNewsPosts } from '@/utils/news'
+import { formatNewsDate, getRelatedNewsPosts } from '@/utils/news'
 import { assetUrl } from '@/utils/assetUrl'
 
 type Props = {
@@ -42,7 +42,7 @@ export default function RelatedArticles({ currentPostId, limit = 3 }: Props) {
                   {relatedPost.excerpt}
                 </p>
                 <p className="text-xs text-gray-500 mt-2">
-                  {new Date(relatedPost.date).toLocaleDateString()}
+                  {formatNewsDate(relatedPost.date)}
                 </p>
               </div>
             </article>

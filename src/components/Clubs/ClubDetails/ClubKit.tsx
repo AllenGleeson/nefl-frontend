@@ -1,7 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import { assetUrl } from "@/utils/assetUrl";
+import ClubSection from "./ClubSection";
 
 type KitImages = {
   home?: string;
@@ -19,35 +18,29 @@ const LABELS: Record<string, string> = {
 };
 
 export default function ClubKit({ kit }: ClubKitProps) {
-  const entries = Object.entries(kit).filter(
-    ([, url]) => url && typeof url === "string"
-  ) as [string, string][];
+  const entries = Object.entries(kit).filter(([, url]) => url && typeof url === "string") as [string, string][];
   if (entries.length === 0) return null;
 
   return (
-    <section className="mt-8">
-      <h2 className="text-2xl font-bold text-white mb-4">Kit</h2>
-      <div className="flex flex-wrap gap-6">
+    <ClubSection title="Kit">
+      <div className="grid grid-cols-2 gap-3">
         {entries.map(([key, src]) => (
-          <div
-            key={key}
-            className="rounded-lg border border-white/10 overflow-hidden bg-white/5 p-4 flex flex-col items-center"
-          >
-            <div className="relative w-32 h-40 sm:w-40 sm:h-48">
+          <figure key={key} className="rounded-xl bg-[var(--md-surface-container-low)] p-3 flex flex-col items-center">
+            <div className="relative w-full aspect-[4/5]">
               <Image
                 src={assetUrl(src)}
                 alt={`${LABELS[key] ?? key} kit`}
                 fill
                 className="object-contain"
-                sizes="(max-width: 640px) 128px, 160px"
+                sizes="160px"
               />
             </div>
-            <span className="mt-2 text-sm font-medium text-white/80 capitalize">
+            <figcaption className="mt-2 text-sm font-medium text-[var(--md-on-surface-variant)] capitalize">
               {LABELS[key] ?? key}
-            </span>
-          </div>
+            </figcaption>
+          </figure>
         ))}
       </div>
-    </section>
+    </ClubSection>
   );
 }

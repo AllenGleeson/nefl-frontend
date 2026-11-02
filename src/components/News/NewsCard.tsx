@@ -4,6 +4,7 @@ import Badge from "./Badge"
 import Link from "next/link"
 import Image from "next/image"
 import { assetUrl } from "@/utils/assetUrl"
+import { formatNewsDate } from "@/utils/news"
 
 type Props = {
   post: NewsPost
@@ -29,7 +30,7 @@ function NewsCard({ post, viewMode = 'grid' }: Props) {
                 <div className="flex flex-row sm:flex-col items-start sm:items-start justify-between sm:justify-start gap-2 sm:gap-0">
                   <h2 className="text-lg sm:text-xl font-bold leading-tight line-clamp-2 text-[var(--md-on-surface)] flex-1">{post.title}</h2>
                   <p className="text-xs sm:text-sm text-[var(--md-on-surface-variant)] font-medium whitespace-nowrap sm:hidden">
-                    {new Date(post.date).toLocaleDateString()}
+                    {formatNewsDate(post.date)}
                   </p>
                 </div>
                 <p className="text-sm sm:text-base text-[var(--md-on-surface-variant)] leading-relaxed line-clamp-2">{post.excerpt}</p>
@@ -40,7 +41,7 @@ function NewsCard({ post, viewMode = 'grid' }: Props) {
                 </div>
               </div>
               <p className="text-xs sm:text-sm text-[var(--md-on-surface-variant)] mt-2 font-medium hidden sm:block">
-                {new Date(post.date).toLocaleDateString()}
+                {formatNewsDate(post.date)}
               </p>
             </div>
           </div>
@@ -67,7 +68,7 @@ function NewsCard({ post, viewMode = 'grid' }: Props) {
               <div className="flex flex-row sm:flex-col items-start sm:items-start justify-between sm:justify-start gap-2 sm:gap-0 mb-2 sm:mb-3">
                 <h2 className="text-base sm:text-lg md:text-xl font-bold leading-tight line-clamp-2 text-[var(--md-on-surface)] flex-1">{post.title}</h2>
                 <p className="text-xs sm:text-sm text-[var(--md-on-surface-variant)] font-medium whitespace-nowrap sm:hidden">
-                  {new Date(post.date).toLocaleDateString()}
+                  {formatNewsDate(post.date)}
                 </p>
               </div>
               <p className="text-sm sm:text-base text-[var(--md-on-surface-variant)] leading-relaxed line-clamp-2 sm:line-clamp-3">{post.excerpt}</p>
@@ -79,7 +80,7 @@ function NewsCard({ post, viewMode = 'grid' }: Props) {
             </div>
           </div>
           <p className="text-xs sm:text-sm text-[var(--md-on-surface-variant)] mt-3 sm:mt-4 font-medium hidden sm:block">
-            {new Date(post.date).toLocaleDateString()}
+            {formatNewsDate(post.date)}
           </p>
         </div>
       </article>

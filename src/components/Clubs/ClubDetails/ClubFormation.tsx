@@ -1,4 +1,5 @@
 import Pitch from "./Pitch";
+import ClubSection from "./ClubSection";
 import type { Club } from "@/data/club";
 
 interface ClubFormationProps {
@@ -8,30 +9,30 @@ interface ClubFormationProps {
 // The club's preferred formation, shown as position markers on a pitch (no players).
 export default function ClubFormation({ formation }: ClubFormationProps) {
   return (
-    <section className="mt-8">
-      <div className="flex items-baseline gap-3 mb-4">
-        <h2 className="text-2xl font-bold text-white">Formation</h2>
-        <span className="text-lg font-semibold text-[var(--md-primary-container)]">{formation.name}</span>
-      </div>
-      {formation.description && <p className="text-white/70 mb-4">{formation.description}</p>}
-      <div className="w-full max-w-4xl">
-        <Pitch>
-          {formation.positions.map((pos) => (
+    <ClubSection
+      title="Formation"
+      action={
+        <span className="cursor-default select-none rounded-full bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] px-3 py-1 text-sm font-bold">
+          {formation.name}
+        </span>
+      }
+    >
+      <Pitch>
+        {formation.positions.map((pos) => (
+          <div
+            key={pos.id}
+            className="absolute -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${pos.y}%`, top: `${pos.x}%` }}
+          >
             <div
-              key={pos.id}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${pos.y}%`, top: `${pos.x}%` }}
+              className="w-8 h-8 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] border-2 border-white shadow-lg"
+              title={pos.position}
             >
-              <div
-                className="w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold bg-[var(--md-primary)] text-[var(--md-on-primary)] border-2 border-white shadow-lg"
-                title={pos.position}
-              >
-                {pos.position}
-              </div>
+              {pos.position}
             </div>
-          ))}
-        </Pitch>
-      </div>
-    </section>
+          </div>
+        ))}
+      </Pitch>
+    </ClubSection>
   );
 }

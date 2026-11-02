@@ -3,20 +3,14 @@ import Image from "next/image"
 import { ChevronRight } from "lucide-react"
 import { newsPosts } from "@/data/newsPosts"
 import { assetUrl } from "@/utils/assetUrl"
+import { formatNewsDate } from "@/utils/news"
 
 export default function NewsSection() {
   // Get the first 7 news posts
   const news = newsPosts.slice(0, 7);
 
   // Format date helper
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+  const formatDate = (dateString: string) => formatNewsDate(dateString, 'long');
 
   // Early return if no news posts
   if (news.length === 0) {

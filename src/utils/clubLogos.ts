@@ -104,3 +104,12 @@ export function getClubLogo(clubName: string): string {
   return defaultLogo;
 }
 
+
+/**
+ * The club's own crest, or null when we only have the sponsor placeholder.
+ * Use this where a placeholder would look like the club's badge (e.g. league tables).
+ */
+export function getClubCrest(clubName: string): string | null {
+  const logo = getClubLogo(clubName);
+  return logo.endsWith("/UHY_Logo.webp") ? null : logo;
+}

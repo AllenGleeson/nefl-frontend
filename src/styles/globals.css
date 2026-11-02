@@ -85,6 +85,54 @@
   }
 }
 
+/*
+ * Material 3 dark scheme (from src/data/material-theme.json), scoped to one area.
+ * Add class="md-dark" to a container on a dark or photo background and every
+ * --md-* token inside it switches to its dark value.
+ */
+.md-dark {
+  --md-primary: #8BD0EF;
+  --md-on-primary: #003546;
+  --md-primary-container: #004D64;
+  --md-on-primary-container: #BDE9FF;
+  --md-primary-fixed: #BDE9FF;
+  --md-on-primary-fixed: #001F2A;
+  --md-primary-fixed-dim: #8BD0EF;
+  --md-on-primary-fixed-variant: #004D64;
+  --md-secondary: #B4CAD6;
+  --md-on-secondary: #1F333C;
+  --md-secondary-container: #354A53;
+  --md-on-secondary-container: #D0E6F2;
+  --md-tertiary: #C6C2EA;
+  --md-on-tertiary: #2F2D4D;
+  --md-tertiary-container: #454364;
+  --md-on-tertiary-container: #E3DFFF;
+  --md-error: #FFB4AB;
+  --md-on-error: #690005;
+  --md-error-container: #93000A;
+  --md-on-error-container: #FFDAD6;
+  --md-background: #0F1417;
+  --md-on-background: #DFE3E7;
+  --md-surface: #0F1417;
+  --md-on-surface: #DFE3E7;
+  --md-surface-variant: #40484C;
+  --md-on-surface-variant: #C0C8CD;
+  --md-surface-container-lowest: #0A0F11;
+  --md-surface-container-low: #171C1F;
+  --md-surface-container: #1B2023;
+  --md-surface-container-high: #262B2E;
+  --md-surface-container-highest: #303538;
+  --md-outline: #8A9297;
+  --md-outline-variant: #40484C;
+  --md-inverse-surface: #DFE3E7;
+  --md-inverse-on-surface: #2C3134;
+  --md-inverse-primary: #126682;
+  /* Filled elements still get darker on hover */
+  --md-primary-hover: #6BA8C6;
+  --md-primary-container-hover: #005B76;
+  --md-error-hover: #FF8A7D;
+}
+
 /* Tailwind v4 resets buttons to the default cursor; bring back the pointer for anything clickable */
 @layer base {
   button:not(:disabled),

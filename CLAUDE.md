@@ -32,6 +32,7 @@ Scope is deliberately small: news, leagues, fixtures/results, clubs and an about
 
 - **Colours come from Material 3 tokens** defined in `src/styles/globals.css` (`--md-primary`, `--md-surface-container`, etc.). Use them as Tailwind arbitrary values: `bg-[var(--md-primary)]`.
   - Don't use stock Tailwind palettes (`blue-600`, `indigo-*`, `gray-*`) for UI chrome such as buttons, links, focus rings and tabs. Stock colours are fine for data meaning: stat categories, match events, charts and role badges.
+  - On a dark or photo background, add `md-dark` to the container. It switches every `--md-*` token inside to the Material dark scheme (see the club page cards).
   - Filled elements get **darker** on hover: `--md-primary-hover`, `--md-error-hover`. Don't use `--md-primary-fixed-dim` as a hover colour, because it washes out white text.
 - `globals.css` is the only stylesheet imported globally. Feature CSS (e.g. `fixtures-matrix.css`) is imported by the component that uses it. Most other files in `src/styles/` are empty placeholders.
 - **Buttons:** use `<Button>` or `buttonStyles()` from `@/components/ui/Button`. Never hand-roll button classes.

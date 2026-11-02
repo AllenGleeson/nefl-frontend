@@ -1,15 +1,23 @@
 "use client"
 
-import { ArrowDownWideNarrow, ArrowUpNarrowWide, ChevronDown, Search, X } from "lucide-react"
+import { useMemo, type ReactNode } from "react"
+import Image from "next/image"
+import { ArrowDownWideNarrow, ArrowUpNarrowWide, CalendarDays, Layers, Trophy, X } from "lucide-react"
 import { buttonStyles } from "@/components/ui/Button"
+import FilterSelect, { type FilterOption } from "@/components/ui/FilterSelect"
+import ClubSearch from "./ClubSearch"
 import {
-  fixtureClubs,
+  clubsFor,
   fixtureLeagues,
   fixtureSeasons,
+  leagueMatchCounts,
+  seasonMatchCounts,
   type FixturesFilters,
   type FixturesView,
 } from "@/hooks/useFixturesFilter"
 import { shortLeagueName } from "@/utils/leagueNames"
+import { getLeagueLogo } from "@/utils/leagueLogos"
+import { assetUrl } from "@/utils/assetUrl"
 import DateRangePicker, { futurePresets, pastPresets } from "@/components/ui/DateRangePicker"
 
 type Props = {
@@ -25,7 +33,62 @@ const views: { id: FixturesView; label: string }[] = [
   { id: "results", label: "Results" },
 ]
 
+/** Round badge holding an icon or a sponsor logo, the same size as a club crest */
+function OptionBadge({ children }: { children: ReactNode }) {
+  return (
+    <span className="w-7 h-7 shrink-0 rounded-full bg-[var(--md-primary-fixed)] text-[var(--md-on-primary-fixed)] flex items-center justify-center">
+      {children}
+    </span>
+  )
+}
+
+const matchCount = (n = 0) => `${n} match${n === 1 ? "" : "es"}`
+
+const seasonOptions: FilterOption[] = [
+  ...fixtureSeasons.map((s, i) => ({
+    value: s,
+    label: s.replace("-", "/"),
+    description: i === 0 ? "Current season" : undefined,
+    icon: <OptionBadge><CalendarDays className="w-4 h-4" aria-hidden /></OptionBadge>,
+    meta: matchCount(seasonMatchCounts[s]),
+  })),
+  {
+    value: "all",
+    label: "All seasons",
+    icon: <OptionBadge><Layers className="w-4 h-4" aria-hidden /></OptionBadge>,
+    meta: matchCount(seasonMatchCounts.all),
+  },
+]
+
 export default function FixturesFilter({ filters, counts, hasActiveFilters, onChange, onReset }: Props) {
+  const clubs = useMemo(() => clubsFor(filters.season, filters.league), [filters.season, filters.league])
+
+  const leagueOptions = useMemo<FilterOption[]>(() => {
+    const n = leagueMatchCounts(filters.season)
+    return [
+      {
+        value: "all",
+        label: "All leagues",
+        icon: <OptionBadge><Trophy className="w-4 h-4" aria-hidden /></OptionBadge>,
+        meta: matchCount(n.all),
+      },
+      ...fixtureLeagues.map((l) => {
+        const short = shortLeagueName(l)
+        return {
+          value: l,
+          label: short,
+          description: l.replace(short, "").trim() || undefined,
+          icon: (
+            <OptionBadge>
+              <Image src={assetUrl(getLeagueLogo(l))} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain" />
+            </OptionBadge>
+          ),
+          meta: matchCount(n[l]),
+        }
+      }),
+    ]
+  }, [filters.season])
+
   return (
     <div className="sticky top-20 z-30 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-[var(--md-surface)]/95 backdrop-blur-sm border-b border-[var(--md-outline-variant)] sm:border-0">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
@@ -64,69 +127,13 @@ export default function FixturesFilter({ filters, counts, hasActiveFilters, onCh
 
         <div className="flex flex-1 flex-wrap items-center gap-2 lg:justify-end">
           {/* Season */}
-          <label className="relative flex-1 min-w-[130px] sm:flex-none">
-            <span className="sr-only">Season</span>
-            <select
-              value={filters.season}
-              onChange={(e) => onChange({ season: e.target.value })}
-              className="w-full sm:w-36 h-10 appearance-none rounded-full border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] pl-4 pr-9 text-sm font-medium text-[var(--md-on-surface)] hover:border-[var(--md-outline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-primary)]"
-            >
-              {fixtureSeasons.map((s) => (
-                <option key={s} value={s}>
-                  {s.replace("-", "/")} season
-                </option>
-              ))}
-              <option value="all">All seasons</option>
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--md-on-surface-variant)]" aria-hidden />
-          </label>
+          <FilterSelect label="Season" options={seasonOptions} value={filters.season} onChange={(season) => onChange({ season })} className="sm:w-40" />
 
           {/* League */}
-          <label className="relative flex-1 min-w-[180px] sm:flex-none">
-            <span className="sr-only">League</span>
-            <select
-              value={filters.league}
-              onChange={(e) => onChange({ league: e.target.value })}
-              className="w-full sm:w-56 h-10 appearance-none rounded-full border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] pl-4 pr-9 text-sm font-medium text-[var(--md-on-surface)] hover:border-[var(--md-outline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-primary)]"
-            >
-              <option value="all">All leagues</option>
-              {fixtureLeagues.map((l) => (
-                <option key={l} value={l}>
-                  {shortLeagueName(l)}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--md-on-surface-variant)]" aria-hidden />
-          </label>
+          <FilterSelect label="League" options={leagueOptions} value={filters.league} onChange={(league) => onChange({ league })} className="sm:w-52" />
 
           {/* Club search */}
-          <label className="relative flex-1 min-w-[180px] sm:flex-none">
-            <span className="sr-only">Search clubs</span>
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--md-on-surface-variant)]" aria-hidden />
-            <input
-              type="search"
-              list="fixture-clubs"
-              value={filters.club}
-              onChange={(e) => onChange({ club: e.target.value })}
-              placeholder="Search for a club"
-              className="w-full sm:w-60 h-10 rounded-full border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-lowest)] pl-9 pr-9 text-sm text-[var(--md-on-surface)] placeholder:text-[var(--md-on-surface-variant)] hover:border-[var(--md-outline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-primary)] [&::-webkit-search-cancel-button]:hidden"
-            />
-            <datalist id="fixture-clubs">
-              {fixtureClubs.map((c) => (
-                <option key={c} value={c} />
-              ))}
-            </datalist>
-            {filters.club && (
-              <button
-                type="button"
-                onClick={() => onChange({ club: "" })}
-                aria-label="Clear club search"
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container)]"
-              >
-                <X className="w-4 h-4" aria-hidden />
-              </button>
-            )}
-          </label>
+          <ClubSearch clubs={clubs} value={filters.club} onChange={(club) => onChange({ club })} />
 
           {/* Dates */}
           <DateRangePicker

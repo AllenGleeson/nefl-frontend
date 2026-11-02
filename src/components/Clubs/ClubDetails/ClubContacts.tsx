@@ -1,6 +1,5 @@
-"use client";
-
-import { FaEnvelope, FaPhone, FaUser } from "react-icons/fa6";
+import { FaEnvelope, FaPhone } from "react-icons/fa6";
+import ClubSection from "./ClubSection";
 
 export type ClubContact = {
   name: string;
@@ -13,71 +12,52 @@ interface ClubContactsProps {
   contacts: ClubContact[];
 }
 
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+const linkClass =
+  "inline-flex items-center gap-2 text-sm text-[var(--md-primary)] hover:underline break-all";
+
 export default function ClubContacts({ contacts }: ClubContactsProps) {
   if (!contacts?.length) return null;
 
   return (
-    <section className="mt-8">
-      <h2 className="text-2xl font-bold text-white mb-4">Club contacts</h2>
-      <div className="rounded-lg border border-white/10 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-0">
-            <thead className="bg-white/10">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                  Role
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                  Phone
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
-                  Email
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/10">
-              {contacts.map((c, i) => (
-                <tr key={i} className="bg-white/5 hover:bg-white/10 transition-colors">
-                  <td className="px-4 py-3 text-white flex items-center gap-2">
-                    <FaUser className="text-white/60 flex-shrink-0" />
-                    {c.name}
-                  </td>
-                  <td className="px-4 py-3 text-white/80">{c.role}</td>
-                  <td className="px-4 py-3 text-white/80">
-                    {c.phone ? (
-                      <a
-                        href={`tel:${c.phone.replace(/\s/g, "")}`}
-                        className="inline-flex items-center gap-1.5 text-white/90 hover:text-white"
-                      >
-                        <FaPhone className="text-white/60 flex-shrink-0" />
-                        {c.phone}
-                      </a>
-                    ) : (
-                      <span className="text-white/50">—</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-white/80">
-                    {c.email ? (
-                      <a
-                        href={`mailto:${c.email}`}
-                        className="inline-flex items-center gap-1.5 text-white/90 hover:text-white break-all"
-                      >
-                        <FaEnvelope className="text-white/60 flex-shrink-0" />
-                        {c.email}
-                      </a>
-                    ) : (
-                      <span className="text-white/50">—</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    <ClubSection title="Club contacts">
+      <ul className="divide-y divide-[var(--md-outline-variant)]/60">
+        {contacts.map((c) => (
+          <li key={`${c.role}-${c.name}`} className="flex items-start gap-3 py-3">
+            <span
+              aria-hidden
+              className="w-10 h-10 shrink-0 rounded-full bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] flex items-center justify-center text-sm font-bold"
+            >
+              {initials(c.name)}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-semibold leading-snug">{c.name}</p>
+              <p className="text-xs uppercase tracking-wider text-[var(--md-on-surface-variant)]">{c.role}</p>
+              <div className="mt-1.5 flex flex-col gap-1">
+                {c.phone && (
+                  <a href={`tel:${c.phone.replace(/\s/g, "")}`} className={linkClass}>
+                    <FaPhone className="w-3.5 h-3.5 shrink-0" aria-hidden />
+                    {c.phone}
+                  </a>
+                )}
+                {c.email && (
+                  <a href={`mailto:${c.email}`} className={linkClass}>
+                    <FaEnvelope className="w-3.5 h-3.5 shrink-0" aria-hidden />
+                    {c.email}
+                  </a>
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </ClubSection>
   );
 }
